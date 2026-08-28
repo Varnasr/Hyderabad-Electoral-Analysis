@@ -293,6 +293,37 @@
         .badge-inc { background: #0ea5e9; color: white; }
         .badge-bjp { background: #f97316; color: white; }
         .badge-trs { background: #ec4899; color: white; }
+
+        /* A data caveat readers should meet before the numbers, not after */
+        .data-caveat {
+            background: #fffbeb;
+            border-left: 4px solid #d97706;
+            border-radius: 6px;
+            padding: 16px 20px;
+            margin: 24px 0;
+            font-size: 0.95em;
+        }
+        .data-caveat strong { color: #92400e; }
+        .data-caveat ul { margin: 8px 0 0 18px; }
+        .data-caveat li { margin-bottom: 6px; }
+
+        /* Screen breakpoints. Previously the only media query here was print, so the
+           600px-tall charts and the 8-column table were unusable on a phone. */
+        @media screen and (max-width: 900px) {
+            .chart-wrapper { height: 420px; }
+        }
+
+        @media screen and (max-width: 600px) {
+            .container { padding: 12px; }
+            .header { padding: 24px 14px; }
+            .header h1 { font-size: 1.4em; }
+            .chart-wrapper { height: 320px; }
+            .chart-container { padding: 10px; }
+            table { font-size: 0.8em; }
+            th, td { padding: 7px 8px; white-space: nowrap; }
+            th { position: static; }   /* sticky headers fight momentum scrolling on iOS */
+            .party-badge { font-size: 0.75em; padding: 3px 9px; }
+        }
     </style>
 </head>
 <body>
@@ -331,6 +362,18 @@
         <!-- Executive Summary -->
         <div class="section" id="executive-summary">
             <h2>Executive Summary</h2>
+
+            <div class="data-caveat">
+                <strong>Before reading the numbers.</strong> This is a descriptive vote-share series. It shows how these contests were divided, not why, and it contains no service-delivery or infrastructure data.
+                <ul>
+                    <li><strong>Bahadurpura has no 1999&ndash;2009 rows.</strong> The seat was created in the 2008 delimitation, but it <em>was</em> contested in 2009 and that row is missing here &mdash; so district totals for 2009 understate AIMIM.</li>
+                    <li><strong>Rows do not sum to 100%.</strong> Independents, smaller parties and NOTA are not captured; a 10&ndash;20 point residual is normal.</li>
+                    <li><strong>A blank is "did not contest", not zero.</strong></li>
+                    <li><strong>Figures are good to about &plusmn;1 point.</strong> Spot-checks differ slightly from other sources, most likely a valid-votes versus votes-polled denominator difference.</li>
+                    <li><strong>The 2008 delimitation redrew these boundaries</strong>, so pre- and post-2009 rows are not strictly the same geographies.</li>
+                </ul>
+                Full detail in <a href="METHODOLOGY.md">METHODOLOGY.md</a> and <a href="Data/README.md">Data/README.md</a>.
+            </div>
             <div class="stats-grid">
                 <div class="stat-card">
                     <h3>Time Period</h3>
@@ -655,6 +698,28 @@
                     })
                 };
             });
+        }
+
+        // Chart.js comes from a CDN. On a restricted network it can fail to load, in which
+        // case every chart below throws and the reader is left staring at blank boxes with
+        // no explanation. Say so instead, and point at the data, which needs no JavaScript.
+        if (typeof Chart === 'undefined') {
+            document.querySelectorAll('.chart-wrapper').forEach(function (el) {
+                el.style.height = 'auto';
+                el.innerHTML =
+                    '<div style="padding:28px;background:#fff7ed;border-left:4px solid #ea580c;' +
+                    'border-radius:6px;color:#7c2d12;font-size:0.95em;line-height:1.6">' +
+                    '<strong>Charts could not load.</strong><br>' +
+                    'This report draws its charts with Chart.js from a CDN, which this network ' +
+                    'appears to be blocking. The tables on this page still work, and the full ' +
+                    'dataset is in <code>Data/HYD-DIST-RESULTS.csv</code>.' +
+                    '</div>';
+            });
+            const btns = document.querySelectorAll('.export-buttons button');
+            btns.forEach(function (b) {
+                if (/PNG|PDF/i.test(b.textContent)) { b.disabled = true; b.style.opacity = 0.5; }
+            });
+            throw new Error('Chart.js unavailable — charts replaced with a notice.');
         }
 
         // AIMIM Chart
