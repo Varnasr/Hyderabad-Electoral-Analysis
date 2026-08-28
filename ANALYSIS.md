@@ -103,11 +103,17 @@ three caveats: NFHS "clean fuel" is a broader category than the Census's "LPG/PN
 the bound assumes ward counts proxy population shares; and NFHS is a sample survey
 where the Census is a complete enumeration.
 
-The NFHS-5 district figures here were read from a community mirror of the IIPS
-district factsheets. The primary source, `rchiips.org`, was unreachable at the time of
-writing, so **these numbers are not yet confirmed against the official factsheet PDF**
-and should be treated as provisional. The banking statement is deliberately weaker
-than the LPG one and is offered as an inference, not a measurement.
+The NFHS-5 district figures have been confirmed against the official IIPS
+*District Fact Sheet: Hyderabad* (NFHS-5, 2019–21) — a copy of the original PDF is in
+[`Docs/NFHS-5-Hyderabad-District-Factsheet.pdf`](Docs/NFHS-5-Hyderabad-District-Factsheet.pdf).
+Electricity 99.9%, improved drinking water 99.6%, improved sanitation 84.4%, clean
+cooking fuel 99.5%. Two notes from the factsheet itself: it carries **no NFHS-4
+comparison column for this district** (the reorganisation of Telangana's districts
+made 2015–16 estimates non-comparable), so no district-level trend can be quoted; and
+it does not report the women's bank-account indicator at district level — the 84.4%
+figure is from the official Telangana **state** factsheet (urban: 83.0%) and is
+labelled as such. The banking statement remains deliberately weaker than the LPG one:
+an inference, not a measurement.
 
 ## What this supports, and what it does not
 
@@ -223,24 +229,60 @@ in time series than in cross-section, and a dense, long-electrified metro is clo
 saturated — so lights are a reasonable outcome for the rural and small-town seats in
 design 1 and a poor one inside Hyderabad.
 
-### The cheap, direct test of "did nothing"
+### The cheap, direct test of "did nothing" — run
 
-Before any of the above, there is a much smaller piece of work that speaks to the folk
-version of the claim directly, because it looks at what the representative actually
-controlled:
+The direct test looks at what the representatives actually controlled: the
+discretionary funds and the legislature. It needs no identification strategy, and the
+answer turns out to be textured rather than one-sided.
 
-- **MPLADS and MLA-LADS utilisation.** Allocation, release, expenditure and works
-  completed are published per constituency per year. Low utilisation is direct evidence
-  of discretionary money left unspent; high utilisation refutes the claim on its own
-  terms. Either way it is an answer, and it does not need an identification strategy.
-- **Legislative activity.** Attendance, questions, debates and private member's bills
-  are compiled for MPs and for several state assemblies.
-- **GHMC ward-level works and budget.** The corporation is the right unit for service
-  delivery; ward-level expenditure would test the parity finding directly rather than
-  by proxy.
+**Hyderabad has been an AIMIM Lok Sabha seat continuously since 1984** — Sultan
+Salahuddin Owaisi to 2004, Asaduddin Owaisi since — which makes the MP fund a clean
+series. The record:
 
-None of these identifies a causal effect. All of them are cheap, public, and bear on
-whether the officeholders used the instruments they had.
+| Term | Fund position | Works | Source |
+|---|---|---|---|
+| 16th LS (2014–19) | Recommended ₹24.87 cr; sanctioned ₹16.72 cr; **utilised ₹7.09 cr** (~28% of the ₹25 cr entitlement) | 225 completed | Citizen Matters candidate report card, from MPLADS data |
+| 17th LS (2019–24) | Released ₹15.51 cr; **spent ₹8.77 cr** (57% of released) | 8 of 69 recommended works completed | Siasat, citing the MPLADS portal |
+| 18th LS (2024–) | Released ₹9.80 cr; spent ₹0.58 cr | none completed yet (term young) | Siasat, citing the MPLADS portal |
+
+**The legislative record points the other way.** PRS Legislative Research, 17th Lok
+Sabha: attendance 72% (national average 79%), **60 debates** (average 46.7), **366
+questions** (average 210), **3 private member's bills** (average 1.5). In the 16th,
+Citizen Matters reports 82% attendance and **737 questions** against a 293 average,
+and a Sansad Ratna award for the 15th. Whatever else is true, this is not an absentee
+representative.
+
+**The state-side fund shows the same under-spending — across every party.** Under
+Telangana's Constituency Development Programme (₹3 crore per MLA per year from
+2016–17), Deccan Chronicle reported that in 2017–18 the sixteen Hyderabad-city MLAs
+together spent under ₹10 crore of ₹36 crore released, and the five who spent below
+₹50 lakh included AIMIM's Pasha Quadri (Charminar) and Akbaruddin Owaisi
+(Chandrayangutta) — **alongside BJP's K. Laxman and G. Kishan Reddy and TRS minister
+Talasani Srinivas Yadav**. Under-utilisation of constituency funds in Hyderabad is a
+city-wide, cross-party pattern, not an AIMIM trait.
+
+**Reading it honestly.** The MPLADS utilisation numbers are genuinely poor, and they
+are the strongest single piece of evidence available for the folk claim — discretionary
+money the MP controlled, left unspent. Against that: works are executed by the
+district authority, not the MP, so completion counts partly measure GHMC and the
+collectorate; expenditure figures trail recommendations by years as bills post; the
+17th-term envelope reflects the national MPLADS suspension of 2020–21; and the
+cross-party CDP pattern says under-spending is how Hyderabad's fund machinery behaves
+generally. And the legislative record is well above average on every measure PRS
+tracks except attendance. "Did nothing" survives contact with this data only in the
+narrow form: *the discretionary works funds were substantially under-spent* — a
+statement that indicts the city's MLAs of every party, and its fund administration,
+as much as its MP.
+
+**Still uncollected:** GHMC ward-level works and budget data — the corporation is the
+right unit for service delivery, and ward-level expenditure would test the parity
+finding directly rather than by proxy. Telangana publishes no per-constituency CDP
+utilisation series; the 2017–18 figures above are a single press-reported year.
+
+All figures above are as reported at their access dates (August 2026); the MPLADS
+portal (mplads.mospi.gov.in) revises as bills are uploaded, and none of the press
+figures has been re-verified against the live portal, which does not expose a
+static report.
 
 ### The version of the claim that survives
 
