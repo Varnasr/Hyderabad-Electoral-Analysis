@@ -33,7 +33,31 @@ The dataset jumps from no Bahadurpura rows (1999–2009) to a 2014 row. That is 
 
 Consequence: any district-level aggregate for 2009 omits what is consistently AIMIM's strongest seat, and therefore **understates AIMIM in 2009**. Cross-cycle comparisons involving 2009 are affected.
 
-This row has deliberately **not** been added. A secondary source reports roughly 65,453 votes and about 70.8% share, but that has not been confirmed against an ECI record, and this dataset should not carry an unverified figure alongside sourced ones. Filling this gap from the ECI's 2009 Andhra Pradesh assembly results is the single most useful contribution available here.
+**What has been recovered so far** (August 2026, secondary sources, two independent
+results agreeing — not yet confirmed against an ECI record):
+
+| Candidate | Party | Votes | Share |
+|---|---|---|---|
+| Mohammad Moazam Khan | AIMIM | 65,453 | 70.80% |
+| Mir Ahmed Ali | **CPI** | 8,718 | 9.43% |
+
+**Why the row is still not in the CSV.** The runner-up was **CPI**, which has no column in
+this dataset. The schema carries AIMIM, TDP, MBT, INC, BJP and TRS only. Adding a row with
+AIMIM at 70.80 and every other column blank would assert, under this file's own convention,
+that INC, BJP, TDP and MBT *did not contest* Bahadurpura in 2009 — which is not established
+and is probably false. A partial row would therefore corrupt the dataset rather than complete
+it, and would do so silently.
+
+This is itself a finding about the schema: the six tracked parties do not cover every serious
+contender in these seats. In 2009 Bahadurpura the second-placed party is not represented at
+all.
+
+**To close this properly**, the row needs the full candidate list with each party's share,
+from the ECI's *Statistical Report on the 2009 General Election to the Andhra Pradesh
+Legislative Assembly* (constituency-wise detail, or the Form 20 for AC-69). Sources tried and
+exhausted without success: Wikipedia (constituency and candidate pages — no 2009 table),
+IndiaVotes, ElectionPandit (503), ResultUniversity (520), and the Indiastat constituency
+factbook (a scanned PDF with no extractable text).
 
 The pre-2009 absence of Bahadurpura is correct and expected — the seat did not exist.
 
