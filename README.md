@@ -41,6 +41,8 @@ Read alongside the [limits](METHODOLOGY.md#what-this-cannot-establish).
 
 **Malakpet is the outlier throughout.** It is the only seat where AIMIM has never crossed 50%, and the only one with a genuine four-way contest. The 1999 and 2004 rows are unusual and should not be read as trend points — see the data notes below.
 
+**Schooling is modestly behind; work is far behind.** From the same Census's ward-level Primary Census Abstract: literacy 82.1% vs 86.3% (p = 0.001), but work participation among the age-7+ population 37.1% vs 44.3% and women working 17.9% vs 25.3%, both at p < 0.0001 — and the work gap survives adjusting for the old city's younger population. One result runs the other way: the male–female literacy gap is *smaller* in the old city. Data in [`Data/GHMC-WARD-PCA-2011.csv`](Data/GHMC-WARD-PCA-2011.csv).
+
 **The old city is poorer, not less served.** Across 108 GHMC wards in Census 2011, the six old-city mandals fall far behind the rest of Hyderabad district on LPG for cooking (55.9% vs 77.1%), banking (51.4% vs 68.7%), internet (9.1% vs 20.0%) and vehicle ownership (5.9% vs 15.7%), all at p&nbsp;<&nbsp;0.0001 — while matching it on treated tap water (97.1% vs 97.4%), closed drainage (98.4% vs 97.5%) and bathroom access (98.9% vs 99.0%), none of those differences significant. The extremes are wider still: Charminar ward 39 has 100% closed drainage and 2.3% internet; Ameerpet ward 99, in the same district, has 47.5% internet. Full working in [ANALYSIS.md](ANALYSIS.md).
 
 ## The data

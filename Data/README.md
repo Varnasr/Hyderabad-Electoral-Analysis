@@ -152,3 +152,45 @@ representation.
 **Complete enumeration, not a sample.** There are no sampling errors on these
 figures. Significance tests in `ANALYSIS.md` compare ward distributions between two
 groups of wards, which is a different question from sampling uncertainty.
+
+---
+
+# GHMC-WARD-PCA-2011.csv
+
+Census 2011 ward-level Primary Census Abstract, reduced to literacy and
+work-participation indicators for the same **108 GHMC wards** as the amenities file.
+Used in the "Schooling and work" section of [`../ANALYSIS.md`](../ANALYSIS.md).
+
+## Dictionary
+
+| Column | Description |
+|---|---|
+| `mandal`, `ward_no`, `old_city` | As in `GHMC-WARD-AMENITIES-2011.csv` |
+| `population` | Total ward population |
+| `literacy_rate_7plus` | Literates as % of the age-7+ population |
+| `female_literacy_rate_7plus` | Female literates as % of age-7+ females |
+| `male_female_literacy_gap` | Male literacy rate minus female, percentage points |
+| `wpr_all_ages` | Total workers as % of total population |
+| `wpr_7plus` | Total workers as % of the age-7+ population |
+| `female_wpr_all_ages` | Female workers as % of total females |
+| `female_wpr_7plus` | Female workers as % of age-7+ females |
+| `main_worker_share` | Main (non-marginal) workers as % of all workers |
+| `child_share_0_6` | Age 0–6 population as % of total |
+| `sc_share` | Scheduled Caste population as % of total |
+
+## Derivation and provenance
+
+Derived from the ward-level Primary Census Abstract for Hyderabad district
+(Census of India 2011), republished by
+[OpenCity](https://data.opencity.in/dataset/hyderabad-census-2011-data). Rates are
+computed from the PCA counts (`P_LIT`, `TOT_WORK_P`, `P_06` and so on); no values
+were taken from secondary tabulations. Mandal spellings were normalised to match
+the amenities file (Ammerpet→ameerpet, Tirumalgiri→tirumalagiri,
+Maredpally→maredpalle, Himayatnagar→himayathnagar, Golkonda→golconda); all 108
+wards joined exactly.
+
+The 7-plus denominators use the PCA's age-0–6 counts. Census convention computes
+literacy over the age-7+ population; the same denominator is offered for work
+participation because the old city's higher child share (13.0% vs 10.7%) would
+otherwise depress its whole-population rate mechanically. Both variants are in the
+file.
