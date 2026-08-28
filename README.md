@@ -23,9 +23,9 @@ Its central finding is negative and worth stating up front: **the old city is no
 
 ## What this is *not*
 
-**Not a causal analysis.** It shows what vote shares were and what household conditions were, not why either. Nothing here identifies the effect of representation on anything — and it cannot, because there is no variation in representation to exploit: AIMIM has won every one of these seats, every cycle. [METHODOLOGY.md](METHODOLOGY.md) sets out exactly what the comparison can and cannot support, and is worth reading before quoting any of it.
+**Not a causal analysis.** It shows what vote shares were and what household conditions were, not why either. Nothing here identifies the effect of representation on anything — and it cannot, because there is almost no variation in representation to exploit. AIMIM has led every contest it entered; the only two it did not lead are Malakpet in 1999 (BJP, 53.2%) and 2004 (INC, 52.1%), both cycles in which it fielded no candidate. Two contests in one seat, both before the delimitation, is not an identification strategy. [METHODOLOGY.md](METHODOLOGY.md) sets out exactly what the comparison can and cannot support, and is worth reading before quoting any of it.
 
-**Not an infrastructure-denial argument.** An earlier version of this repository was described as a "voting patterns and public infrastructure analysis," implying under-provision. The Census data added here contradicts that: water, drainage and sanitation coverage in the old city are statistically indistinguishable from the rest of the district.
+**Not an infrastructure-denial argument.** An earlier version of this repository was described as a "voting patterns and public infrastructure analysis," implying under-provision. The service-delivery data added here contradicts that: water, drainage and sanitation coverage in the old city are statistically indistinguishable from the rest of the district. Note that this repository *does* now carry infrastructure and service-delivery data — it is the basis of the central finding, and it points the opposite way from the claim it was gathered to test.
 
 ## What the data shows
 
@@ -50,7 +50,7 @@ Read alongside the [limits](METHODOLOGY.md#what-this-cannot-establish).
 Three things to know before using it:
 
 1. **Bahadurpura is missing for 2009.** The seat was created in the 2008 delimitation and *was* contested in 2009 — AIMIM's Mohammad Moazam Khan won it. The row is absent from this dataset, so any 2009 district total understates AIMIM. This is a known gap, not a zero. See [`Data/README.md`](Data/README.md#known-gaps).
-2. **Rows do not sum to 100%.** There is no "Others"/independents/NOTA column. A gap of 10–20 points is normal and does not indicate missing party data.
+2. **Rows do not sum to 100%.** There is no "Others"/independents/NOTA column. The residual runs from 0 to 15.6 points with a median of 3.5, and 21 of the 27 rows are under 6. It is real votes, not missing party data.
 3. **Blank ≠ zero.** A blank cell means the party did not contest that seat that year.
 
 ## Open questions

@@ -1,1438 +1,1112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hyderabad District Electoral Analysis 1999-2023</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The pipes went in. The income didn't. — Hyderabad's old city, 1999–2023</title>
+<meta name="description" content="Five old-city assembly seats in Hyderabad have returned the same party since 1999. Census 2011 shows those wards are level with the rest of the district on municipal services and far behind on household economics. What that supports, and what it does not.">
 
-        /* ---- Design tokens. Chart hues are the validated categorical palette;
-               both modes were checked with the dataviz validator (all gates pass;
-               the light-mode contrast WARN is relieved by the data table below). */
-        :root {
-            --surface:        #ffffff;
-            --surface-alt:    #f7f7f6;
-            --surface-sunk:   #fcfcfb;
-            --border:         #e4e4e1;
-            --text-primary:   #17171a;
-            --text-secondary: #52514e;
-            --text-muted:     #767570;
-            --accent:         #2a78d6;
-            --grid:           rgba(23,23,26,.07);
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
-            /* Notes. Every note colour is declared in BOTH modes; a hard-coded
-               light fill under white dark-mode text is what broke this before. */
-            --note-bg:     #faf9f6;
-            --note-rule:   #c2b8a3;
-            --note-head:   #6b5d3e;
-            --warn-bg:     #fdfaf4;
-            --warn-rule:   #d97706;
-            --warn-head:   #8a5a12;
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
-            --series-1: #2a78d6;   /* Bahadurpura     */
-            --series-2: #eb6834;   /* Chandrayangutta */
-            --series-3: #1baf7a;   /* Charminar       */
-            --series-4: #eda100;   /* Malakpet        */
-            --series-5: #e87ba4;   /* Yakutpura       */
-        }
-        @media (prefers-color-scheme: dark) {
-            :root:not([data-theme="light"]) {
-                --surface:        #141413;
-                --surface-alt:    #1a1a19;
-                --surface-sunk:   #1f1f1e;
-                --border:         #34342f;
-                --text-primary:   #ffffff;
-                --text-secondary: #c3c2b7;
-                --text-muted:     #9b9a90;
-                --accent:         #3987e5;
-                --grid:           rgba(255,255,255,.09);
+<style>
+/* ============================================================
+   Two voices, held strictly apart:
+     Newsreader (serif)  = the essay. Prose, headlines, pull-figures.
+     IBM Plex Sans       = the evidence. Tables, axes, labels, caveats.
+   A number inside a sentence stays serif; a number inside a figure
+   is sans. That mapping is the page's whole typographic system.
+   ============================================================ */
 
-                --note-bg:     #1c1b18;
-                --note-rule:   #4a4437;
-                --note-head:   #c9bb96;
-                --warn-bg:     #201d16;
-                --warn-rule:   #a8761f;
-                --warn-head:   #e0b967;
+*, *::before, *::after { box-sizing: border-box; }
+body, h1, h2, h3, h4, p, ul, ol, li, figure, blockquote { margin: 0; padding: 0; }
 
-                --series-1: #3987e5;
-                --series-2: #d95926;
-                --series-3: #199e70;
-                --series-4: #c98500;
-                --series-5: #d55181;
-            }
-        }
+/* ---- Tokens. Every colour is declared in all three states:
+        :root (light), prefers-color-scheme:dark, and [data-theme].
+        A hard-coded fill surviving into dark mode is what broke the
+        previous version, so nothing below sets a colour literally
+        outside this block. ---- */
+:root {
+    --paper:        #f7f3ec;
+    --surface:      #fdfbf7;
+    --ink:          #211d16;
+    --muted:        #6e675a;
+    --rule:         #ddd5c6;
+    --rule-strong:  #b8ae9a;
+    --accent:       #a84b2f;
+    --accent-soft:  rgba(168, 75, 47, .16);
+    --grid:         rgba(33, 29, 22, .08);
+    --hatch:        rgba(110, 103, 90, .30);
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            line-height: 1.65;
-            color: var(--text-primary);
-            background: var(--surface);
-            -webkit-font-smoothing: antialiased;
-            font-size: 16px;
-        }
-        p { max-width: 68ch; color: var(--text-secondary); }
-        p + p { margin-top: .85em; }
-        li { color: var(--text-secondary); }
-        
-        .container {
-            max-width: 1080px;
-            margin: 0 auto;
-            padding: 0 28px 64px;
-            background: var(--surface);
-        }
-        
-        .header {
-            padding: 72px 0 28px;
-            margin-bottom: 8px;
-            border-bottom: 1px solid var(--border);
-        }
-        .header h1 {
-            font-size: clamp(1.9rem, 4.2vw, 2.9rem);
-            line-height: 1.1;
-            letter-spacing: -0.033em;
-            font-weight: 700;
-            margin-bottom: 14px;
-            max-width: 20ch;
-        }
-        .header p {
-            font-size: 1.02rem;
-            color: var(--text-muted);
-            max-width: 60ch;
-        }
-        
-        .metadata {
-            background: var(--surface-sunk);
-            font-size: .92rem;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            border: 1px solid var(--border);
-            border-left: 3px solid var(--accent);
-        }
-        
-        .section {
-            margin: 0;
-            padding: 56px 0 0;
-            background: transparent;
-        }
-        
-        .section h2 {
-            color: var(--text-primary);
-            margin-bottom: 22px;
-            padding-bottom: 0;
-            border-bottom: none;
-            letter-spacing: -0.026em;
-            font-size: 1.55rem;
-            font-weight: 680;
-        }
-        
-        .section h3 {
-            color: var(--text-primary);
-            margin: 34px 0 12px;
-            font-size: 1.02rem;
-            font-weight: 650;
-            letter-spacing: -0.01em;
-        }
-        
-        .chart-container {
-            position: relative;
-            margin: 28px 0 40px;
-            padding: 0;
-            background: transparent;
-            border: none;
-        }
-        .chart-container h3 { margin-top: 0; }
-        
-        .chart-wrapper {
-            position: relative;
-            height: 460px;
-            margin-bottom: 12px;
-            padding: 20px 18px 14px;
-            background: var(--surface-sunk);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-        }
-        
-        .export-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .btn {
-            padding: 7px 14px;
-            border: 1px solid var(--border);
-            background: transparent;
-            color: var(--text-secondary);
-            border-radius: 7px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 550;
-            transition: background .15s ease, color .15s ease, border-color .15s ease;
-        }
-        .btn:hover { background: var(--surface-alt); color: var(--text-primary); border-color: var(--text-muted); }
-        
-        .btn-primary { }
-        
-        .btn-primary:hover { }
-        
-        .btn-secondary { }
-        
-        .btn-secondary:hover { }
-        
-        .btn-export { }
-        
-        .btn-export:hover { }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background: var(--surface);
-        }
-        
-        th, td {
-            padding: 10px 12px;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-            font-size: .9rem;
-        }
-        
-        th {
-            background: var(--surface-alt);
-            color: var(--text-secondary);
-            font-weight: 600;
-            border-bottom: 2px solid var(--border);
-            text-transform: uppercase;
-            letter-spacing: .04em;
-            font-size: .78em;
-            position: sticky;
-            top: 0;
-        }
-        
-        tr:hover {
-            background: var(--surface-alt);
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 26px;
-            margin: 26px 0 8px;
-        }
-        
-        .stat-card {
-            background: transparent;
-            color: var(--text-primary);
-            padding: 0 0 0 16px;
-            border: none;
-            border-left: 2px solid var(--border);
-            border-radius: 0;
-        }
-        
-        .stat-card h3 {
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: .06em;
-            font-size: .7rem;
-            font-weight: 600;
-            margin: 0 0 6px;
-        }
-        
-        .stat-card .value {
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 4px;
-        }
-        
-        .stat-card .label {
-            font-size: 0.85em;
-            color: var(--text-secondary);
-        }
-        
-        .insight-box {
-            background: var(--note-bg);
-            border-left: 2px solid var(--note-rule);
-            color: var(--text-secondary);
-            padding: 18px 22px;
-            margin: 24px 0;
-            border-radius: 0 8px 8px 0;
-        }
-        
-        .insight-box h4 {
-            color: var(--text-primary);
-            margin-bottom: 10px;
-        }
-        
-        .methodology > summary {
-            cursor: pointer;
-            color: var(--note-head);
-            font-weight: 600;
-            font-size: .9rem;
-            list-style: none;
-        }
-        .methodology > summary::before { content: '\203A  '; }
-        .methodology[open] > summary::before { content: '\2304  '; }
-        details.methodology { padding: 12px 22px; }
-        details.methodology[open] { padding-bottom: 18px; }
+    /* Validated categorical palette — CVD-checked, entity-locked.
+       Colour follows the constituency, never its rank. Do not reuse
+       these for the two-group comparison; that has its own encoding. */
+    --series-1: #2a78d6;   /* Bahadurpura     */
+    --series-2: #eb6834;   /* Chandrayangutta */
+    --series-3: #1baf7a;   /* Charminar       */
+    --series-4: #eda100;   /* Malakpet        */
+    --series-5: #e87ba4;   /* Yakutpura       */
+}
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --paper:       #151310;
+        --surface:     #1d1a16;
+        --ink:         #ece6d9;
+        --muted:       #a09786;
+        --rule:        #3a352c;
+        --rule-strong: #554e40;
+        --accent:      #e08a5f;
+        --accent-soft: rgba(224, 138, 95, .20);
+        --grid:        rgba(236, 230, 217, .09);
+        --hatch:       rgba(160, 151, 134, .34);
 
-        .methodology {
-            background: var(--note-bg);
-            border-left: 2px solid var(--note-rule);
-            color: var(--text-secondary);
-            padding: 18px 22px;
-            margin: 24px 0;
-            border-radius: 0 8px 8px 0;
-        }
-        .methodology strong { color: var(--note-head); }
-        
-        .footer {
-            text-align: left;
-            padding: 26px 0 8px;
-            border-top: 1px solid var(--border);
-            color: var(--text-muted);
-            font-size: .88em;
-            margin-top: 48px;
-        }
-        
-        @media print {
-            .export-buttons {
-                display: none;
-            }
-            .section {
-                page-break-inside: avoid;
-            }
-            .container {
-                max-width: 100%;
-                padding: 10px;
-            }
-            .chart-wrapper {
-                height: 520px !important;
-                width: 100% !important;
-                page-break-inside: avoid;
-                margin: 20px 0;
-            }
-            .chart-wrapper canvas {
-                max-width: 100% !important;
-                height: auto !important;
-            }
-            .chart-container {
-                width: 100% !important;
-                page-break-inside: avoid;
-                padding: 15px;
-            }
-            body {
-                width: 100%;
-            }
-            table {
-                font-size: 9px;
-            }
-            th, td {
-                padding: 5px;
-            }
-            @page {
-                size: A4;
-                margin: 15mm;
-            }
-        }
-        
-        .highlight {
-            background: transparent;
-            padding: 0;
-            font-weight: 650;
-            color: var(--text-primary);
-            box-shadow: inset 0 -0.42em 0 var(--warn-bg);
-        }
-        
-        .party-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: 600;
-            margin: 2px;
-        }
-        
-        .badge-aimim { background: #16a34a; color: white; }
-        .badge-tdp { background: #eab308; color: black; }
-        .badge-mbt { background: #dc2626; color: white; }
-        .badge-inc { background: #0ea5e9; color: white; }
-        .badge-bjp { background: #f97316; color: white; }
-        .badge-trs { background: #ec4899; color: white; }
+        --series-1: #5b9ce8;
+        --series-2: #f0805a;
+        --series-3: #33c390;
+        --series-4: #e0ab33;
+        --series-5: #ef95b6;
+    }
+}
+:root[data-theme="dark"] {
+    --paper:       #151310;
+    --surface:     #1d1a16;
+    --ink:         #ece6d9;
+    --muted:       #a09786;
+    --rule:        #3a352c;
+    --rule-strong: #554e40;
+    --accent:      #e08a5f;
+    --accent-soft: rgba(224, 138, 95, .20);
+    --grid:        rgba(236, 230, 217, .09);
+    --hatch:       rgba(160, 151, 134, .34);
 
-        /* A data caveat readers should meet before the numbers, not after */
-        .data-caveat {
-            background: var(--warn-bg);
-            border-left: 2px solid var(--warn-rule);
-            color: var(--text-secondary);
-            border-radius: 0 8px 8px 0;
-            padding: 18px 22px;
-            margin: 26px 0;
-            font-size: 0.95em;
-            line-height: 1.65;
-        }
-        .data-caveat strong { color: var(--warn-head); }
-        .data-caveat ul { margin: 8px 0 0 18px; }
-        .data-caveat li { margin-bottom: 6px; }
+    --series-1: #5b9ce8;
+    --series-2: #f0805a;
+    --series-3: #33c390;
+    --series-4: #e0ab33;
+    --series-5: #ef95b6;
+}
 
-        /* Screen breakpoints. Previously the only media query here was print, so the
-           600px-tall charts and the 8-column table were unusable on a phone. */
-        @media screen and (max-width: 900px) {
-            .chart-wrapper { height: 420px; }
-        }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
-        @media screen and (max-width: 600px) {
-            .container { padding: 12px; }
-            .header { padding: 24px 14px; }
-            .header h1 { font-size: 1.4em; }
-            .chart-wrapper { height: 320px; }
-            .chart-container { padding: 10px; }
-            table { font-size: 0.8em; }
-            th, td { padding: 7px 8px; white-space: nowrap; }
-            th { position: static; }   /* sticky headers fight momentum scrolling on iOS */
-            .party-badge { font-size: 0.75em; padding: 3px 9px; }
-        }
-    </style>
+body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Newsreader', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+    font-size: 18px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+/* The evidence voice */
+.sans, table, .fig, .caveat, .masthead, .overline, .chart-note, figcaption,
+.dumbbell, .record, .toggle, .footer, .statline, .record-key, .actions, .tri-l {
+    font-family: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-feature-settings: "tnum" 1;
+}
+
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; }
+
+.skip {
+    position: absolute; left: -9999px; top: 0; z-index: 99;
+    background: var(--ink); color: var(--paper); padding: 10px 16px; border-radius: 0 0 6px 0;
+}
+.skip:focus { left: 0; }
+
+/* ---------------- layout ---------------- */
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+.measure { max-width: 62ch; }
+.measure-wide { max-width: 76ch; }
+
+section { padding: 0 0 12px; scroll-margin-top: 68px; }
+[id] { scroll-margin-top: 68px; }
+.rule-top { border-top: 1px solid var(--rule); margin-top: 72px; padding-top: 40px; }
+
+.overline {
+    font-size: 11px; font-weight: 600; letter-spacing: .09em;
+    text-transform: uppercase; color: var(--muted);
+    display: flex; align-items: center; gap: 10px; margin-bottom: 18px;
+}
+.overline::before {
+    content: ""; width: 18px; height: 2px; background: var(--accent); flex: none;
+}
+
+h1 {
+    font-size: clamp(2.4rem, 6.4vw, 4.25rem);
+    font-weight: 500; line-height: 1.03; letter-spacing: -.018em;
+    max-width: 17ch; margin-bottom: 22px;
+}
+h2 {
+    font-size: clamp(1.5rem, 3vw, 1.95rem);
+    font-weight: 500; line-height: 1.2; letter-spacing: -.012em;
+    max-width: 26ch; margin-bottom: 16px;
+}
+h3 {
+    font-size: 1.18rem; font-weight: 500; line-height: 1.3;
+    margin: 34px 0 10px; letter-spacing: -.008em;
+}
+p { margin-bottom: 1.05em; }
+p.dek {
+    font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+    font-style: italic; font-weight: 400; color: var(--muted);
+    line-height: 1.45; max-width: 40ch; margin-bottom: 26px;
+}
+strong { font-weight: 600; }
+em { font-style: italic; }
+
+/* ---------------- masthead ---------------- */
+.masthead {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+}
+@supports (backdrop-filter: blur(12px)) {
+    .masthead {
+        background: color-mix(in srgb, var(--paper) 86%, transparent);
+        backdrop-filter: saturate(180%) blur(12px);
+        -webkit-backdrop-filter: saturate(180%) blur(12px);
+    }
+}
+.masthead-in {
+    max-width: 1120px; margin: 0 auto; padding: 0 24px;
+    height: 52px; display: flex; align-items: center; gap: 22px;
+    font-size: 13px;
+}
+.masthead .brand { font-weight: 600; letter-spacing: -.01em; white-space: nowrap; }
+.masthead nav { margin-left: auto; display: flex; gap: 20px; align-items: center; }
+.masthead nav a {
+    color: var(--muted); text-decoration: none; white-space: nowrap;
+    border-bottom: 2px solid transparent; padding: 4px 0;
+}
+.masthead nav a:hover { color: var(--ink); }
+.masthead nav a[aria-current="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+@media (max-width: 820px) {
+    .masthead nav a { display: none; }
+    .masthead-in { gap: 12px; }
+}
+
+.toggle {
+    background: none; border: 1px solid var(--rule-strong); color: var(--muted);
+    border-radius: 6px; padding: 4px 10px; font-size: 12px; cursor: pointer;
+    font-family: inherit; white-space: nowrap;
+}
+.toggle:hover { color: var(--ink); border-color: var(--ink); }
+
+/* ---------------- hero ---------------- */
+.hero { padding: clamp(44px, 8vw, 88px) 0 8px; }
+.standfirst { font-size: 1.08rem; }
+.statline {
+    margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--rule);
+    display: flex; flex-wrap: wrap; gap: 8px 26px;
+    font-size: 12.5px; color: var(--muted);
+}
+.statline b { color: var(--ink); font-weight: 600; }
+
+/* ---------------- dumbbell (CSS only — no Chart.js, no JS) ---------------- */
+.fig {
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 10px; padding: 26px clamp(16px, 3vw, 30px) 22px;
+    margin: 30px 0;
+}
+.fig-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px; margin-bottom: 4px; }
+.fig-title {
+    font-family: 'Newsreader', Georgia, serif; font-size: 1.28rem;
+    font-weight: 500; letter-spacing: -.01em; line-height: 1.25; max-width: 30ch;
+}
+.legend { margin-left: auto; display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 12px; color: var(--muted); }
+.legend span { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.dot-old, .dot-rest { width: 12px; height: 12px; border-radius: 50%; flex: none; display: inline-block; }
+.dot-old  { background: var(--accent); }
+.dot-rest { background: var(--surface); border: 2px solid var(--muted); }
+
+.panel-label {
+    font-size: 11px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--muted); margin: 26px 0 8px; padding-top: 16px; border-top: 1px solid var(--rule);
+}
+.panel-label.first { border-top: none; padding-top: 0; margin-top: 20px; }
+
+.db-row {
+    display: grid;
+    grid-template-columns: 178px 1fr 82px;
+    align-items: center; gap: 14px; padding: 20px 0 8px;
+    font-size: 13.5px;
+}
+.db-name { color: var(--ink); }
+.db-track { position: relative; height: 18px; }
+.db-track::before {           /* the 0–100 rail, shared by every row */
+    content: ""; position: absolute; left: 0; right: 0; top: 50%;
+    height: 1px; background: var(--rule); transform: translateY(-50%);
+}
+.db-link {
+    position: absolute; top: 50%; height: 4px; border-radius: 2px;
+    background: var(--accent-soft); transform: translateY(-50%);
+    left: calc(var(--lo) * 1%); width: calc((var(--hi) - var(--lo)) * 1%);
+}
+.db-pt {
+    position: absolute; top: 50%; width: 12px; height: 12px; border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+.db-pt.old  { background: var(--accent); left: calc(var(--old) * 1%); }
+.db-pt.rest { background: var(--surface); border: 2px solid var(--muted); left: calc(var(--rest) * 1%); }
+.db-val {
+    position: absolute; bottom: calc(100% + 2px); transform: translateX(-50%);
+    font-size: 10.5px; color: var(--muted); white-space: nowrap;
+}
+.db-sig { text-align: right; font-size: 11.5px; color: var(--muted); white-space: nowrap; }
+.db-sig.hit { color: var(--accent); font-weight: 600; }
+.db-axis {
+    display: grid; grid-template-columns: 178px 1fr 82px; gap: 14px;
+    font-size: 11px; color: var(--muted); margin-top: 10px;
+    padding-top: 8px; border-top: 1px solid var(--rule);
+}
+.db-axis-in { display: flex; justify-content: space-between; }
+.panel-verdict {
+    font-family: 'Newsreader', Georgia, serif; font-style: italic;
+    font-size: 1.02rem; color: var(--ink); margin: 12px 0 0;
+}
+@media (max-width: 760px) {
+    .db-row, .db-axis { grid-template-columns: 104px 1fr 58px; gap: 8px; font-size: 12px; }
+    .db-val { display: none; }
+}
+
+/* ---------------- the record grid ---------------- */
+.record { margin: 26px 0 8px; overflow-x: auto; padding-bottom: 4px; }
+.record-grid {
+    display: grid; grid-template-columns: 132px repeat(6, minmax(56px, 1fr));
+    gap: 5px; min-width: 560px;
+}
+.rc-h {
+    font-size: 11px; font-weight: 600; letter-spacing: .06em; color: var(--muted);
+    text-align: center; padding-bottom: 4px;
+}
+.rc-seat { font-size: 12.5px; display: flex; align-items: center; color: var(--ink); }
+.rc {
+    aspect-ratio: 1 / .68; border-radius: 4px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 500; letter-spacing: -.01em; line-height: 1.15;
+}
+.rc-aimim { background: var(--accent-soft); color: var(--ink); border: 1px solid transparent; }
+.rc-other { background: var(--surface); color: var(--muted); border: 1px dashed var(--rule-strong); font-size: 10.5px; }
+.rc-none  { background: transparent; color: var(--rule-strong); border: 1px solid var(--rule); font-size: 15px; }
+.rc-gap {
+    border: 1px dashed var(--accent); color: var(--accent); font-size: 9.5px; text-align: center;
+    background: repeating-linear-gradient(45deg, transparent, transparent 4px, var(--hatch) 4px, var(--hatch) 5px);
+    padding: 2px;
+}
+.record-key {
+    display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 12px;
+    color: var(--muted); margin-top: 16px;
+}
+.record-key span { display: flex; align-items: center; gap: 7px; }
+.record-key + .measure { margin-top: 30px; }
+.key-sw { width: 14px; height: 11px; border-radius: 3px; flex: none; }
+
+/* ---------------- ward 43 triptych ---------------- */
+.triptych {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 20px 34px; margin: 12px 0 4px;
+}
+.tri-n {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: clamp(2.7rem, 6.5vw, 4.1rem); font-weight: 400;
+    line-height: 1; letter-spacing: -.03em;
+}
+.tri-n.lead { color: var(--accent); }
+.tri-l { font-size: 12px; color: var(--muted); margin-top: 8px; line-height: 1.45; }
+
+/* ---------------- caveats ---------------- */
+.caveat {
+    border-left: 3px solid var(--accent); background: var(--surface);
+    padding: 18px 22px; margin: 26px 0; border-radius: 0 8px 8px 0;
+    font-size: 14.5px; line-height: 1.62; color: var(--muted);
+}
+.caveat h3 {
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: 11px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--ink); margin: 0 0 10px;
+}
+.caveat ul { margin: 8px 0 0; padding-left: 18px; }
+.caveat li { margin-bottom: 7px; }
+.caveat strong { color: var(--ink); }
+.caveat p { margin-bottom: .7em; }
+.caveat p:last-child, .caveat li:last-child { margin-bottom: 0; }
+
+/* two-column supported / not supported */
+.ledger { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 34px; margin: 28px 0 8px; }
+.ledger h3 {
+    margin: 0 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--rule);
+    font-size: 1.05rem;
+}
+.ledger h3.yes { border-bottom-color: var(--accent); }
+.ledger p { font-size: .96rem; margin-bottom: 0; }
+.ledger .item { margin-bottom: 18px; }
+.ledger .item b { font-style: italic; font-weight: 500; display: block; margin-bottom: 3px; }
+
+/* ---------------- charts ---------------- */
+.chart-block { margin: 34px 0 12px; }
+.chart-wrapper {
+    position: relative; height: 400px; padding: 16px 12px 8px;
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 10px;
+}
+.chart-note { font-size: 12.5px; color: var(--muted); margin: 10px 0 0; max-width: 74ch; line-height: 1.6; }
+.chart-note strong { color: var(--ink); }
+@media (max-width: 700px) { .chart-wrapper { height: 320px; } }
+
+/* ---------------- table ---------------- */
+.table-scroll { overflow-x: auto; margin: 22px 0; border: 1px solid var(--rule); border-radius: 10px; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; background: var(--surface); }
+caption { text-align: left; padding: 14px 16px 2px; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+th, td { padding: 9px 14px; text-align: right; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
+thead th {
+    font-size: 10.5px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase;
+    color: var(--muted); border-bottom: 1px solid var(--rule-strong);
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: var(--paper); }
+td.nil { color: var(--rule-strong); }
+td.lead { font-weight: 600; color: var(--ink); }
+
+.actions { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 13.5px; margin-top: 18px; }
+.actions button {
+    background: none; border: none; padding: 0; cursor: pointer;
+    color: var(--accent); text-decoration: underline; text-underline-offset: 2px;
+    font-family: inherit; font-size: inherit;
+}
+
+.footer {
+    margin-top: 76px; border-top: 1px solid var(--rule); padding: 26px 0 60px;
+    font-size: 13px; color: var(--muted); line-height: 1.65;
+}
+.footer p { margin-bottom: .6em; max-width: 74ch; }
+.footer strong { color: var(--ink); }
+
+/* ---------------- print ---------------- */
+@media print {
+    :root, :root[data-theme="dark"] {
+        --paper: #fff; --surface: #fff; --ink: #000; --muted: #444;
+        --rule: #ccc; --rule-strong: #999; --accent: #000;
+        --accent-soft: #eee; --grid: #ddd; --hatch: #bbb;
+    }
+    .masthead, .actions, .skip { display: none !important; }
+    body { font-size: 11pt; background: #fff; }
+    .wrap { max-width: 100%; padding: 0; }
+    section, .fig, .chart-block, .record, table, .triptych { page-break-inside: avoid; }
+    .rule-top { margin-top: 28px; padding-top: 20px; }
+    .chart-wrapper { height: 330px; }
+    a { color: #000; }
+    @page { size: A4; margin: 16mm; }
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Electoral Analysis: Hyderabad District</h1>
-            <p>Assembly Elections 1999-2023 | Comprehensive Political Economy Analysis</p>
-        </div>
-        
-        <div class="metadata">
-            <h3>Report Metadata</h3>
-            <p><strong>Analysis Period:</strong> 1999-2023 (6 Election Cycles)</p>
-            <p><strong>Geographic Coverage:</strong> Hyderabad District Constituencies</p>
-            <p><strong>Constituencies Analyzed:</strong> Chandrayangutta, Charminar, Malakpet, Yakutpura, Bahadurpura</p>
-            <p><strong>Political Parties:</strong> AIMIM, TDP, MBT, INC, BJP, TRS/BRS</p>
-            <p><strong>Report Generated:</strong> <span id="reportDate"></span></p>
-            <p><strong>Methodology:</strong> Quantitative analysis of vote share trends, constituency-level comparative analysis, party performance metrics</p>
-        </div>
+<a class="skip" href="#main">Skip to content</a>
 
-        <div class="export-buttons" style="margin-bottom: 20px;">
-            <button class="btn btn-export" onclick="exportToPDF()">Export Full Report to PDF</button>
-            <button class="btn btn-secondary" onclick="exportAllDataToCSV()">Export All Data to CSV</button>
-        </div>
-        
-        <details class="methodology" style="margin-bottom: 20px;"><summary>PDF export tips</summary>
-            <h4></h4>
-            <p><strong>For best results:</strong> When the print dialog opens, select "Save as PDF" and set the following:</p>
-            <ul style="margin-left: 20px; margin-top: 5px;">
-                <li>Paper size: A4 or Letter</li>
-                <li>Margins: Default or Minimum</li>
-                <li>Scale: 100% (or adjust to fit)</li>
-                <li>Background graphics: Enabled (to include colors and charts)</li>
-            </ul>
-        </details>
+<header class="masthead">
+  <div class="masthead-in">
+    <span class="brand">Hyderabad&rsquo;s old city &middot; 1999&ndash;2023</span>
+    <nav>
+      <a href="#finding">Finding</a>
+      <a href="#still-holds">Still true?</a>
+      <a href="#record">The record</a>
+      <a href="#evidence">Evidence</a>
+      <a href="#limits">Limits</a>
+      <a href="#data">Data</a>
+      <button class="toggle" id="themeToggle" type="button" aria-label="Switch colour theme">Theme</button>
+    </nav>
+  </div>
+</header>
 
-        <!-- Executive Summary -->
-        <div class="section" id="executive-summary">
-            <h2>Executive Summary</h2>
+<main id="main">
+<div class="wrap">
 
-            <div class="data-caveat">
-                <strong>Before reading the numbers.</strong> This is a descriptive vote-share series. It shows how these contests were divided, not why, and it contains no service-delivery or infrastructure data.
-                <ul>
-                    <li><strong>Bahadurpura has no 1999&ndash;2009 rows.</strong> The seat was created in the 2008 delimitation, but it <em>was</em> contested in 2009 and that row is missing here &mdash; so district totals for 2009 understate AIMIM.</li>
-                    <li><strong>Rows do not sum to 100%.</strong> Independents, smaller parties and NOTA are not captured; a 10&ndash;20 point residual is normal.</li>
-                    <li><strong>A blank is "did not contest", not zero.</strong></li>
-                    <li><strong>Figures are good to about &plusmn;1 point.</strong> Spot-checks differ slightly from other sources, most likely a valid-votes versus votes-polled denominator difference.</li>
-                    <li><strong>The 2008 delimitation redrew these boundaries</strong>, so pre- and post-2009 rows are not strictly the same geographies.</li>
-                </ul>
-                Full detail in <a href="METHODOLOGY.md">METHODOLOGY.md</a> and <a href="Data/README.md">Data/README.md</a>.
-            </div>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>Time Period</h3>
-                    <div class="value">24</div>
-                    <div class="label">Years Analyzed</div>
-                </div>
-                <div class="stat-card">
-                    <h3>Election Cycles</h3>
-                    <div class="value">6</div>
-                    <div class="label">Assembly Elections</div>
-                </div>
-                <div class="stat-card">
-                    <h3>Constituencies</h3>
-                    <div class="value">5</div>
-                    <div class="label">Assembly Segments</div>
-                </div>
-                <div class="stat-card">
-                    <h3>Political Parties</h3>
-                    <div class="value">6</div>
-                    <div class="label">Major Players</div>
-                </div>
-            </div>
-            
-            <h3>Key Findings</h3>
-            <div class="insight-box">
-                <h4>AIMIM Dominance Pattern</h4>
-                <p>AIMIM demonstrates consistent electoral dominance in Hyderabad constituencies, with vote shares ranging from 30.44% to 78.46%. The party shows particularly strong performance in Bahadurpura (2014: 78.46%, 2018: 74.26%) and Charminar constituencies.</p>
-            </div>
-            
-            <div class="insight-box">
-                <h4>INC Performance Dynamics</h4>
-                <p>The Indian National Congress shows variable performance with notable strength in Malakpet (2004: 52.12%, 2023: 22.5%). As documented in the supplementary analysis, the 2004 spike in Malakpet occurred due to AIMIM not fielding a candidate, leading to temporary vote consolidation. Recent elections (2018-2023) show modest INC recovery across constituencies.</p>
-            </div>
-            
-            <div class="insight-box">
-                <h4>BJP Growth Trajectory</h4>
-                <p>BJP demonstrates significant growth from marginal presence in 1999 to competitive positions in recent elections, particularly in Malakpet (2014: 28.61%) and Charminar (2023: 26.8%), indicating changing electoral dynamics.</p>
-            </div>
-            
-            <div class="insight-box">
-                <h4>Multi-Party Competition</h4>
-                <p>The electoral landscape shows increasing multi-party competition with TRS/BRS emerging as a significant player post-2014, and MBT maintaining presence in specific constituencies, particularly Yakutpura.</p>
-            </div>
-        </div>
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="overline">Assembly elections 1999&ndash;2023 &middot; Census 2011 &middot; 108 GHMC wards</div>
+    <h1>The pipes went in. The income didn&rsquo;t.</h1>
+    <p class="dek">Sustained representation, sustained poverty &mdash; and a finding that cuts against the argument it was collected to make.</p>
+    <div class="measure standfirst">
+      <p>Five assembly seats in Hyderabad&rsquo;s old city &mdash; Bahadurpura, Chandrayangutta, Charminar, Malakpet and Yakutpura &mdash; have returned AIMIM in almost every contest since 1999. The usual charge against that record is that the old city has been left without development.</p>
+      <p>The Census says otherwise. On water, drainage and sanitation these wards are level with the rest of Hyderabad district, and on one measure marginally ahead. The gap is in how households live, not in what the corporation built. That was the picture in 2011. Fifteen years on, two of the four economic gaps have closed &mdash; and not because of anything that happened locally.</p>
+    </div>
+    <div class="statline">
+      <span><b>27</b> constituency&ndash;year rows</span>
+      <span><b>6</b> election cycles</span>
+      <span><b>5</b> seats</span>
+      <span><b>108</b> GHMC wards</span>
+      <span><a href="Data/HYD-DIST-RESULTS.csv">Electoral data</a></span>
+      <span><a href="Data/GHMC-WARD-AMENITIES-2011.csv">Census data</a></span>
+      <span><a href="METHODOLOGY.md">Methodology</a></span>
+      <span><a href="https://github.com/Varnasr/Hyderabad-Electoral-Analysis">Repository</a></span>
+    </div>
+  </section>
 
-        <!-- Data Table -->
-        <div class="section" id="data-section">
-            <h2>Complete Electoral Data</h2>
-            <div class="export-buttons">
-                <button class="btn btn-secondary" onclick="exportTableToCSV('dataTable', 'electoral_data.csv')">Export Table to CSV</button>
-            </div>
-            <div style="overflow-x: auto;">
-                <table id="dataTable">
-                    <thead>
-                        <tr>
-                            <th>Year</th>
-                            <th>Constituency</th>
-                            <th>AIMIM %</th>
-                            <th>TDP %</th>
-                            <th>MBT %</th>
-                            <th>INC %</th>
-                            <th>BJP %</th>
-                            <th>TRS %</th>
-                        </tr>
-                    </thead>
-                    <tbody id="dataTableBody">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Party Performance Over Time -->
-        <div class="section" id="party-trends">
-            <h2>Party-wise Performance Trends</h2>
-            <div class="chart-container">
-                <h3>AIMIM Vote Share Evolution (1999-2023)</h3>
-                <div class="chart-wrapper">
-                    <canvas id="aimim-chart"></canvas>
-                </div>
-                <div class="export-buttons">
-                    <button class="btn btn-primary" onclick="exportChartToPNG('aimim-chart', 'AIMIM_Trends.png')">Export to PNG</button>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <h3>INC Vote Share Trajectory (1999-2023)</h3>
-                <div class="chart-wrapper">
-                    <canvas id="inc-chart"></canvas>
-                </div>
-                <div class="export-buttons">
-                    <button class="btn btn-primary" onclick="exportChartToPNG('inc-chart', 'INC_Trends.png')">Export to PNG</button>
-                </div>
-                <div class="methodology">
-                    <h4>Important Context: Malakpet 2004 Anomaly</h4>
-                    <p>The sharp increase in INC's vote share in Malakpet during 2004 (52.12%) occurred because AIMIM did not field a candidate in that election, leading to a temporary consolidation of votes towards INC. This represents a structural anomaly rather than genuine INC strength in that constituency.</p>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <h3>BJP Growth Pattern (1999-2023)</h3>
-                <div class="chart-wrapper">
-                    <canvas id="bjp-chart"></canvas>
-                </div>
-                <div class="export-buttons">
-                    <button class="btn btn-primary" onclick="exportChartToPNG('bjp-chart', 'BJP_Trends.png')">Export to PNG</button>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <h3>TRS/BRS Emergence (2004-2023)</h3>
-                <div class="chart-wrapper">
-                    <canvas id="trs-chart"></canvas>
-                </div>
-                <div class="export-buttons">
-                    <button class="btn btn-primary" onclick="exportChartToPNG('trs-chart', 'TRS_Trends.png')">Export to PNG</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Constituency Analysis -->
-        <div class="section" id="constituency-analysis">
-            <h2>Constituency-Level Analysis</h2>
-            
-            <div class="chart-container">
-                <h3>Comparative Party Performance by Constituency (2023)</h3>
-                <div class="chart-wrapper">
-                    <canvas id="constituency-comparison"></canvas>
-                </div>
-                <div class="export-buttons">
-                    <button class="btn btn-primary" onclick="exportChartToPNG('constituency-comparison', 'Constituency_Comparison_2023.png')">Export to PNG</button>
-                </div>
-            </div>
-            
-            <div class="chart-container">
-                <h3>AIMIM Dominance Across Constituencies</h3>
-                <div class="chart-wrapper">
-                    <canvas id="aimim-constituency"></canvas>
-                </div>
-                <div class="export-buttons">
-                    <button class="btn btn-primary" onclick="exportChartToPNG('aimim-constituency', 'AIMIM_by_Constituency.png')">Export to PNG</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Statistical Analysis -->
-        <div class="section" id="statistical-analysis">
-            <h2>Statistical Analysis</h2>
-            
-            <h3>Vote Share Volatility Analysis</h3>
-            <div class="chart-container">
-                <h3>Standard Deviation of Vote Shares (Measure of Electoral Volatility)</h3>
-                <div class="chart-wrapper">
-                    <canvas id="volatility-chart"></canvas>
-                </div>
-                <div class="export-buttons">
-                    <button class="btn btn-primary" onclick="exportChartToPNG('volatility-chart', 'Vote_Share_Volatility.png')">Export to PNG</button>
-                </div>
-            </div>
-            
-            <h3>Average Vote Share by Party (1999-2023)</h3>
-            <div id="avg-stats"></div>
-            
-            <h3>Growth Rate Analysis</h3>
-            <div class="chart-container">
-                <h3>Vote Share Change: 1999 vs 2023</h3>
-                <div class="chart-wrapper">
-                    <canvas id="growth-chart"></canvas>
-                </div>
-                <div class="export-buttons">
-                    <button class="btn btn-primary" onclick="exportChartToPNG('growth-chart', 'Growth_Analysis.png')">Export to PNG</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Interpretation and Insights -->
-        <div class="section" id="representation-and-poverty">
-            <h2>Representation and Poverty</h2>
-
-            <p>The five seats above have returned the same party in every cycle since 1999. Set that record beside how the same neighbourhoods actually live, and the result is not the one usually assumed.</p>
-
-            <p>Census 2011 enumerated <strong>108 GHMC wards</strong> in Hyderabad district. Comparing the <strong>52 wards</strong> in the six old-city mandals against the <strong>56 elsewhere</strong> splits cleanly in two &mdash; and the split is not where an under-provision argument would put it.</p>
-
-            <div class="chart-container">
-                <h3>Municipal service versus household economics, Census 2011</h3>
-                <div class="chart-wrapper">
-                    <canvas id="amenities-chart"></canvas>
-                </div>
-                <div class="export-buttons">
-                    <button class="btn btn-primary" onclick="exportChartToPNG('amenities-chart', 'old_city_vs_rest.png')">Export to PNG</button>
-                </div>
-            </div>
-
-            <div class="data-caveat">
-                <strong>What this shows.</strong> On the four municipal-service measures &mdash; the things a corporation or an MLA delivers &mdash; the old city is level with the rest of its district. Not one difference is statistically significant, and closed drainage marginally favours the old city. On the four household-economic measures the gap is large and unambiguous, every one at <em>p</em>&nbsp;&lt;&nbsp;0.0001.
-                <ul>
-                    <li>The district's <strong>worst-served ward</strong> on treated water (49.1%) and closed drainage (49.8%) is ward 1, Musheerabad &mdash; <strong>not</strong> in the old city.</li>
-                    <li>Ward 43 in Bahadurpura has the district's <strong>lowest LPG penetration at 22.0%</strong>, alongside 92.9% treated tap water and 95.6% closed drainage. Poor households on a well-served network.</li>
-                </ul>
-                <strong>What it does not show.</strong> This is a coincidence of two long-run facts, not a causal finding. There is no variation in representation to exploit &mdash; AIMIM won every one of these seats, every cycle &mdash; and urban infrastructure in India runs through the municipal corporation and state departments, not the MLA. Census 2011 is a single time point, and mandals only approximate constituency boundaries. See <a href="ANALYSIS.md">ANALYSIS.md</a>.
-            </div>
-        </div>
-
-        <div class="section" id="interpretation">
-            <h2>Political Economy Interpretation</h2>
-            
-            <h3>1. Electoral Stability and Party Systems</h3>
-            <p>The Hyderabad constituencies exhibit characteristics of a <span class="highlight">dominant party system</span> with AIMIM maintaining consistent electoral superiority across most constituencies. This pattern suggests:</p>
-            <ul style="margin-left: 30px; margin-top: 10px;">
-                <li><strong>Identity-based Voting:</strong> Strong community consolidation leading to stable vote banks</li>
-                <li><strong>Institutional Incumbency:</strong> AIMIM's organizational strength and local governance experience</li>
-                <li><strong>Fragmented Opposition:</strong> Multiple opposition parties splitting anti-incumbency votes</li>
-            </ul>
-            
-            <h3>2. Emerging Competition Dynamics</h3>
-            <p>The data reveals <span class="highlight">increasing competitive pressure</span> from BJP and TRS/BRS in recent elections:</p>
-            <ul style="margin-left: 30px; margin-top: 10px;">
-                <li><strong>BJP Growth:</strong> Systematic expansion from negligible presence (1999) to 15-27% vote share in multiple constituencies (2023)</li>
-                <li><strong>TRS/BRS Entry:</strong> Post-2014 emergence as a significant player, particularly in constituencies like Bahadurpura (15.6% in 2023) and Yakutpura (15.95% in 2018)</li>
-                <li><strong>TDP Decline:</strong> Systematic erosion from competitive positions (1999-2009) to marginal or no presence in recent elections</li>
-            </ul>
-            
-            <h3>3. INC Performance: Electoral Trajectory</h3>
-            <p>The Congress party's trajectory demonstrates <span class="highlight">distinct electoral patterns</span>:</p>
-            <ul style="margin-left: 30px; margin-top: 10px;">
-                <li><strong>Variable Performance:</strong> High volatility across constituencies with fluctuating vote shares</li>
-                <li><strong>Multi-Party Competition:</strong> Operating within a fragmented opposition landscape alongside BJP, TRS/BRS, and regional parties</li>
-                <li><strong>Contextual Gains:</strong> The 2004 Malakpet spike (52.12%) represents a structural anomaly due to AIMIM's absence rather than baseline performance</li>
-                <li><strong>Recent Performance:</strong> 2023 shows notable presence in key constituencies (Malakpet: 22.5%, Charminar: 11.1%, Bahadurpura: 10.1%)</li>
-            </ul>
-            
-            <h3>4. Constituency-Specific Patterns</h3>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3>Bahadurpura</h3>
-                    <p style="font-size: 0.9em;">AIMIM fortress with 62-78% vote share. Minimal opposition competitiveness.</p>
-                </div>
-                <div class="stat-card">
-                    <h3>Chandrayangutta</h3>
-                    <p style="font-size: 0.9em;">Consistent AIMIM dominance (59-68%). Growing BJP-TRS challenge in recent cycles.</p>
-                </div>
-                <div class="stat-card">
-                    <h3>Charminar</h3>
-                    <p style="font-size: 0.9em;">Most competitive constituency. AIMIM declining from 66% (1999) to 50% (2023). BJP emerging strong (26.8% in 2023).</p>
-                </div>
-                <div class="stat-card">
-                    <h3>Malakpet</h3>
-                    <p style="font-size: 0.9em;">Highest volatility. Multi-party competition with AIMIM, BJP, INC, and TDP all competitive at different points.</p>
-                </div>
-                <div class="stat-card">
-                    <h3>Yakutpura</h3>
-                    <p style="font-size: 0.9em;">AIMIM stronghold showing recent vulnerability. Significant vote share decline (57% in 2004 to 33% in 2023).</p>
-                </div>
-            </div>
-            
-            <h3>5. Implications for Electoral Competition</h3>
-            <div class="insight-box">
-                <h4>Key Takeaways for Political Analysis</h4>
-                <p><strong>Electoral Realignment:</strong> The period 2014-2023 marks a significant realignment with BJP emergence and TRS/BRS entry changing traditional two-party (AIMIM-TDP) dynamics.</p>
-                <p><strong>Opposition Fragmentation:</strong> Multiple opposition parties (BJP, INC, TRS, TDP) compete for anti-incumbency votes, benefiting AIMIM through vote splitting.</p>
-                <p><strong>Changing Demographics:</strong> Declining AIMIM margins in constituencies like Yakutpura and Charminar may indicate demographic shifts or changing voter preferences.</p>
-                <p><strong>National vs Regional Dynamics:</strong> BJP's growth reflects national political trends penetrating traditional regional strongholds.</p>
-            </div>
-        </div>
-
-        <div class="footer">
-            <p>Electoral Analysis Report | Hyderabad District 1999-2023</p>
-            <p>Generated using official election data | All vote shares in percentages</p>
-            <p style="margin-top: 10px; font-size: 0.9em;">For academic and research purposes</p>
-        </div>
+  <!-- ============ THE FINDING ============ -->
+  <section id="finding" class="rule-top">
+    <span id="executive-summary"></span><span id="representation-and-poverty"></span>
+    <div class="overline">The finding</div>
+    <h2>Level on the pipes. Far behind on everything the pipes were meant to bring.</h2>
+    <div class="measure">
+      <p>Census 2011 enumerated 108 GHMC wards in Hyderabad district. Comparing the <strong>52 wards</strong> in the six old-city mandals against the <strong>56 elsewhere</strong> splits the indicators cleanly in two &mdash; and not where an under-provision argument would put the split.</p>
     </div>
 
-    <script>
-        // Data
-        const electionData = [
-            {YEAR: 1999, ACNAME: "CHANDRAYANGUTTA", AIMIM_VoteShare: 34.87, TDP_VoteShare: 27.95, MBT_VoteShare: 28.64, INC_VoteShare: 4.86, BJP_VoteShare: null, TRS_VoteShare: null},
-            {YEAR: 1999, ACNAME: "CHARMINAR", AIMIM_VoteShare: 66.15, TDP_VoteShare: 17.39, MBT_VoteShare: 7.41, INC_VoteShare: 6.96, BJP_VoteShare: null, TRS_VoteShare: null},
-            {YEAR: 1999, ACNAME: "MALAKPET", AIMIM_VoteShare: null, TDP_VoteShare: null, MBT_VoteShare: null, INC_VoteShare: 31.16, BJP_VoteShare: 53.24, TRS_VoteShare: null},
-            {YEAR: 1999, ACNAME: "YAKUTPURA", AIMIM_VoteShare: 48.07, TDP_VoteShare: null, MBT_VoteShare: 25.35, INC_VoteShare: 3.14, BJP_VoteShare: 19.02, TRS_VoteShare: null},
-            {YEAR: 2004, ACNAME: "CHANDRAYANGUTTA", AIMIM_VoteShare: 42.45, TDP_VoteShare: 13.11, MBT_VoteShare: 33.78, INC_VoteShare: 8.33, BJP_VoteShare: null, TRS_VoteShare: 0.53},
-            {YEAR: 2004, ACNAME: "CHARMINAR", AIMIM_VoteShare: 73.52, TDP_VoteShare: 12.9, MBT_VoteShare: 2.61, INC_VoteShare: 9.06, BJP_VoteShare: null, TRS_VoteShare: null},
-            {YEAR: 2004, ACNAME: "MALAKPET", AIMIM_VoteShare: null, TDP_VoteShare: 43.35, MBT_VoteShare: null, INC_VoteShare: 52.12, BJP_VoteShare: null, TRS_VoteShare: null},
-            {YEAR: 2004, ACNAME: "YAKUTPURA", AIMIM_VoteShare: 57.54, TDP_VoteShare: null, MBT_VoteShare: 17.86, INC_VoteShare: 8.13, BJP_VoteShare: 15.51, TRS_VoteShare: 0.96},
-            {YEAR: 2009, ACNAME: "CHANDRAYANGUTTA", AIMIM_VoteShare: 46.59, TDP_VoteShare: null, MBT_VoteShare: 31.05, INC_VoteShare: 8.07, BJP_VoteShare: 5.49, TRS_VoteShare: 1.01},
-            {YEAR: 2009, ACNAME: "CHARMINAR", AIMIM_VoteShare: 48.61, TDP_VoteShare: 36.72, MBT_VoteShare: null, INC_VoteShare: 6.33, BJP_VoteShare: 4.72, TRS_VoteShare: null},
-            {YEAR: 2009, ACNAME: "MALAKPET", AIMIM_VoteShare: 30.44, TDP_VoteShare: 22.18, MBT_VoteShare: null, INC_VoteShare: 18.01, BJP_VoteShare: 16.78, TRS_VoteShare: null},
-            {YEAR: 2009, ACNAME: "YAKUTPURA", AIMIM_VoteShare: 53.82, TDP_VoteShare: null, MBT_VoteShare: 16.06, INC_VoteShare: 10.44, BJP_VoteShare: 6.04, TRS_VoteShare: null},
-            {YEAR: 2014, ACNAME: "BAHADURPURA", AIMIM_VoteShare: 78.46, TDP_VoteShare: 8.68, MBT_VoteShare: 1.86, INC_VoteShare: 3.57, BJP_VoteShare: null, TRS_VoteShare: 2.73},
-            {YEAR: 2014, ACNAME: "CHANDRAYANGUTTA", AIMIM_VoteShare: 59.19, TDP_VoteShare: 12.8, MBT_VoteShare: 15.55, INC_VoteShare: 3.77, BJP_VoteShare: null, TRS_VoteShare: 5.36},
-            {YEAR: 2014, ACNAME: "CHARMINAR", AIMIM_VoteShare: 57.11, TDP_VoteShare: 23.89, MBT_VoteShare: 2.04, INC_VoteShare: 5.08, BJP_VoteShare: null, TRS_VoteShare: 7.51},
-            {YEAR: 2014, ACNAME: "MALAKPET", AIMIM_VoteShare: 47.24, TDP_VoteShare: null, MBT_VoteShare: null, INC_VoteShare: 6.66, BJP_VoteShare: 28.61, TRS_VoteShare: 9.11},
-            {YEAR: 2014, ACNAME: "YAKUTPURA", AIMIM_VoteShare: 45.84, TDP_VoteShare: null, MBT_VoteShare: 19.75, INC_VoteShare: 4.53, BJP_VoteShare: 22.23, TRS_VoteShare: 5.39},
-            {YEAR: 2018, ACNAME: "BAHADURPURA", AIMIM_VoteShare: 74.26, TDP_VoteShare: null, MBT_VoteShare: null, INC_VoteShare: 5.49, BJP_VoteShare: 5.66, TRS_VoteShare: 11.08},
-            {YEAR: 2018, ACNAME: "CHANDRAYANGUTTA", AIMIM_VoteShare: 67.95, TDP_VoteShare: null, MBT_VoteShare: 0.36, INC_VoteShare: 8.06, BJP_VoteShare: 10.75, TRS_VoteShare: 10.14},
-            {YEAR: 2018, ACNAME: "CHARMINAR", AIMIM_VoteShare: 53.36, TDP_VoteShare: null, MBT_VoteShare: null, INC_VoteShare: 16.76, BJP_VoteShare: 21.04, TRS_VoteShare: 6.17},
-            {YEAR: 2018, ACNAME: "MALAKPET", AIMIM_VoteShare: 42.86, TDP_VoteShare: 23.95, MBT_VoteShare: null, INC_VoteShare: null, BJP_VoteShare: 16.8, TRS_VoteShare: 13.76},
-            {YEAR: 2018, ACNAME: "YAKUTPURA", AIMIM_VoteShare: 49.07, TDP_VoteShare: null, MBT_VoteShare: 14.96, INC_VoteShare: 4.55, BJP_VoteShare: 11.71, TRS_VoteShare: 15.95},
-            {YEAR: 2023, ACNAME: "BAHADURPURA", AIMIM_VoteShare: 62.02, TDP_VoteShare: null, MBT_VoteShare: 2, INC_VoteShare: 10.1, BJP_VoteShare: 8.1, TRS_VoteShare: 15.6},
-            {YEAR: 2023, ACNAME: "CHANDRAYANGUTTA", AIMIM_VoteShare: 64.9, TDP_VoteShare: null, MBT_VoteShare: null, INC_VoteShare: 9.5, BJP_VoteShare: 10.7, TRS_VoteShare: 11.8},
-            {YEAR: 2023, ACNAME: "CHARMINAR", AIMIM_VoteShare: 50.1, TDP_VoteShare: null, MBT_VoteShare: null, INC_VoteShare: 11.1, BJP_VoteShare: 26.8, TRS_VoteShare: 9.1},
-            {YEAR: 2023, ACNAME: "MALAKPET", AIMIM_VoteShare: 42.3, TDP_VoteShare: null, MBT_VoteShare: null, INC_VoteShare: 22.5, BJP_VoteShare: 18.01, TRS_VoteShare: 14.1},
-            {YEAR: 2023, ACNAME: "YAKUTPURA", AIMIM_VoteShare: 32.9, TDP_VoteShare: null, MBT_VoteShare: 32.2, INC_VoteShare: 5, BJP_VoteShare: 15.9, TRS_VoteShare: null}
-        ];
+    <figure class="fig">
+      <div class="fig-head">
+        <figcaption class="fig-title">Old city versus the rest of Hyderabad district, Census 2011</figcaption>
+        <div class="legend">
+          <span><i class="dot-old"></i> Old city (52 wards)</span>
+          <span><i class="dot-rest"></i> Rest of district (56 wards)</span>
+        </div>
+      </div>
 
-        // Set report date
-        document.getElementById('reportDate').textContent = new Date().toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
+      <div class="panel-label first">What the corporation built</div>
+      <div class="dumbbell">
+        <div class="db-row">
+          <div class="db-name">Tap water, treated</div>
+          <div class="db-track" style="--old:97.1;--rest:97.4;--lo:97.1;--hi:97.4">
+            <i class="db-link"></i><i class="db-pt rest"></i><i class="db-pt old"></i>
+            <span class="db-val" style="left:97.25%">97.1 / 97.4</span>
+          </div>
+          <div class="db-sig">n.s.</div>
+        </div>
+        <div class="db-row">
+          <div class="db-name">Water within premises</div>
+          <div class="db-track" style="--old:94.8;--rest:94.5;--lo:94.5;--hi:94.8">
+            <i class="db-link"></i><i class="db-pt rest"></i><i class="db-pt old"></i>
+            <span class="db-val" style="left:94.65%">94.8 / 94.5</span>
+          </div>
+          <div class="db-sig">n.s.</div>
+        </div>
+        <div class="db-row">
+          <div class="db-name">Closed drainage</div>
+          <div class="db-track" style="--old:98.4;--rest:97.5;--lo:97.5;--hi:98.4">
+            <i class="db-link"></i><i class="db-pt rest"></i><i class="db-pt old"></i>
+            <span class="db-val" style="left:97.95%">98.4 / 97.5</span>
+          </div>
+          <div class="db-sig">n.s.</div>
+        </div>
+        <div class="db-row">
+          <div class="db-name">Bathroom within premises</div>
+          <div class="db-track" style="--old:98.9;--rest:99.0;--lo:98.9;--hi:99.0">
+            <i class="db-link"></i><i class="db-pt rest"></i><i class="db-pt old"></i>
+            <span class="db-val" style="left:98.95%">98.9 / 99.0</span>
+          </div>
+          <div class="db-sig">n.s.</div>
+        </div>
+      </div>
+      <p class="panel-verdict">Level. Not one difference is significant, and drainage marginally favours the old city.</p>
+
+      <div class="panel-label">How households live</div>
+      <div class="dumbbell">
+        <div class="db-row">
+          <div class="db-name">LPG / PNG for cooking</div>
+          <div class="db-track" style="--old:55.9;--rest:77.1;--lo:55.9;--hi:77.1">
+            <i class="db-link"></i><i class="db-pt rest"></i><i class="db-pt old"></i>
+            <span class="db-val" style="left:55.9%">55.9</span>
+            <span class="db-val" style="left:77.1%">77.1</span>
+          </div>
+          <div class="db-sig hit">p&lt;0.0001</div>
+        </div>
+        <div class="db-row">
+          <div class="db-name">Avails banking</div>
+          <div class="db-track" style="--old:51.4;--rest:68.7;--lo:51.4;--hi:68.7">
+            <i class="db-link"></i><i class="db-pt rest"></i><i class="db-pt old"></i>
+            <span class="db-val" style="left:51.4%">51.4</span>
+            <span class="db-val" style="left:68.7%">68.7</span>
+          </div>
+          <div class="db-sig hit">p&lt;0.0001</div>
+        </div>
+        <div class="db-row">
+          <div class="db-name">Computer with internet</div>
+          <div class="db-track" style="--old:9.1;--rest:20.0;--lo:9.1;--hi:20.0">
+            <i class="db-link"></i><i class="db-pt rest"></i><i class="db-pt old"></i>
+            <span class="db-val" style="left:9.1%">9.1</span>
+            <span class="db-val" style="left:20%">20.0</span>
+          </div>
+          <div class="db-sig hit">p&lt;0.0001</div>
+        </div>
+        <div class="db-row">
+          <div class="db-name">Car / jeep / van</div>
+          <div class="db-track" style="--old:5.9;--rest:15.7;--lo:5.9;--hi:15.7">
+            <i class="db-link"></i><i class="db-pt rest"></i><i class="db-pt old"></i>
+            <span class="db-val" style="left:5.9%">5.9</span>
+            <span class="db-val" style="left:15.7%">15.7</span>
+          </div>
+          <div class="db-sig hit">p&lt;0.0001</div>
+        </div>
+      </div>
+      <p class="panel-verdict">Not level. Half the cooking gas, half the internet, a third of the cars.</p>
+
+      <div class="db-axis">
+        <div></div>
+        <div class="db-axis-in"><span>0</span><span>25</span><span>50</span><span>75</span><span>100%</span></div>
+        <div></div>
+      </div>
+      <p class="chart-note">Ward medians, percentage of households; both panels share one 0&ndash;100% scale. Significance is a two-sided Mann&ndash;Whitney&nbsp;U on the ward distributions &mdash; a rank test, chosen because ward percentages are bounded and skewed rather than normal. <strong>n.s.</strong> = not significant; those four <em>p</em>-values run from 0.07 to 0.90.</p>
+    </figure>
+
+    <div class="measure">
+      <p>The single worst-served ward in the district on treated water (49.1%) and on closed drainage (49.8%) is ward 1, Musheerabad &mdash; <em>not</em> in the old city. And the sharpest illustration of the whole pattern sits in Bahadurpura.</p>
+    </div>
+
+    <figure class="fig">
+      <div class="fig-head"><figcaption class="fig-title">Ward 43, Bahadurpura</figcaption></div>
+      <div class="triptych">
+        <div>
+          <div class="tri-n lead">22.0%</div>
+          <div class="tri-l">LPG for cooking &mdash; the lowest of all 108 wards in the district</div>
+        </div>
+        <div>
+          <div class="tri-n">92.9%</div>
+          <div class="tri-l">Treated tap water</div>
+        </div>
+        <div>
+          <div class="tri-n">95.6%</div>
+          <div class="tri-l">Waste water to closed drainage</div>
+        </div>
+      </div>
+      <p class="panel-verdict">Poor households on a well-served network.</p>
+    </figure>
+  </section>
+
+  <!-- ============ DOES IT STILL HOLD ============ -->
+  <section id="still-holds" class="rule-top">
+    <div class="overline">Projecting forward</div>
+    <h2>Does a 2011 census still describe 2026?</h2>
+    <div class="measure">
+      <p>Partly &mdash; and which part matters. The two families of indicators age very differently, and the difference is not a matter of judgement but of arithmetic.</p>
+
+      <h3>The service finding is ceiling-bounded, so it holds</h3>
+      <p>In 2011 both groups already sat between <strong>94% and 99%</strong> on every municipal measure. You cannot open a meaningful gap from 97 versus 97 when the ceiling is 100, and piped coverage does not run backwards. NFHS-5 (2019&ndash;21) puts Hyderabad district at <strong>99.6%</strong> for an improved drinking-water source and <strong>99.9%</strong> for electricity, consistent with saturation in both halves. Nothing that has happened since 2011 could have turned service parity into a service deficit.</p>
+
+      <h3>One economic gap has demonstrably closed</h3>
+      <p>The LPG gap has not survived. NFHS-5 records <strong>99.5%</strong> of Hyderabad district households using clean cooking fuel in 2019&ndash;21. Since the old city is roughly half the district, it cannot sit below about 99% without the other half exceeding 100%. The twenty-one point gap of 2011 is arithmetically gone &mdash; and Ward 43&rsquo;s 22.0% with it.</p>
+
+      <h3>A second has probably closed</h3>
+      <p>Household banking is very likely in the same position. Jan Dhan accounts opened from 2014, and by 2019&ndash;21 <strong>84%</strong> of women in Telangana had a bank account they themselves used. That is a different unit and a different definition from the Census household measure, so it does not settle the question at ward level &mdash; but a seventeen-point household gap surviving that expansion is hard to credit.</p>
+
+      <h3>Two have no ceiling and no scheme behind them</h3>
+      <p>Computer-with-internet and vehicle ownership stood at <strong>9.1%</strong> and <strong>5.9%</strong> in the old city in 2011, with no ceiling anywhere near and no national programme driving them towards universality. These are the measures where the economic distance plausibly persists, and they are the ones nobody has measured at ward level since.</p>
+
+      <h3>Which sharpens the question rather than dissolving it</h3>
+      <p>Note what closed the two gaps that closed. Ujjwala from 2016 and Jan Dhan from 2014 are centrally sponsored schemes, delivered nationally and uniformly. They did not close the old city&rsquo;s gap because the old city was represented well or badly; they closed it everywhere at once. So convergence on cooking fuel and bank accounts is not evidence of local development, any more than the 2011 shortfall was evidence of local neglect. Both were set elsewhere. The measures still plausibly diverging are precisely the ones no scheme delivers &mdash; durable assets and connectivity, the things that follow income rather than eligibility.</p>
+    </div>
+
+    <div class="caveat measure-wide">
+      <h3>How firm is this section</h3>
+      <p>The ceiling argument on municipal services needs no new data and is as strong as the 2011 figures themselves. The LPG conclusion rests on a single district-level figure plus a bounding argument, and carries three caveats: NFHS &ldquo;clean fuel&rdquo; is a broader category than the Census&rsquo;s &ldquo;LPG/PNG&rdquo;; the bound assumes ward counts are a reasonable proxy for population shares; and NFHS is a sample survey with sampling error, where the Census is a complete enumeration.</p>
+      <p>The NFHS-5 district figures were read from a community mirror of the IIPS district factsheets. The primary source, <strong>rchiips.org</strong>, was unreachable at the time of writing, so these numbers are <strong>not yet confirmed against the official factsheet PDF</strong> and should be treated as provisional. The banking statement is deliberately weaker than the LPG one, and is offered as an inference rather than a measurement.</p>
+    </div>
+  </section>
+
+  <!-- ============ THE RECORD ============ -->
+  <section id="record" class="rule-top">
+    <span id="constituency-analysis"></span>
+    <div class="overline">The electoral record</div>
+    <h2>Twenty-four years, twenty-seven contests, two of them led by anyone else.</h2>
+    <div class="measure">
+      <p>Each cell is the leading party&rsquo;s vote share in that seat and cycle. The monotony is the point: this is what a generation of unbroken representation looks like when you put it in one place.</p>
+    </div>
+
+    <div class="record">
+      <div class="record-grid">
+        <div></div>
+        <div class="rc-h">1999</div><div class="rc-h">2004</div><div class="rc-h">2009</div>
+        <div class="rc-h">2014</div><div class="rc-h">2018</div><div class="rc-h">2023</div>
+
+        <div class="rc-seat">Bahadurpura</div>
+        <div class="rc rc-none" title="Seat did not exist before the 2008 delimitation">&middot;</div>
+        <div class="rc rc-none" title="Seat did not exist before the 2008 delimitation">&middot;</div>
+        <div class="rc rc-gap" title="Contested and won by AIMIM in 2009; the row is missing from this dataset">row<br>missing</div>
+        <div class="rc rc-aimim">78.5</div><div class="rc rc-aimim">74.3</div><div class="rc rc-aimim">62.0</div>
+
+        <div class="rc-seat">Chandrayangutta</div>
+        <div class="rc rc-aimim">34.9</div><div class="rc rc-aimim">42.5</div><div class="rc rc-aimim">46.6</div>
+        <div class="rc rc-aimim">59.2</div><div class="rc rc-aimim">68.0</div><div class="rc rc-aimim">64.9</div>
+
+        <div class="rc-seat">Charminar</div>
+        <div class="rc rc-aimim">66.2</div><div class="rc rc-aimim">73.5</div><div class="rc rc-aimim">48.6</div>
+        <div class="rc rc-aimim">57.1</div><div class="rc rc-aimim">53.4</div><div class="rc rc-aimim">50.1</div>
+
+        <div class="rc-seat">Malakpet</div>
+        <div class="rc rc-other" title="BJP 53.24% — AIMIM did not contest">BJP<br>53.2</div>
+        <div class="rc rc-other" title="INC 52.12% — AIMIM did not contest">INC<br>52.1</div>
+        <div class="rc rc-aimim">30.4</div>
+        <div class="rc rc-aimim">47.2</div><div class="rc rc-aimim">42.9</div><div class="rc rc-aimim">42.3</div>
+
+        <div class="rc-seat">Yakutpura</div>
+        <div class="rc rc-aimim">48.1</div><div class="rc rc-aimim">57.5</div><div class="rc rc-aimim">53.8</div>
+        <div class="rc rc-aimim">45.8</div><div class="rc rc-aimim">49.1</div><div class="rc rc-aimim">32.9</div>
+      </div>
+    </div>
+    <div class="record-key">
+      <span><i class="key-sw" style="background:var(--accent-soft)"></i> AIMIM led</span>
+      <span><i class="key-sw" style="border:1px dashed var(--rule-strong);background:var(--surface)"></i> Another party led</span>
+      <span><i class="key-sw" style="border:1px dashed var(--accent);background:repeating-linear-gradient(45deg,transparent,transparent 3px,var(--hatch) 3px,var(--hatch) 4px)"></i> Missing row, not a loss</span>
+      <span><i class="key-sw" style="border:1px solid var(--rule)"></i> Seat did not exist</span>
+    </div>
+
+    <div class="measure">
+      <p><strong>Malakpet is the exception, and it matters.</strong> AIMIM did not contest it in 1999 or 2004; BJP took it with 53.2% and Congress with 52.1%, both outright majorities. Those are the only two contests in this series that AIMIM did not lead. Every seat it has actually contested, it has led &mdash; and it has held all five continuously since 2009.</p>
+      <p><strong>The dominance is real but narrowing.</strong> Since 2014 AIMIM&rsquo;s share has fallen in four of the five seats. The clearest movement is in <strong>Yakutpura</strong>, from 45.8% to <strong>32.9%</strong> &mdash; its weakest recorded position, on the district&rsquo;s lowest turnout that year (39.6%). Chandrayangutta is the only seat where the party gained, up 5.7 points.</p>
+      <p><strong>Yakutpura 2023 was effectively a tie.</strong> AIMIM 32.9%, MBT 32.2%. Reading AIMIM&rsquo;s fall there without MBT&rsquo;s revival misses the mechanism entirely.</p>
+    </div>
+  </section>
+
+  <!-- ============ EVIDENCE ============ -->
+  <section id="evidence" class="rule-top">
+    <span id="party-trends"></span><span id="statistical-analysis"></span>
+    <div class="overline">The evidence</div>
+    <h2>Three views of a narrowing hold.</h2>
+
+    <div class="chart-block">
+      <h3>AIMIM&rsquo;s share has fallen in four of five seats since 2014</h3>
+      <div class="chart-wrapper"><canvas id="aimim-chart"></canvas></div>
+      <p class="chart-note">Bahadurpura begins in 2014: the seat was created in the 2008 delimitation, and its 2009 row is missing from this dataset. Malakpet begins in 2009, the first cycle AIMIM contested it. A gap in a line means the party did not contest, not that it scored zero.</p>
+    </div>
+
+    <div class="chart-block">
+      <h3>BJP&rsquo;s rise is in the two seats it used to skip entirely</h3>
+      <div class="chart-wrapper"><canvas id="bjp-chart"></canvas></div>
+      <p class="chart-note">BJP&rsquo;s highest share anywhere in this series is its <strong>53.2% in Malakpet in 1999</strong>, so the familiar &ldquo;grew from nothing&rdquo; story is wrong as stated. What is true is narrower and more interesting: BJP was absent from Chandrayangutta and Charminar until 2009, and it is there that it has since climbed, reaching <strong>26.8% in Charminar</strong> by 2023 as AIMIM fell from 73.5% (2004) to 50.1%.</p>
+    </div>
+
+    <div class="chart-block">
+      <h3>In 2023 the challenge is a different party in almost every seat</h3>
+      <div class="chart-wrapper"><canvas id="c2023-chart"></canvas></div>
+      <p class="chart-note">BJP in Charminar, Congress in Malakpet, MBT in Yakutpura, BRS in Bahadurpura. There is no single opposition to AIMIM in the old city, which is a large part of why it keeps winning: the challenging vote splits several ways in every seat.</p>
+    </div>
+  </section>
+
+  <!-- ============ LIMITS ============ -->
+  <section id="limits" class="rule-top">
+    <span id="interpretation"></span>
+    <div class="overline">Interpretation</div>
+    <h2>What this supports, and what it does not.</h2>
+
+    <div class="ledger">
+      <div>
+        <h3 class="yes">Supported</h3>
+        <div class="item"><p>The old city has been led by one party in every contest that party entered, across six cycles, and has held all five seats continuously since 2009.</p></div>
+        <div class="item"><p>In 2011 those same neighbourhoods were statistically indistinguishable from the rest of their district on every municipal service measure available, and far behind on every household economic measure available.</p></div>
+        <div class="item"><p>The service-parity finding is robust to the age of the census, because both groups were already near the ceiling when it was taken.</p></div>
+      </div>
+      <div>
+        <h3>Not supported</h3>
+        <div class="item">
+          <b>That AIMIM caused the poverty.</b>
+          <p>This is a coincidence of two long-run facts. Causal inference needs variation in representation, and there is almost none &mdash; two contests, in one seat, both before the delimitation, is not an identification strategy.</p>
+        </div>
+        <div class="item">
+          <b>That the old city was denied infrastructure.</b>
+          <p>The Census says the opposite. Anyone arguing under-provision of municipal services will be refuted by the data on this page.</p>
+        </div>
+        <div class="item">
+          <b>That an MLA could have changed either.</b>
+          <p>Urban infrastructure runs through the municipal corporation, state departments and centrally sponsored schemes. MLA-LADS is around &#8377;3 crore a year, small against municipal capital budgets. Across this whole period GHMC and the state were held by TDP, Congress, then TRS/BRS. That cuts both ways: it weakens a blame argument and a credit argument equally.</p>
+        </div>
+        <div class="item">
+          <b>That the direction runs one way.</b>
+          <p>Poor, dense, historically under-invested neighbourhoods produce distinctive political attachments. Representation may be as much consequence as cause, and nothing here separates the two.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="measure">
+      <h3>Why the reframing is the stronger argument</h3>
+      <p>&ldquo;The old city has no development&rdquo; is refutable in one afternoon with a single Census table, and it aims at the one thing an MLA has least control over. <em>&ldquo;A generation of unbroken representation has coincided with a generation of unchanged relative poverty, in a place where the pipes and drains were built&rdquo;</em> is harder to dismiss and more interesting. It moves the question from civic works &mdash; where the old city is doing fine &mdash; to economic mobility, where the gap was large, consistent across four indicators, and statistically unambiguous.</p>
+      <p>It also raises the question worth actually asking. If service delivery is level and outcomes are not, the binding constraint is somewhere other than pipes: land title, credit access, formal employment, schooling. None of those is settled by a vote-share chart.</p>
+    </div>
+
+    <div class="caveat measure-wide">
+      <h3>Limits of the comparison</h3>
+      <ul>
+        <li><strong>Mandals are not constituencies.</strong> The six old-city mandals approximate the five assembly seats, but the boundaries are not identical. This compares parts of a city, not electorates.</li>
+        <li><strong>These are levels, not change.</strong> Levels largely record history; a poor area in 2011 may have been poor in 1951. Detecting whether representation changed a trajectory needs at least two ward-level time points, which do not exist &mdash; census ward boundaries are renumbered between rounds and do not correspond.</li>
+        <li><strong>No controls.</strong> Old-city wards differ in density, housing-stock age, unauthorised construction and land-title status, all of which predict economic outcomes independently of who represents them.</li>
+        <li><strong>One census.</strong> &ldquo;Sustained&rdquo; on the poverty side rests on a single time point. The forward projection above bounds part of that problem; it does not remove it.</li>
+      </ul>
+    </div>
+
+    <div class="measure">
+      <h3>How the stronger claim could actually be established</h3>
+      <p>The claim people usually want from this material is that AIMIM&rsquo;s wins have done little for these constituencies. Nothing here establishes that, and the obstacle is not data volume &mdash; it is that there is no variation in representation to compare against. Worth stating plainly: the claim is weakest exactly where the party had most power. Municipal service delivery is the corporation&rsquo;s domain, AIMIM has held a large bloc of GHMC corporator seats across these wards for decades, and on those measures the old city is at parity or ahead. Household income, where the shortfall is real, is what an MLA influences least.</p>
+      <p>Three routes would do better. A <strong>close-election regression discontinuity</strong> pooling every AIMIM contest nationally &mdash; Telangana, Maharashtra, the Bihar Seemanchal seats &mdash; comparing bare wins against bare losses; the catch is that ward-level data for large cities is excluded, so it would identify an effect everywhere except Hyderabad. The <strong>2008 delimitation</strong> moved wards between constituencies and offers within-ward variation, if the 2001 and 2011 ward identifiers can be reconciled geographically. And before either, a much cheaper test of the folk claim: <strong>MPLADS and MLA-LADS utilisation</strong>, legislative attendance, and GHMC ward-level works budgets all measure whether officeholders used the instruments they actually had, and all are public.</p>
+      <p>Full treatment, including why night lights are the wrong outcome inside a saturated metro, in <a href="ANALYSIS.md">ANALYSIS.md</a>.</p>
+    </div>
+  </section>
+
+  <!-- ============ DATA ============ -->
+  <section id="data" class="rule-top">
+    <span id="data-section"></span>
+    <div class="overline">Data and method</div>
+    <h2>The full series.</h2>
+
+    <div class="caveat measure-wide">
+      <h3>Before reading the numbers</h3>
+      <ul>
+        <li><strong>Bahadurpura has no 1999&ndash;2009 rows.</strong> The seat was created in the 2008 delimitation, but it <em>was</em> contested in 2009 and won by AIMIM. That row is missing here, so any 2009 district total understates AIMIM.</li>
+        <li><strong>Rows do not sum to 100%.</strong> There is no column for independents, smaller parties or NOTA. The residual runs from 0 to 15.6 points with a median of 3.5; twenty-one of the twenty-seven rows are under 6.</li>
+        <li><strong>A blank is &ldquo;did not contest&rdquo;, not zero.</strong> Treating blanks as zeros will invent declines that did not happen.</li>
+        <li><strong>Figures are good to about &plusmn;1 point.</strong> Spot-checks differ slightly from other sources, most likely a valid-votes versus votes-polled denominator difference.</li>
+        <li><strong>The 2008 delimitation redrew these boundaries</strong>, so pre- and post-2009 rows are not strictly the same geographies.</li>
+        <li><strong>&ldquo;Led&rdquo; is not quite &ldquo;won&rdquo;.</strong> This dataset tracks six parties. Leading among those six is decisive wherever the leader clears 50%, which covers both non-AIMIM contests, but for a handful of rows an untracked independent cannot be formally ruled out.</li>
+      </ul>
+    </div>
+
+    <div class="table-scroll">
+      <table id="dataTable">
+        <caption>Party vote share by constituency and cycle, percent. An em dash means the party did not contest that seat that year. Bold marks the leading party among the six tracked.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Year</th><th scope="col">Constituency</th>
+            <th scope="col">AIMIM</th><th scope="col">TDP</th><th scope="col">MBT</th>
+            <th scope="col">INC</th><th scope="col">BJP</th><th scope="col">TRS/BRS</th>
+          </tr>
+        </thead>
+        <tbody id="dataTableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="actions">
+      <button type="button" onclick="exportAllDataToCSV()">Download the electoral data (CSV)</button>
+      <a href="Data/GHMC-WARD-AMENITIES-2011.csv">Download the Census ward data (CSV)</a>
+      <button type="button" onclick="window.print()">Print or save as PDF</button>
+      <a href="ANALYSIS.md">Full written analysis</a>
+      <a href="CITATION.cff">Cite this</a>
+    </div>
+
+    <h3>Sources</h3>
+    <p class="chart-note">
+      <strong>Electoral results:</strong> Election Commission of India, constituency-level results, cross-checked against Wikipedia constituency pages and IndiaVotes; see <a href="Data/README.md">Data/README.md</a> for the cross-check table and the denominator note.<br>
+      <strong>Ward amenities:</strong> Census of India 2011, Houselisting &amp; Housing Census, table HH-14, district 536 (Hyderabad), retrieved from the release republished by <a href="https://data.opencity.in/dataset/hyderabad-census-2011-data">OpenCity</a>.<br>
+      <strong>Forward indicators:</strong> NFHS-5 (2019&ndash;21), Hyderabad district factsheet and the Telangana state report &mdash; provisional, see the caveat in that section.
+    </p>
+  </section>
+
+  <footer class="footer">
+    <p><strong>Hyderabad Electoral Analysis, 1999&ndash;2023.</strong> An independent analysis using official Election Commission results and Census of India data. Interpretations are the author&rsquo;s. Where a claim rests on a single secondary source rather than a primary record, the text says so.</p>
+    <p>MIT licensed. <a href="https://github.com/Varnasr/Hyderabad-Electoral-Analysis">Source and data on GitHub</a> &middot; corrections to the missing 2009 Bahadurpura row are especially welcome.</p>
+  </footer>
+
+</div>
+</main>
+
+<script>
+"use strict";
+
+/* ---------------- data ---------------- */
+const electionData = [
+    {YEAR: 1999, ACNAME: "CHANDRAYANGUTTA", AIMIM_VoteShare: 34.87, TDP_VoteShare: 27.95, MBT_VoteShare: 28.64, INC_VoteShare: 4.86, BJP_VoteShare: null, TRS_VoteShare: null},
+    {YEAR: 1999, ACNAME: "CHARMINAR", AIMIM_VoteShare: 66.15, TDP_VoteShare: 17.39, MBT_VoteShare: 7.41, INC_VoteShare: 6.96, BJP_VoteShare: null, TRS_VoteShare: null},
+    {YEAR: 1999, ACNAME: "MALAKPET", AIMIM_VoteShare: null, TDP_VoteShare: null, MBT_VoteShare: null, INC_VoteShare: 31.16, BJP_VoteShare: 53.24, TRS_VoteShare: null},
+    {YEAR: 1999, ACNAME: "YAKUTPURA", AIMIM_VoteShare: 48.07, TDP_VoteShare: null, MBT_VoteShare: 25.35, INC_VoteShare: 3.14, BJP_VoteShare: 19.02, TRS_VoteShare: null},
+    {YEAR: 2004, ACNAME: "CHANDRAYANGUTTA", AIMIM_VoteShare: 42.45, TDP_VoteShare: 13.11, MBT_VoteShare: 33.78, INC_VoteShare: 8.33, BJP_VoteShare: null, TRS_VoteShare: 0.53},
+    {YEAR: 2004, ACNAME: "CHARMINAR", AIMIM_VoteShare: 73.52, TDP_VoteShare: 12.9, MBT_VoteShare: 2.61, INC_VoteShare: 9.06, BJP_VoteShare: null, TRS_VoteShare: null},
+    {YEAR: 2004, ACNAME: "MALAKPET", AIMIM_VoteShare: null, TDP_VoteShare: 43.35, MBT_VoteShare: null, INC_VoteShare: 52.12, BJP_VoteShare: null, TRS_VoteShare: null},
+    {YEAR: 2004, ACNAME: "YAKUTPURA", AIMIM_VoteShare: 57.54, TDP_VoteShare: null, MBT_VoteShare: 17.86, INC_VoteShare: 8.13, BJP_VoteShare: 15.51, TRS_VoteShare: 0.96},
+    {YEAR: 2009, ACNAME: "CHANDRAYANGUTTA", AIMIM_VoteShare: 46.59, TDP_VoteShare: null, MBT_VoteShare: 31.05, INC_VoteShare: 8.07, BJP_VoteShare: 5.49, TRS_VoteShare: 1.01},
+    {YEAR: 2009, ACNAME: "CHARMINAR", AIMIM_VoteShare: 48.61, TDP_VoteShare: 36.72, MBT_VoteShare: null, INC_VoteShare: 6.33, BJP_VoteShare: 4.72, TRS_VoteShare: null},
+    {YEAR: 2009, ACNAME: "MALAKPET", AIMIM_VoteShare: 30.44, TDP_VoteShare: 22.18, MBT_VoteShare: null, INC_VoteShare: 18.01, BJP_VoteShare: 16.78, TRS_VoteShare: null},
+    {YEAR: 2009, ACNAME: "YAKUTPURA", AIMIM_VoteShare: 53.82, TDP_VoteShare: null, MBT_VoteShare: 16.06, INC_VoteShare: 10.44, BJP_VoteShare: 6.04, TRS_VoteShare: null},
+    {YEAR: 2014, ACNAME: "BAHADURPURA", AIMIM_VoteShare: 78.46, TDP_VoteShare: 8.68, MBT_VoteShare: 1.86, INC_VoteShare: 3.57, BJP_VoteShare: null, TRS_VoteShare: 2.73},
+    {YEAR: 2014, ACNAME: "CHANDRAYANGUTTA", AIMIM_VoteShare: 59.19, TDP_VoteShare: 12.8, MBT_VoteShare: 15.55, INC_VoteShare: 3.77, BJP_VoteShare: null, TRS_VoteShare: 5.36},
+    {YEAR: 2014, ACNAME: "CHARMINAR", AIMIM_VoteShare: 57.11, TDP_VoteShare: 23.89, MBT_VoteShare: 2.04, INC_VoteShare: 5.08, BJP_VoteShare: null, TRS_VoteShare: 7.51},
+    {YEAR: 2014, ACNAME: "MALAKPET", AIMIM_VoteShare: 47.24, TDP_VoteShare: null, MBT_VoteShare: null, INC_VoteShare: 6.66, BJP_VoteShare: 28.61, TRS_VoteShare: 9.11},
+    {YEAR: 2014, ACNAME: "YAKUTPURA", AIMIM_VoteShare: 45.84, TDP_VoteShare: null, MBT_VoteShare: 19.75, INC_VoteShare: 4.53, BJP_VoteShare: 22.23, TRS_VoteShare: 5.39},
+    {YEAR: 2018, ACNAME: "BAHADURPURA", AIMIM_VoteShare: 74.26, TDP_VoteShare: null, MBT_VoteShare: null, INC_VoteShare: 5.49, BJP_VoteShare: 5.66, TRS_VoteShare: 11.08},
+    {YEAR: 2018, ACNAME: "CHANDRAYANGUTTA", AIMIM_VoteShare: 67.95, TDP_VoteShare: null, MBT_VoteShare: 0.36, INC_VoteShare: 8.06, BJP_VoteShare: 10.75, TRS_VoteShare: 10.14},
+    {YEAR: 2018, ACNAME: "CHARMINAR", AIMIM_VoteShare: 53.36, TDP_VoteShare: null, MBT_VoteShare: null, INC_VoteShare: 16.76, BJP_VoteShare: 21.04, TRS_VoteShare: 6.17},
+    {YEAR: 2018, ACNAME: "MALAKPET", AIMIM_VoteShare: 42.86, TDP_VoteShare: 23.95, MBT_VoteShare: null, INC_VoteShare: null, BJP_VoteShare: 16.8, TRS_VoteShare: 13.76},
+    {YEAR: 2018, ACNAME: "YAKUTPURA", AIMIM_VoteShare: 49.07, TDP_VoteShare: null, MBT_VoteShare: 14.96, INC_VoteShare: 4.55, BJP_VoteShare: 11.71, TRS_VoteShare: 15.95},
+    {YEAR: 2023, ACNAME: "BAHADURPURA", AIMIM_VoteShare: 62.02, TDP_VoteShare: null, MBT_VoteShare: 2, INC_VoteShare: 10.1, BJP_VoteShare: 8.1, TRS_VoteShare: 15.6},
+    {YEAR: 2023, ACNAME: "CHANDRAYANGUTTA", AIMIM_VoteShare: 64.9, TDP_VoteShare: null, MBT_VoteShare: null, INC_VoteShare: 9.5, BJP_VoteShare: 10.7, TRS_VoteShare: 11.8},
+    {YEAR: 2023, ACNAME: "CHARMINAR", AIMIM_VoteShare: 50.1, TDP_VoteShare: null, MBT_VoteShare: null, INC_VoteShare: 11.1, BJP_VoteShare: 26.8, TRS_VoteShare: 9.1},
+    {YEAR: 2023, ACNAME: "MALAKPET", AIMIM_VoteShare: 42.3, TDP_VoteShare: null, MBT_VoteShare: null, INC_VoteShare: 22.5, BJP_VoteShare: 18.01, TRS_VoteShare: 14.1},
+    {YEAR: 2023, ACNAME: "YAKUTPURA", AIMIM_VoteShare: 32.9, TDP_VoteShare: null, MBT_VoteShare: 32.2, INC_VoteShare: 5, BJP_VoteShare: 15.9, TRS_VoteShare: null}
+];
+
+const YEARS   = [1999, 2004, 2009, 2014, 2018, 2023];
+const PARTIES = ["AIMIM", "TDP", "MBT", "INC", "BJP", "TRS"];
+const SEATS   = ["BAHADURPURA", "CHANDRAYANGUTTA", "CHARMINAR", "MALAKPET", "YAKUTPURA"];
+const TITLE   = { BAHADURPURA: "Bahadurpura", CHANDRAYANGUTTA: "Chandrayangutta",
+                  CHARMINAR: "Charminar", MALAKPET: "Malakpet", YAKUTPURA: "Yakutpura" };
+
+/* Colour follows the constituency, never its position in an array. */
+const SERIES_VAR = {
+    BAHADURPURA: "--series-1", CHANDRAYANGUTTA: "--series-2", CHARMINAR: "--series-3",
+    MALAKPET: "--series-4", YAKUTPURA: "--series-5"
+};
+function cssVar(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+function seriesColor(seat) {
+    return cssVar(SERIES_VAR[String(seat).toUpperCase()] || "--muted");
+}
+
+/* ---------------- theme ---------------- */
+const root = document.documentElement;
+function currentTheme() {
+    return root.getAttribute("data-theme") ||
+        (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+}
+try {
+    const saved = localStorage.getItem("hyd-theme");
+    if (saved === "dark" || saved === "light") root.setAttribute("data-theme", saved);
+} catch (e) { /* private mode — fall through to the system preference */ }
+
+document.getElementById("themeToggle").addEventListener("click", function () {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("hyd-theme", next); } catch (e) {}
+    repaintCharts();
+});
+
+/* ---------------- table ---------------- */
+(function buildTable() {
+    const tbody = document.getElementById("dataTableBody");
+    const frag = document.createDocumentFragment();
+
+    electionData.forEach(function (row) {
+        // Leading party among the six tracked. Flagged here and caveated
+        // above, because "led among six" is not formally "won".
+        let lead = null, best = -1;
+        PARTIES.forEach(function (p) {
+            const v = row[p + "_VoteShare"];
+            if (v !== null && v > best) { best = v; lead = p; }
         });
 
-        // Populate data table
-        const tbody = document.getElementById('dataTableBody');
-        electionData.forEach(row => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${row.YEAR}</td>
-                <td>${row.ACNAME}</td>
-                <td>${row.AIMIM_VoteShare !== null ? row.AIMIM_VoteShare.toFixed(2) : '-'}</td>
-                <td>${row.TDP_VoteShare !== null ? row.TDP_VoteShare.toFixed(2) : '-'}</td>
-                <td>${row.MBT_VoteShare !== null ? row.MBT_VoteShare.toFixed(2) : '-'}</td>
-                <td>${row.INC_VoteShare !== null ? row.INC_VoteShare.toFixed(2) : '-'}</td>
-                <td>${row.BJP_VoteShare !== null ? row.BJP_VoteShare.toFixed(2) : '-'}</td>
-                <td>${row.TRS_VoteShare !== null ? row.TRS_VoteShare.toFixed(2) : '-'}</td>
-            `;
-            tbody.appendChild(tr);
+        const tr = document.createElement("tr");
+        tr.innerHTML =
+            "<td>" + row.YEAR + "</td>" +
+            "<td>" + (TITLE[row.ACNAME] || row.ACNAME) + "</td>" +
+            PARTIES.map(function (p) {
+                const v = row[p + "_VoteShare"];
+                if (v === null) { return '<td class="nil">&mdash;</td>'; }
+                return '<td class="' + (p === lead ? "lead" : "") + '">' + v.toFixed(2) + "</td>";
+            }).join("");
+        frag.appendChild(tr);
+    });
+    tbody.appendChild(frag);
+})();
+
+/* ---------------- scroll spy ---------------- */
+(function spy() {
+    const links = Array.prototype.slice.call(
+        document.querySelectorAll('.masthead nav a[href^="#"]'));
+    const targets = links
+        .map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); })
+        .filter(Boolean);
+    if (!targets.length || !("IntersectionObserver" in window)) { return; }
+
+    const io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+            if (!e.isIntersecting) { return; }
+            links.forEach(function (a) {
+                a.setAttribute("aria-current",
+                    a.getAttribute("href") === "#" + e.target.id ? "true" : "false");
+            });
         });
+    }, { rootMargin: "-52px 0px -70% 0px", threshold: 0 });
+    targets.forEach(function (t) { io.observe(t); });
+})();
 
+/* ---------------- CSV export ---------------- */
+function exportAllDataToCSV() {
+    const head = "YEAR,ACNAME," + PARTIES.map(function (p) { return p + "_VoteShare"; }).join(",");
+    const body = electionData.map(function (r) {
+        return [r.YEAR, r.ACNAME].concat(PARTIES.map(function (p) {
+            const v = r[p + "_VoteShare"];
+            return v === null ? "" : v;      // a blank stays blank: a gap is not a zero
+        })).join(",");
+    });
+    const blob = new Blob([head + "\n" + body.join("\n") + "\n"], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "hyderabad-electoral-data.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+}
 
-        if (typeof Chart !== 'undefined') {
-            Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif";
-            Chart.defaults.color = getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim();
-            Chart.defaults.borderColor = getComputedStyle(document.documentElement).getPropertyValue('--grid').trim();
-            Chart.defaults.plugins.legend.labels.usePointStyle = true;
-            Chart.defaults.plugins.legend.labels.boxWidth = 8;
-            Chart.defaults.plugins.legend.labels.padding = 16;
-        }
+/* ---------------- charts ---------------- */
+/* Chart.js is the page's only runtime dependency, and only the three panels
+   below use it. The two figures that carry the argument — the dumbbell and
+   the record grid — are plain HTML and CSS, so a blocked CDN costs the
+   supporting evidence and never the finding. */
+const charts = [];
 
-        // Colour follows the constituency, never its position in an array.
-        // Previously no dataset set a colour at all, so Chart.js assigned them by
-        // index -- meaning a chart plotting a different subset would repaint the
-        // survivors and the same seat could change colour between charts.
-        const CONSTITUENCY_COLOR = {
-            BAHADURPURA:     'var(--series-1)',
-            CHANDRAYANGUTTA: 'var(--series-2)',
-            CHARMINAR:       'var(--series-3)',
-            MALAKPET:        'var(--series-4)',
-            YAKUTPURA:       'var(--series-5)'
+if (typeof Chart === "undefined") {
+    document.querySelectorAll(".chart-wrapper").forEach(function (el) {
+        el.style.height = "auto";
+        el.innerHTML =
+            '<p style="margin:0;padding:22px;font-size:14px;line-height:1.6;color:var(--muted)">' +
+            "<strong>This chart could not load.</strong> It is drawn with Chart.js from a CDN, " +
+            "which this network appears to be blocking. The figures above and the full table " +
+            "below use no JavaScript library and are unaffected.</p>";
+    });
+} else {
+    Chart.defaults.font.family = "'IBM Plex Sans', system-ui, -apple-system, sans-serif";
+    Chart.defaults.font.size = 12;
+    Chart.defaults.maintainAspectRatio = false;
+    Chart.defaults.plugins.legend.labels.usePointStyle = true;
+    Chart.defaults.plugins.legend.labels.boxWidth = 7;
+    Chart.defaults.plugins.legend.labels.padding = 15;
+
+    const lineSeries = function (party) {
+        return SEATS.map(function (seat) {
+            return {
+                label: TITLE[seat],
+                seat: seat,
+                data: YEARS.map(function (y) {
+                    const r = electionData.find(function (d) {
+                        return d.YEAR === y && d.ACNAME === seat;
+                    });
+                    return r ? r[party + "_VoteShare"] : null;
+                }),
+                borderWidth: 2,
+                pointRadius: 3.5,
+                pointHoverRadius: 6,
+                pointBorderWidth: 2,
+                tension: 0,
+                fill: false,
+                spanGaps: false      // a gap is "did not contest" and must stay a gap
+            };
+        });
+    };
+
+    const lineOpts = function (max) {
+        return {
+            responsive: true,
+            interaction: { mode: "nearest", intersect: false },
+            plugins: {
+                legend: { position: "bottom" },
+                tooltip: {
+                    callbacks: {
+                        label: function (c) {
+                            return c.dataset.label + ": " + c.parsed.y.toFixed(2) + "%";
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true, max: max,
+                    title: { display: true, text: "Vote share (%)" },
+                    ticks: { callback: function (v) { return v + "%"; } }
+                },
+                x: { title: { display: true, text: "Election year" } }
+            }
         };
-        function cssVar(name) {
-            return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-        }
-        function seriesColor(name) {
-            const v = CONSTITUENCY_COLOR[String(name).toUpperCase()];
-            return v ? getComputedStyle(document.documentElement)
-                        .getPropertyValue(v.slice(4, -1)).trim() : '#767570';
-        }
+    };
 
-        // Chart colors
-        const colors = {
-            aimim: '#16a34a',
-            tdp: '#eab308',
-            mbt: '#dc2626',
-            inc: '#0ea5e9',
-            bjp: '#f97316',
-            trs: '#ec4899'
-        };
+    charts.push(new Chart(document.getElementById("aimim-chart"), {
+        type: "line",
+        data: { labels: YEARS, datasets: lineSeries("AIMIM") },
+        options: lineOpts(90)
+    }));
 
-        // Helper function to get constituency data by party
-        function getPartyDataByConstituency(party) {
-            const constituencies = [...new Set(electionData.map(d => d.ACNAME))].sort();
-            const years = [1999, 2004, 2009, 2014, 2018, 2023];
-            
-            return constituencies.map(constituency => {
+    charts.push(new Chart(document.getElementById("bjp-chart"), {
+        type: "line",
+        data: { labels: YEARS, datasets: lineSeries("BJP") },
+        options: lineOpts(60)
+    }));
+
+    const d2023 = SEATS.map(function (s) {
+        return electionData.find(function (d) { return d.YEAR === 2023 && d.ACNAME === s; });
+    });
+    charts.push(new Chart(document.getElementById("c2023-chart"), {
+        type: "bar",
+        data: {
+            labels: SEATS.map(function (s) { return TITLE[s]; }),
+            datasets: ["AIMIM", "MBT", "INC", "BJP", "TRS"].map(function (p, i) {
                 return {
-                    constituency: constituency,
-                    data: years.map(year => {
-                        const entry = electionData.find(d => d.YEAR === year && d.ACNAME === constituency);
-                        return entry ? entry[party] : null;
-                    })
+                    label: p === "TRS" ? "BRS" : p,
+                    partyIndex: i,
+                    data: d2023.map(function (r) { return r ? r[p + "_VoteShare"] : null; }),
+                    borderRadius: 3,
+                    borderSkipped: false
                 };
-            });
+            })
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: "bottom" },
+                tooltip: {
+                    callbacks: {
+                        label: function (c) {
+                            return c.dataset.label + ": " +
+                                (c.parsed.y === null ? "did not contest" : c.parsed.y.toFixed(2) + "%");
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true, max: 70,
+                    title: { display: true, text: "Vote share, 2023 (%)" },
+                    ticks: { callback: function (v) { return v + "%"; } }
+                },
+                x: { grid: { display: false } }
+            }
         }
+    }));
+}
 
-        // Chart.js comes from a CDN. On a restricted network it can fail to load, in which
-        // case every chart below throws and the reader is left staring at blank boxes with
-        // no explanation. Say so instead, and point at the data, which needs no JavaScript.
-        if (typeof Chart === 'undefined') {
-            document.querySelectorAll('.chart-wrapper').forEach(function (el) {
-                el.style.height = 'auto';
-                el.innerHTML =
-                    '<div style="padding:28px;background:#fff7ed;border-left:4px solid #ea580c;' +
-                    'border-radius:6px;color:#7c2d12;font-size:0.95em;line-height:1.6">' +
-                    '<strong>Charts could not load.</strong><br>' +
-                    'This report draws its charts with Chart.js from a CDN, which this network ' +
-                    'appears to be blocking. The tables on this page still work, and the full ' +
-                    'dataset is in <code>Data/HYD-DIST-RESULTS.csv</code>.' +
-                    '</div>';
-            });
-            const btns = document.querySelectorAll('.export-buttons button');
-            btns.forEach(function (b) {
-                if (/PNG|PDF/i.test(b.textContent)) { b.disabled = true; b.style.opacity = 0.5; }
-            });
-            throw new Error('Chart.js unavailable — charts replaced with a notice.');
+/* Re-read every token and repaint. A CSS-only theme switch would leave the
+   charts painted in the outgoing mode's ink — the exact defect that made the
+   previous dark mode unreadable. */
+function repaintCharts() {
+    if (typeof Chart === "undefined" || !charts.length) { return; }
+
+    const ink = cssVar("--ink"), muted = cssVar("--muted"),
+          grid = cssVar("--grid"), surface = cssVar("--surface");
+
+    Chart.defaults.color = muted;
+    Chart.defaults.borderColor = grid;
+
+    charts.forEach(function (ch) {
+        ch.data.datasets.forEach(function (ds) {
+            if (ds.seat) {                                   // line charts: colour by seat
+                const c = seriesColor(ds.seat);
+                ds.borderColor = c;
+                ds.backgroundColor = c;
+                ds.pointBackgroundColor = c;
+                ds.pointBorderColor = surface;
+            } else if (typeof ds.partyIndex === "number") {  // 2023 bars: fixed party order
+                ds.backgroundColor = cssVar("--series-" + (ds.partyIndex + 1));
+            }
+        });
+        Object.keys(ch.options.scales || {}).forEach(function (k) {
+            const sc = ch.options.scales[k];
+            if (sc.title) { sc.title.color = muted; }
+            sc.ticks = Object.assign({}, sc.ticks, { color: muted });
+            sc.grid  = Object.assign({}, sc.grid,  { color: grid });
+        });
+        if (ch.options.plugins && ch.options.plugins.legend) {
+            ch.options.plugins.legend.labels =
+                Object.assign({}, ch.options.plugins.legend.labels, { color: ink });
         }
+        ch.update("none");
+    });
+}
+repaintCharts();
 
+/* Follow the system theme for as long as the reader has not chosen one. */
+const mq = window.matchMedia("(prefers-color-scheme: dark)");
+const onSystemChange = function () { if (!root.hasAttribute("data-theme")) { repaintCharts(); } };
+if (mq.addEventListener) { mq.addEventListener("change", onSystemChange); }
+else if (mq.addListener) { mq.addListener(onSystemChange); }
 
-        // ---- Representation and poverty: Census 2011 ward medians ------------
-        // Two families of indicators, one group comparison. A grouped bar reads
-        // the dissociation directly: the municipal block is flat, the economic
-        // block is not. Two series only, so slots 1 and 2 of the palette.
-        const AMENITY_ROWS = [
-            { label: 'Tap water (treated)',   old: 97.1, rest: 97.4, family: 'municipal' },
-            { label: 'Water in premises',     old: 94.8, rest: 94.5, family: 'municipal' },
-            { label: 'Closed drainage',       old: 98.4, rest: 97.5, family: 'municipal' },
-            { label: 'Bathroom in premises',  old: 98.9, rest: 99.0, family: 'municipal' },
-            { label: 'LPG/PNG cooking',       old: 55.9, rest: 77.1, family: 'economic'  },
-            { label: 'Avails banking',        old: 51.4, rest: 68.7, family: 'economic'  },
-            { label: 'Computer + internet',   old:  9.1, rest: 20.0, family: 'economic'  },
-            { label: 'Car / jeep / van',      old:  5.9, rest: 15.7, family: 'economic'  }
-        ];
-        new Chart(document.getElementById('amenities-chart'), {
-            type: 'bar',
-            data: {
-                labels: AMENITY_ROWS.map(r => r.label),
-                datasets: [
-                    { label: 'Old city (52 wards)',
-                      data: AMENITY_ROWS.map(r => r.old),
-                      backgroundColor: cssVar('--series-1'),
-                      borderRadius: 4, borderSkipped: false, barPercentage: .82 },
-                    { label: 'Rest of district (56 wards)',
-                      data: AMENITY_ROWS.map(r => r.rest),
-                      backgroundColor: cssVar('--series-2'),
-                      borderRadius: 4, borderSkipped: false, barPercentage: .82 }
-                ]
-            },
-            options: {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'bottom' },
-                    tooltip: {
-                        callbacks: {
-                            afterBody: function (items) {
-                                const r = AMENITY_ROWS[items[0].dataIndex];
-                                const gap = (r.old - r.rest).toFixed(1);
-                                return (r.family === 'municipal'
-                                    ? 'Municipal service — difference not significant'
-                                    : 'Household economics — p < 0.0001')
-                                    + '\ngap ' + (gap > 0 ? '+' : '') + gap + ' points';
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    x: { beginAtZero: true, max: 100,
-                         title: { display: true, text: '% of households (ward median)' } },
-                    y: { grid: { display: false } }
-                }
-            }
-        });
-
-        // AIMIM Chart
-        const aimimData = getPartyDataByConstituency('AIMIM_VoteShare');
-        new Chart(document.getElementById('aimim-chart'), {
-            type: 'line',
-            data: {
-                labels: [1999, 2004, 2009, 2014, 2018, 2023],
-                datasets: aimimData.map(d => ({
-                    label: d.constituency,
-                    data: d.data,
-                    borderColor: seriesColor(d.constituency),
-                    backgroundColor: seriesColor(d.constituency),
-                    borderWidth: 2,
-                    pointRadius: 4,
-                    pointHoverRadius: 6,
-                    pointBorderColor: cssVar('--surface'),
-                    pointBorderWidth: 2,
-                    tension: 0,
-                    fill: false,
-                    spanGaps: false
-                }))
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    title: {
-                        display: false
-                    },
-                    legend: {
-                        position: 'bottom'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100,
-                        title: {
-                            display: true,
-                            text: 'Vote Share (%)'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Election Year'
-                        }
-                    }
-                }
-            }
-        });
-
-        // INC Chart
-        const incData = getPartyDataByConstituency('INC_VoteShare');
-        new Chart(document.getElementById('inc-chart'), {
-            type: 'line',
-            data: {
-                labels: [1999, 2004, 2009, 2014, 2018, 2023],
-                datasets: incData.map(d => ({
-                    label: d.constituency,
-                    data: d.data,
-                    borderColor: seriesColor(d.constituency),
-                    backgroundColor: seriesColor(d.constituency),
-                    borderWidth: 2,
-                    pointRadius: 4,
-                    pointHoverRadius: 6,
-                    pointBorderColor: cssVar('--surface'),
-                    pointBorderWidth: 2,
-                    tension: 0,
-                    fill: false,
-                    spanGaps: false
-                }))
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 60,
-                        title: {
-                            display: true,
-                            text: 'Vote Share (%)'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Election Year'
-                        }
-                    }
-                }
-            }
-        });
-
-        // BJP Chart
-        const bjpData = getPartyDataByConstituency('BJP_VoteShare');
-        new Chart(document.getElementById('bjp-chart'), {
-            type: 'line',
-            data: {
-                labels: [1999, 2004, 2009, 2014, 2018, 2023],
-                datasets: bjpData.map(d => ({
-                    label: d.constituency,
-                    data: d.data,
-                    borderColor: seriesColor(d.constituency),
-                    backgroundColor: seriesColor(d.constituency),
-                    borderWidth: 2,
-                    pointRadius: 4,
-                    pointHoverRadius: 6,
-                    pointBorderColor: cssVar('--surface'),
-                    pointBorderWidth: 2,
-                    tension: 0,
-                    fill: false,
-                    spanGaps: false
-                }))
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 60,
-                        title: {
-                            display: true,
-                            text: 'Vote Share (%)'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Election Year'
-                        }
-                    }
-                }
-            }
-        });
-
-        // TRS Chart
-        const trsData = getPartyDataByConstituency('TRS_VoteShare');
-        new Chart(document.getElementById('trs-chart'), {
-            type: 'line',
-            data: {
-                labels: [1999, 2004, 2009, 2014, 2018, 2023],
-                datasets: trsData.map(d => ({
-                    label: d.constituency,
-                    data: d.data,
-                    borderColor: seriesColor(d.constituency),
-                    backgroundColor: seriesColor(d.constituency),
-                    borderWidth: 2,
-                    pointRadius: 4,
-                    pointHoverRadius: 6,
-                    pointBorderColor: cssVar('--surface'),
-                    pointBorderWidth: 2,
-                    tension: 0,
-                    fill: false,
-                    spanGaps: false
-                }))
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 20,
-                        title: {
-                            display: true,
-                            text: 'Vote Share (%)'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Election Year'
-                        }
-                    }
-                }
-            }
-        });
-
-        // Constituency Comparison 2023
-        const data2023 = electionData.filter(d => d.YEAR === 2023);
-        new Chart(document.getElementById('constituency-comparison'), {
-            type: 'bar',
-            data: {
-                labels: data2023.map(d => d.ACNAME),
-                datasets: [
-                    {
-                        label: 'AIMIM',
-                        data: data2023.map(d => d.AIMIM_VoteShare),
-                        backgroundColor: colors.aimim
-                    },
-                    {
-                        label: 'INC',
-                        data: data2023.map(d => d.INC_VoteShare),
-                        backgroundColor: colors.inc
-                    },
-                    {
-                        label: 'BJP',
-                        data: data2023.map(d => d.BJP_VoteShare),
-                        backgroundColor: colors.bjp
-                    },
-                    {
-                        label: 'TRS',
-                        data: data2023.map(d => d.TRS_VoteShare),
-                        backgroundColor: colors.trs
-                    },
-                    {
-                        label: 'MBT',
-                        data: data2023.map(d => d.MBT_VoteShare),
-                        backgroundColor: colors.mbt
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100,
-                        title: {
-                            display: true,
-                            text: 'Vote Share (%)'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Constituency'
-                        }
-                    }
-                }
-            }
-        });
-
-        // AIMIM by Constituency
-        const constituencies = [...new Set(electionData.map(d => d.ACNAME))].sort();
-        const aimimByConstituency = constituencies.map(constituency => {
-            const constData = electionData.filter(d => d.ACNAME === constituency && d.AIMIM_VoteShare !== null);
-            const avg = constData.reduce((sum, d) => sum + d.AIMIM_VoteShare, 0) / constData.length;
-            return avg;
-        });
-
-        new Chart(document.getElementById('aimim-constituency'), {
-            type: 'bar',
-            data: {
-                labels: constituencies,
-                datasets: [{
-                    label: 'Average AIMIM Vote Share (1999-2023)',
-                    data: aimimByConstituency,
-                    backgroundColor: colors.aimim
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 80,
-                        title: {
-                            display: true,
-                            text: 'Average Vote Share (%)'
-                        }
-                    }
-                }
-            }
-        });
-
-        // Volatility Analysis
-        function calculateVolatility(party) {
-            const constituencies = [...new Set(electionData.map(d => d.ACNAME))];
-            return constituencies.map(constituency => {
-                const values = electionData
-                    .filter(d => d.ACNAME === constituency && d[party] !== null)
-                    .map(d => d[party]);
-                
-                if (values.length < 2) return 0;
-                
-                const mean = values.reduce((a, b) => a + b) / values.length;
-                const variance = values.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / values.length;
-                return Math.sqrt(variance);
-            });
-        }
-
-        const volatilityData = {
-            AIMIM: calculateVolatility('AIMIM_VoteShare'),
-            INC: calculateVolatility('INC_VoteShare'),
-            BJP: calculateVolatility('BJP_VoteShare'),
-            TRS: calculateVolatility('TRS_VoteShare'),
-            TDP: calculateVolatility('TDP_VoteShare'),
-            MBT: calculateVolatility('MBT_VoteShare')
-        };
-
-        new Chart(document.getElementById('volatility-chart'), {
-            type: 'bar',
-            data: {
-                labels: constituencies,
-                datasets: [
-                    {
-                        label: 'AIMIM',
-                        data: volatilityData.AIMIM,
-                        backgroundColor: colors.aimim
-                    },
-                    {
-                        label: 'INC',
-                        data: volatilityData.INC,
-                        backgroundColor: colors.inc
-                    },
-                    {
-                        label: 'BJP',
-                        data: volatilityData.BJP,
-                        backgroundColor: colors.bjp
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Standard Deviation (Volatility Index)'
-                        }
-                    }
-                }
-            }
-        });
-
-        // Average statistics
-        const parties = ['AIMIM_VoteShare', 'INC_VoteShare', 'BJP_VoteShare', 'TRS_VoteShare', 'TDP_VoteShare', 'MBT_VoteShare'];
-        const avgStats = document.getElementById('avg-stats');
-        
-        let statsHTML = '<div class="stats-grid">';
-        parties.forEach(party => {
-            const values = electionData.filter(d => d[party] !== null).map(d => d[party]);
-            if (values.length > 0) {
-                const avg = (values.reduce((a, b) => a + b) / values.length).toFixed(2);
-                const max = Math.max(...values).toFixed(2);
-                const min = Math.min(...values).toFixed(2);
-                const partyName = party.replace('_VoteShare', '');
-                
-                statsHTML += `
-                    <div class="stat-card">
-                        <h3>${partyName}</h3>
-                        <div>Average: <strong>${avg}%</strong></div>
-                        <div>Max: <strong>${max}%</strong></div>
-                        <div>Min: <strong>${min}%</strong></div>
-                    </div>
-                `;
-            }
-        });
-        statsHTML += '</div>';
-        avgStats.innerHTML = statsHTML;
-
-        // Growth Analysis
-        function getGrowthData(party) {
-            const constituencies = [...new Set(electionData.map(d => d.ACNAME))];
-            return constituencies.map(constituency => {
-                const data1999 = electionData.find(d => d.YEAR === 1999 && d.ACNAME === constituency);
-                const data2023 = electionData.find(d => d.YEAR === 2023 && d.ACNAME === constituency);
-                
-                if (data1999 && data2023 && data1999[party] !== null && data2023[party] !== null) {
-                    return data2023[party] - data1999[party];
-                }
-                return null;
-            });
-        }
-
-        new Chart(document.getElementById('growth-chart'), {
-            type: 'bar',
-            data: {
-                labels: constituencies,
-                datasets: [
-                    {
-                        label: 'AIMIM Growth',
-                        data: getGrowthData('AIMIM_VoteShare'),
-                        backgroundColor: colors.aimim
-                    },
-                    {
-                        label: 'INC Growth',
-                        data: getGrowthData('INC_VoteShare'),
-                        backgroundColor: colors.inc
-                    },
-                    {
-                        label: 'BJP Growth',
-                        data: getGrowthData('BJP_VoteShare'),
-                        backgroundColor: colors.bjp
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                },
-                scales: {
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Vote Share Change (percentage points)'
-                        }
-                    }
-                }
-            }
-        });
-
-        // Export functions
-        function exportChartToPNG(chartId, filename) {
-            const canvas = document.getElementById(chartId);
-            const url = canvas.toDataURL('image/png');
-            const link = document.createElement('a');
-            link.download = filename;
-            link.href = url;
-            link.click();
-        }
-
-        function exportTableToCSV(tableId, filename) {
-            const table = document.getElementById(tableId);
-            let csv = [];
-            
-            // Headers
-            const headers = [];
-            for (let cell of table.rows[0].cells) {
-                headers.push(cell.textContent);
-            }
-            csv.push(headers.join(','));
-            
-            // Data
-            for (let i = 1; i < table.rows.length; i++) {
-                const row = [];
-                for (let cell of table.rows[i].cells) {
-                    row.push(cell.textContent);
-                }
-                csv.push(row.join(','));
-            }
-            
-            const csvContent = csv.join('\n');
-            const blob = new Blob([csvContent], { type: 'text/csv' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.download = filename;
-            link.href = url;
-            link.click();
-        }
-
-        function exportAllDataToCSV() {
-            let csv = 'YEAR,ACNAME,AIMIM_VoteShare,TDP_VoteShare,MBT_VoteShare,INC_VoteShare,BJP_VoteShare,TRS_VoteShare\n';
-            
-            electionData.forEach(row => {
-                csv += `${row.YEAR},${row.ACNAME},${row.AIMIM_VoteShare || ''},${row.TDP_VoteShare || ''},${row.MBT_VoteShare || ''},${row.INC_VoteShare || ''},${row.BJP_VoteShare || ''},${row.TRS_VoteShare || ''}\n`;
-            });
-            
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.download = 'hyderabad_electoral_data_complete.csv';
-            link.href = url;
-            link.click();
-        }
-
-        function exportToPDF() {
-            // Show loading message
-            const originalContent = document.querySelector('.container').innerHTML;
-            const loadingDiv = document.createElement('div');
-            loadingDiv.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); z-index: 10000; text-align: center;';
-            loadingDiv.innerHTML = '<h2 style="color: var(--accent); margin-bottom: 10px;">Generating PDF...</h2><p>This may take a moment. Please wait.</p><div style="margin-top: 20px;"><div style="display: inline-block; width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid var(--accent); border-radius: 50%; animation: spin 1s linear infinite;"></div></div>';
-            
-            const style = document.createElement('style');
-            style.textContent = '@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }';
-            document.head.appendChild(style);
-            document.body.appendChild(loadingDiv);
-            
-            // Use browser print with improved settings
-            setTimeout(() => {
-                document.body.removeChild(loadingDiv);
-                document.head.removeChild(style);
-                
-                // Trigger print with a slight delay to ensure rendering
-                window.print();
-            }, 500);
-        }
-    </script>
+window.addEventListener("beforeprint", repaintCharts);
+</script>
 </body>
 </html>

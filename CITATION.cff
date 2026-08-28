@@ -7,8 +7,11 @@ abstract: >-
   election cycles (1999, 2004, 2009, 2014, 2018, 2023) across five
   constituencies in Hyderabad district: Bahadurpura, Chandrayangutta,
   Charminar, Malakpet and Yakutpura. Parties tracked are AIMIM, TDP, MBT,
-  INC, BJP and TRS/BRS. This is a descriptive series and contains no
-  infrastructure or service-delivery data; see METHODOLOGY.md for what the
+  INC, BJP and TRS/BRS. A second dataset pairs this with Census 2011
+  ward-level household amenity and asset data for all 108 GHMC wards in
+  Hyderabad district, supporting a comparison of municipal service delivery
+  against household economic status between the old city and the rest of the
+  district. Descriptive throughout; see METHODOLOGY.md for what the
   comparison can and cannot establish.
 authors:
   - family-names: Raman
