@@ -13,8 +13,8 @@ abstract: >-
 authors:
   - family-names: Raman
     given-names: Varna Sri
-url: "https://github.com/Varnasr/H-VSAINC"
-repository-code: "https://github.com/Varnasr/H-VSAINC"
+url: "https://github.com/Varnasr/Hyderabad-Electoral-Analysis"
+repository-code: "https://github.com/Varnasr/Hyderabad-Electoral-Analysis"
 license: MIT
 version: "2026.1.0"
 date-released: "2026-08-28"
