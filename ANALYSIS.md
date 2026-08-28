@@ -40,6 +40,47 @@ old-city mandals against the 56 elsewhere:
 Ward medians; two-sided Mann–Whitney. Half the cooking-gas penetration, half the
 internet, a third of the car ownership.
 
+## Schooling and work
+
+The asset gaps above are proxies for income. The Census ward tables also carry the
+things income comes from: literacy and work. Same 108 wards, same method — ward
+medians, two-sided Mann–Whitney.
+
+| Indicator | Old city | Rest of district | Gap | p |
+|---|---|---|---|---|
+| Literacy, age 7+ | 82.1% | 86.3% | −4.3 | 0.001 |
+| Female literacy, age 7+ | 77.9% | 81.7% | −3.8 | 0.03 |
+| Working, age 7+ | 37.1% | 44.3% | **−7.2** | <0.0001 |
+| Women working, age 7+ | 17.9% | 25.3% | **−7.3** | <0.0001 |
+
+Schooling is behind, but modestly. **Work is far behind**, and the gap survives the
+first obvious objection: the old city has more children (13.0% of its population is
+under seven, against 10.7% elsewhere, p&nbsp;<&nbsp;0.0001), which mechanically lowers
+a whole-population work rate, so the table uses the age-seven-plus population — and
+the gap is still seven points, at p&nbsp;=&nbsp;2×10⁻¹². In Charminar ward 39, 32.8%
+of the age-7+ population works; in Ameerpet ward 99, 45.7%.
+
+Three cautions on reading this. **Female work participation measures norms as well as
+opportunity** — a low rate reflects who seeks work, not only who can find it, and
+old-city social norms differ from the rest of the city's. **The wards differ in
+composition**: the old city has a much lower Scheduled Caste share (3.1% vs 7.7%),
+younger populations, and different migration histories, none of which is controlled
+for. And one result runs against the deprivation story: **the male–female literacy
+gap is smaller in the old city** (6.3 points vs 8.3, p&nbsp;=&nbsp;0.0008). Old-city
+women read at a smaller disadvantage to their men than women elsewhere in the
+district.
+
+Of the four constraints the services finding points to — schooling, work, credit,
+land title — the first two can now be measured, and both run in the expected
+direction, work much more strongly than schooling. The last two cannot be measured
+at ward level from public data: RBI's credit statistics stop at the district, and
+land-title records are not published. Census 2011's slum tables would give a
+tenure-security proxy and remain uncollected here.
+
+Data: [`Data/GHMC-WARD-PCA-2011.csv`](Data/GHMC-WARD-PCA-2011.csv), derived from the
+ward-level Primary Census Abstract; dictionary in
+[`Data/README.md`](Data/README.md).
+
 ## The services are not the explanation
 
 Set those against what a municipal corporation actually builds:

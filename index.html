@@ -440,7 +440,8 @@ td.lead { font-weight: 600; color: var(--ink); }
       <span><b>5</b> seats</span>
       <span><b>108</b> GHMC wards</span>
       <span><a href="Data/HYD-DIST-RESULTS.csv">Electoral data</a></span>
-      <span><a href="Data/GHMC-WARD-AMENITIES-2011.csv">Census data</a></span>
+      <span><a href="Data/GHMC-WARD-AMENITIES-2011.csv">Census amenities</a></span>
+      <span><a href="Data/GHMC-WARD-PCA-2011.csv">Census literacy &amp; work</a></span>
       <span><a href="METHODOLOGY.md">Methodology</a></span>
       <span><a href="https://github.com/Varnasr/Hyderabad-Electoral-Analysis">Repository</a></span>
     </div>
@@ -505,6 +506,45 @@ td.lead { font-weight: 600; color: var(--ink); }
       </div>
       <p class="panel-verdict">Half the cooking gas, half the internet, a third of the cars. Every difference significant at p&lt;0.0001.</p>
 
+      <div class="panel-label">Schooling and work</div>
+      <div class="dumbbell">
+        <div class="db-row">
+          <div class="db-name">Literate, age 7+</div>
+          <div class="db-track" style="--old:82.1;--rest:86.3;--lo:82.1;--hi:86.3">
+            <i class="db-link"></i><i class="db-pt rest"></i><i class="db-pt old"></i>
+            <span class="db-val" style="left:84.2%">82.1 / 86.3</span>
+          </div>
+          <div class="db-sig hit">p=0.001</div>
+        </div>
+        <div class="db-row">
+          <div class="db-name">Women literate, age 7+</div>
+          <div class="db-track" style="--old:77.9;--rest:81.7;--lo:77.9;--hi:81.7">
+            <i class="db-link"></i><i class="db-pt rest"></i><i class="db-pt old"></i>
+            <span class="db-val" style="left:79.8%">77.9 / 81.7</span>
+          </div>
+          <div class="db-sig hit">p=0.03</div>
+        </div>
+        <div class="db-row">
+          <div class="db-name">Working, age 7+</div>
+          <div class="db-track" style="--old:37.1;--rest:44.3;--lo:37.1;--hi:44.3">
+            <i class="db-link"></i><i class="db-pt rest"></i><i class="db-pt old"></i>
+            <span class="db-val" style="left:37.1%">37.1</span>
+            <span class="db-val" style="left:44.3%">44.3</span>
+          </div>
+          <div class="db-sig hit">p&lt;0.0001</div>
+        </div>
+        <div class="db-row">
+          <div class="db-name">Women working, age 7+</div>
+          <div class="db-track" style="--old:17.9;--rest:25.3;--lo:17.9;--hi:25.3">
+            <i class="db-link"></i><i class="db-pt rest"></i><i class="db-pt old"></i>
+            <span class="db-val" style="left:17.9%">17.9</span>
+            <span class="db-val" style="left:25.3%">25.3</span>
+          </div>
+          <div class="db-sig hit">p&lt;0.0001</div>
+        </div>
+      </div>
+      <p class="panel-verdict">Schooling modestly behind. Work seven points behind, and that holds after adjusting for the old city&rsquo;s younger population.</p>
+
       <div class="panel-label">What the corporation built</div>
       <div class="dumbbell">
         <div class="db-row">
@@ -547,7 +587,7 @@ td.lead { font-weight: 600; color: var(--ink); }
         <div class="db-axis-in"><span>0</span><span>25</span><span>50</span><span>75</span><span>100%</span></div>
         <div></div>
       </div>
-      <p class="chart-note">Ward medians, percentage of households; both panels share one 0&ndash;100% scale. Significance is a two-sided Mann&ndash;Whitney&nbsp;U on the ward distributions &mdash; a rank test, chosen because ward percentages are bounded and skewed rather than normal. <strong>n.s.</strong> = not significant; those four <em>p</em>-values run from 0.07 to 0.90.</p>
+      <p class="chart-note">Ward medians; all panels share one 0&ndash;100% scale. The household rows are percentages of households, the schooling and work rows percentages of people (age 7 and over, the Census literacy convention &mdash; used for work too because the old city&rsquo;s younger population would otherwise depress its rate mechanically). Significance is a two-sided Mann&ndash;Whitney&nbsp;U on the ward distributions &mdash; a rank test, chosen because ward percentages are bounded and skewed rather than normal. <strong>n.s.</strong> = not significant; those four <em>p</em>-values run from 0.07 to 0.90.</p>
     </figure>
 
     <div class="measure">
@@ -565,6 +605,8 @@ td.lead { font-weight: 600; color: var(--ink); }
             <tr><td>Computer with internet</td><td class="lead">2.3</td><td>47.5</td></tr>
             <tr><td>Car / jeep / van</td><td class="lead">1.6</td><td>44.3</td></tr>
             <tr><td>Avails banking</td><td class="lead">18.9</td><td>86.4</td></tr>
+            <tr><td>Literate, age 7+</td><td class="lead">79.8</td><td>90.5</td></tr>
+            <tr><td>Working, age 7+</td><td class="lead">32.8</td><td>45.7</td></tr>
             <tr><td>Treated tap water</td><td>99.7</td><td>99.0</td></tr>
             <tr><td>Closed drainage</td><td>100.0</td><td>99.6</td></tr>
           </tbody>
@@ -743,12 +785,14 @@ td.lead { font-weight: 600; color: var(--ink); }
     <div class="measure">
       <h3>The form of the argument that holds up</h3>
       <p>Say &ldquo;the old city has no development&rdquo; and this Census table refutes you by lunchtime, because the roads, water and drains are all there. The claim that holds is different: <em>the old city has voted for the same party for a generation, and its people are still the poorest in the city &mdash; in neighbourhoods where the basic services were built long ago.</em> The service parity is not a defence of anyone&rsquo;s record. It removes the one excuse that would explain the poverty as neglect from outside, and leaves the harder question of why full pipes and full drains sit over empty bank accounts.</p>
-      <p>If services are level and lives are not, whatever binds these households is somewhere else: land title, credit, schooling, formal work. A vote-share chart settles none of that. It does establish who was in the room the whole time.</p>
+      <p>If services are level and lives are not, whatever binds these households is somewhere else: land title, credit, schooling, work. Two of those four can now be measured from the same Census, and both run the expected way &mdash; schooling modestly behind, work participation seven points behind at any age cut. Two cannot: RBI&rsquo;s credit data stops at the district, and land-title records are not public. A vote-share chart settles none of it, but it does establish who was in the room the whole time.</p>
     </div>
 
     <div class="caveat measure-wide">
       <h3>Limits of the comparison</h3>
       <ul>
+        <li><strong>Female work participation measures norms as well as opportunity.</strong> A low rate reflects who seeks work, not only who can find it. And one schooling result runs against the deprivation story: the male&ndash;female literacy gap is <em>smaller</em> in the old city (6.3 points vs 8.3, p&nbsp;=&nbsp;0.0008).</li>
+        <li><strong>The wards differ in composition.</strong> The old city has a much lower Scheduled Caste share (3.1% vs 7.7%) and a younger population; neither is controlled for.</li>
         <li><strong>Mandals are not constituencies.</strong> The six old-city mandals approximate the five assembly seats, but the boundaries are not identical. This compares parts of a city, not electorates.</li>
         <li><strong>These are levels, not change.</strong> Levels largely record history; a poor area in 2011 may have been poor in 1951. Detecting whether representation changed a trajectory needs at least two ward-level time points, which do not exist &mdash; census ward boundaries are renumbered between rounds and do not correspond.</li>
         <li><strong>No controls.</strong> Old-city wards differ in density, housing-stock age, unauthorised construction and land-title status, all of which predict economic outcomes independently of who represents them.</li>
@@ -798,7 +842,8 @@ td.lead { font-weight: 600; color: var(--ink); }
 
     <div class="actions">
       <button type="button" onclick="exportAllDataToCSV()">Download the electoral data (CSV)</button>
-      <a href="Data/GHMC-WARD-AMENITIES-2011.csv">Download the Census ward data (CSV)</a>
+      <a href="Data/GHMC-WARD-AMENITIES-2011.csv">Census amenities (CSV)</a>
+      <a href="Data/GHMC-WARD-PCA-2011.csv">Census literacy &amp; work (CSV)</a>
       <button type="button" onclick="window.print()">Print or save as PDF</button>
       <a href="ANALYSIS.md">Full written analysis</a>
       <a href="CITATION.cff">Cite this</a>
