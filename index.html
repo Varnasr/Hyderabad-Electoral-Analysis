@@ -29,6 +29,15 @@
             --accent:         #2a78d6;
             --grid:           rgba(23,23,26,.07);
 
+            /* Notes. Every note colour is declared in BOTH modes; a hard-coded
+               light fill under white dark-mode text is what broke this before. */
+            --note-bg:     #faf9f6;
+            --note-rule:   #c2b8a3;
+            --note-head:   #6b5d3e;
+            --warn-bg:     #fdfaf4;
+            --warn-rule:   #d97706;
+            --warn-head:   #8a5a12;
+
             --series-1: #2a78d6;   /* Bahadurpura     */
             --series-2: #eb6834;   /* Chandrayangutta */
             --series-3: #1baf7a;   /* Charminar       */
@@ -47,6 +56,13 @@
                 --accent:         #3987e5;
                 --grid:           rgba(255,255,255,.09);
 
+                --note-bg:     #1c1b18;
+                --note-rule:   #4a4437;
+                --note-head:   #c9bb96;
+                --warn-bg:     #201d16;
+                --warn-rule:   #a8761f;
+                --warn-head:   #e0b967;
+
                 --series-1: #3987e5;
                 --series-2: #d95926;
                 --series-3: #199e70;
@@ -57,40 +73,45 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            line-height: 1.6;
+            line-height: 1.65;
             color: var(--text-primary);
-            background: var(--surface-alt);
+            background: var(--surface);
+            -webkit-font-smoothing: antialiased;
+            font-size: 16px;
         }
+        p { max-width: 68ch; color: var(--text-secondary); }
+        p + p { margin-top: .85em; }
+        li { color: var(--text-secondary); }
         
         .container {
-            max-width: 1400px;
+            max-width: 1080px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 28px 64px;
             background: var(--surface);
         }
         
         .header {
-            background: var(--surface);
-            color: var(--text-primary);
-            padding: 44px 20px 32px;
-            text-align: left;
-            border-bottom: 2px solid var(--text-primary);
-            margin-bottom: 30px;
-            border-radius: 10px;
+            padding: 72px 0 28px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--border);
         }
-        
         .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            font-size: clamp(1.9rem, 4.2vw, 2.9rem);
+            line-height: 1.1;
+            letter-spacing: -0.033em;
+            font-weight: 700;
+            margin-bottom: 14px;
+            max-width: 20ch;
         }
-        
         .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
+            font-size: 1.02rem;
+            color: var(--text-muted);
+            max-width: 60ch;
         }
         
         .metadata {
             background: var(--surface-sunk);
+            font-size: .92rem;
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 30px;
@@ -99,40 +120,46 @@
         }
         
         .section {
-            margin-bottom: 40px;
-            padding: 20px;
-            background: var(--surface);
-            border-radius: 10px;
+            margin: 0;
+            padding: 56px 0 0;
+            background: transparent;
         }
         
         .section h2 {
             color: var(--text-primary);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border);
-            letter-spacing: -0.02em;
-            font-size: 1.8em;
+            margin-bottom: 22px;
+            padding-bottom: 0;
+            border-bottom: none;
+            letter-spacing: -0.026em;
+            font-size: 1.55rem;
+            font-weight: 680;
         }
         
         .section h3 {
             color: var(--text-primary);
-            margin: 20px 0 15px 0;
-            font-size: 1.4em;
+            margin: 34px 0 12px;
+            font-size: 1.02rem;
+            font-weight: 650;
+            letter-spacing: -0.01em;
         }
         
         .chart-container {
             position: relative;
-            margin: 30px 0;
-            padding: 20px;
-            background: var(--surface-sunk);
-            border: 1px solid var(--border);
-            border-radius: 10px;
+            margin: 28px 0 40px;
+            padding: 0;
+            background: transparent;
+            border: none;
         }
+        .chart-container h3 { margin-top: 0; }
         
         .chart-wrapper {
             position: relative;
-            height: 600px;
-            margin-bottom: 20px;
+            height: 460px;
+            margin-bottom: 12px;
+            padding: 20px 18px 14px;
+            background: var(--surface-sunk);
+            border: 1px solid var(--border);
+            border-radius: 12px;
         }
         
         .export-buttons {
@@ -143,41 +170,29 @@
         }
         
         .btn {
-            padding: 10px 20px;
-            border: none;
+            padding: 7px 14px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-secondary);
             border-radius: 7px;
             cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 550;
+            transition: background .15s ease, color .15s ease, border-color .15s ease;
         }
+        .btn:hover { background: var(--surface-alt); color: var(--text-primary); border-color: var(--text-muted); }
         
-        .btn-primary {
-            background: var(--text-primary);
-            color: var(--surface);
-        }
+        .btn-primary { }
         
-        .btn-primary:hover {
-            opacity: .88;
-        }
+        .btn-primary:hover { }
         
-        .btn-secondary {
-            background: var(--accent);
-            color: white;
-        }
+        .btn-secondary { }
         
-        .btn-secondary:hover {
-            opacity: .88;
-        }
+        .btn-secondary:hover { }
         
-        .btn-export {
-            background: var(--accent);
-            color: white;
-        }
+        .btn-export { }
         
-        .btn-export:hover {
-            opacity: .88;
-        }
+        .btn-export:hover { }
         
         table {
             width: 100%;
@@ -187,9 +202,10 @@
         }
         
         th, td {
-            padding: 12px;
+            padding: 10px 12px;
             text-align: left;
             border-bottom: 1px solid var(--border);
+            font-size: .9rem;
         }
         
         th {
@@ -211,31 +227,30 @@
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
+            gap: 26px;
+            margin: 26px 0 8px;
         }
         
         .stat-card {
-            background: var(--surface-sunk);
+            background: transparent;
             color: var(--text-primary);
-            padding: 22px 24px;
-            border: 1px solid var(--border);
-            border-top: 3px solid var(--accent);
-            border-radius: 10px;
+            padding: 0 0 0 16px;
+            border: none;
+            border-left: 2px solid var(--border);
+            border-radius: 0;
         }
         
         .stat-card h3 {
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: .05em;
-            font-size: .78em;
-            font-size: 1em;
-            margin-bottom: 10px;
-            opacity: 0.9;
+            letter-spacing: .06em;
+            font-size: .7rem;
+            font-weight: 600;
+            margin: 0 0 6px;
         }
         
         .stat-card .value {
-            font-size: 2.4em;
+            font-size: 2rem;
             font-weight: 700;
             letter-spacing: -0.02em;
             margin-bottom: 4px;
@@ -247,33 +262,48 @@
         }
         
         .insight-box {
-            background: var(--surface-sunk);
-            border-left: 4px solid var(--accent);
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
+            background: var(--note-bg);
+            border-left: 2px solid var(--note-rule);
+            color: var(--text-secondary);
+            padding: 18px 22px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
         }
         
         .insight-box h4 {
-            color: #2d3748;
+            color: var(--text-primary);
             margin-bottom: 10px;
         }
         
-        .methodology {
-            background: #fff5f5;
-            border-left: 4px solid #f56565;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 5px;
+        .methodology > summary {
+            cursor: pointer;
+            color: var(--note-head);
+            font-weight: 600;
+            font-size: .9rem;
+            list-style: none;
         }
+        .methodology > summary::before { content: '\203A  '; }
+        .methodology[open] > summary::before { content: '\2304  '; }
+        details.methodology { padding: 12px 22px; }
+        details.methodology[open] { padding-bottom: 18px; }
+
+        .methodology {
+            background: var(--note-bg);
+            border-left: 2px solid var(--note-rule);
+            color: var(--text-secondary);
+            padding: 18px 22px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .methodology strong { color: var(--note-head); }
         
         .footer {
-            text-align: center;
-            padding: 20px;
-            background: #2d3748;
-            color: white;
-            margin-top: 40px;
-            border-radius: 8px;
+            text-align: left;
+            padding: 26px 0 8px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: .88em;
+            margin-top: 48px;
         }
         
         @media print {
@@ -288,7 +318,7 @@
                 padding: 10px;
             }
             .chart-wrapper {
-                height: 700px !important;
+                height: 520px !important;
                 width: 100% !important;
                 page-break-inside: avoid;
                 margin: 20px 0;
@@ -318,10 +348,11 @@
         }
         
         .highlight {
-            background: #fef5e7;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-weight: 600;
+            background: transparent;
+            padding: 0;
+            font-weight: 650;
+            color: var(--text-primary);
+            box-shadow: inset 0 -0.42em 0 var(--warn-bg);
         }
         
         .party-badge {
@@ -342,14 +373,16 @@
 
         /* A data caveat readers should meet before the numbers, not after */
         .data-caveat {
-            background: #fffbeb;
-            border-left: 4px solid #d97706;
-            border-radius: 6px;
-            padding: 16px 20px;
-            margin: 24px 0;
+            background: var(--warn-bg);
+            border-left: 2px solid var(--warn-rule);
+            color: var(--text-secondary);
+            border-radius: 0 8px 8px 0;
+            padding: 18px 22px;
+            margin: 26px 0;
             font-size: 0.95em;
+            line-height: 1.65;
         }
-        .data-caveat strong { color: #92400e; }
+        .data-caveat strong { color: var(--warn-head); }
         .data-caveat ul { margin: 8px 0 0 18px; }
         .data-caveat li { margin-bottom: 6px; }
 
@@ -390,12 +423,12 @@
         </div>
 
         <div class="export-buttons" style="margin-bottom: 20px;">
-            <button class="btn btn-export" onclick="exportToPDF()">📄 Export Full Report to PDF</button>
-            <button class="btn btn-secondary" onclick="exportAllDataToCSV()">📊 Export All Data to CSV</button>
+            <button class="btn btn-export" onclick="exportToPDF()">Export Full Report to PDF</button>
+            <button class="btn btn-secondary" onclick="exportAllDataToCSV()">Export All Data to CSV</button>
         </div>
         
-        <div class="methodology" style="margin-bottom: 20px;">
-            <h4>📋 PDF Export Instructions</h4>
+        <details class="methodology" style="margin-bottom: 20px;"><summary>PDF export tips</summary>
+            <h4></h4>
             <p><strong>For best results:</strong> When the print dialog opens, select "Save as PDF" and set the following:</p>
             <ul style="margin-left: 20px; margin-top: 5px;">
                 <li>Paper size: A4 or Letter</li>
@@ -403,7 +436,7 @@
                 <li>Scale: 100% (or adjust to fit)</li>
                 <li>Background graphics: Enabled (to include colors and charts)</li>
             </ul>
-        </div>
+        </details>
 
         <!-- Executive Summary -->
         <div class="section" id="executive-summary">
@@ -445,22 +478,22 @@
             
             <h3>Key Findings</h3>
             <div class="insight-box">
-                <h4>🎯 AIMIM Dominance Pattern</h4>
+                <h4>AIMIM Dominance Pattern</h4>
                 <p>AIMIM demonstrates consistent electoral dominance in Hyderabad constituencies, with vote shares ranging from 30.44% to 78.46%. The party shows particularly strong performance in Bahadurpura (2014: 78.46%, 2018: 74.26%) and Charminar constituencies.</p>
             </div>
             
             <div class="insight-box">
-                <h4>📊 INC Performance Dynamics</h4>
+                <h4>INC Performance Dynamics</h4>
                 <p>The Indian National Congress shows variable performance with notable strength in Malakpet (2004: 52.12%, 2023: 22.5%). As documented in the supplementary analysis, the 2004 spike in Malakpet occurred due to AIMIM not fielding a candidate, leading to temporary vote consolidation. Recent elections (2018-2023) show modest INC recovery across constituencies.</p>
             </div>
             
             <div class="insight-box">
-                <h4>⚡ BJP Growth Trajectory</h4>
+                <h4>BJP Growth Trajectory</h4>
                 <p>BJP demonstrates significant growth from marginal presence in 1999 to competitive positions in recent elections, particularly in Malakpet (2014: 28.61%) and Charminar (2023: 26.8%), indicating changing electoral dynamics.</p>
             </div>
             
             <div class="insight-box">
-                <h4>🔄 Multi-Party Competition</h4>
+                <h4>Multi-Party Competition</h4>
                 <p>The electoral landscape shows increasing multi-party competition with TRS/BRS emerging as a significant player post-2014, and MBT maintaining presence in specific constituencies, particularly Yakutpura.</p>
             </div>
         </div>
@@ -469,7 +502,7 @@
         <div class="section" id="data-section">
             <h2>Complete Electoral Data</h2>
             <div class="export-buttons">
-                <button class="btn btn-secondary" onclick="exportTableToCSV('dataTable', 'electoral_data.csv')">📊 Export Table to CSV</button>
+                <button class="btn btn-secondary" onclick="exportTableToCSV('dataTable', 'electoral_data.csv')">Export Table to CSV</button>
             </div>
             <div style="overflow-x: auto;">
                 <table id="dataTable">
@@ -500,7 +533,7 @@
                     <canvas id="aimim-chart"></canvas>
                 </div>
                 <div class="export-buttons">
-                    <button class="btn btn-primary" onclick="exportChartToPNG('aimim-chart', 'AIMIM_Trends.png')">🖼️ Export to PNG</button>
+                    <button class="btn btn-primary" onclick="exportChartToPNG('aimim-chart', 'AIMIM_Trends.png')">Export to PNG</button>
                 </div>
             </div>
             
@@ -510,10 +543,10 @@
                     <canvas id="inc-chart"></canvas>
                 </div>
                 <div class="export-buttons">
-                    <button class="btn btn-primary" onclick="exportChartToPNG('inc-chart', 'INC_Trends.png')">🖼️ Export to PNG</button>
+                    <button class="btn btn-primary" onclick="exportChartToPNG('inc-chart', 'INC_Trends.png')">Export to PNG</button>
                 </div>
                 <div class="methodology">
-                    <h4>📌 Important Context: Malakpet 2004 Anomaly</h4>
+                    <h4>Important Context: Malakpet 2004 Anomaly</h4>
                     <p>The sharp increase in INC's vote share in Malakpet during 2004 (52.12%) occurred because AIMIM did not field a candidate in that election, leading to a temporary consolidation of votes towards INC. This represents a structural anomaly rather than genuine INC strength in that constituency.</p>
                 </div>
             </div>
@@ -524,7 +557,7 @@
                     <canvas id="bjp-chart"></canvas>
                 </div>
                 <div class="export-buttons">
-                    <button class="btn btn-primary" onclick="exportChartToPNG('bjp-chart', 'BJP_Trends.png')">🖼️ Export to PNG</button>
+                    <button class="btn btn-primary" onclick="exportChartToPNG('bjp-chart', 'BJP_Trends.png')">Export to PNG</button>
                 </div>
             </div>
             
@@ -534,7 +567,7 @@
                     <canvas id="trs-chart"></canvas>
                 </div>
                 <div class="export-buttons">
-                    <button class="btn btn-primary" onclick="exportChartToPNG('trs-chart', 'TRS_Trends.png')">🖼️ Export to PNG</button>
+                    <button class="btn btn-primary" onclick="exportChartToPNG('trs-chart', 'TRS_Trends.png')">Export to PNG</button>
                 </div>
             </div>
         </div>
@@ -549,7 +582,7 @@
                     <canvas id="constituency-comparison"></canvas>
                 </div>
                 <div class="export-buttons">
-                    <button class="btn btn-primary" onclick="exportChartToPNG('constituency-comparison', 'Constituency_Comparison_2023.png')">🖼️ Export to PNG</button>
+                    <button class="btn btn-primary" onclick="exportChartToPNG('constituency-comparison', 'Constituency_Comparison_2023.png')">Export to PNG</button>
                 </div>
             </div>
             
@@ -559,7 +592,7 @@
                     <canvas id="aimim-constituency"></canvas>
                 </div>
                 <div class="export-buttons">
-                    <button class="btn btn-primary" onclick="exportChartToPNG('aimim-constituency', 'AIMIM_by_Constituency.png')">🖼️ Export to PNG</button>
+                    <button class="btn btn-primary" onclick="exportChartToPNG('aimim-constituency', 'AIMIM_by_Constituency.png')">Export to PNG</button>
                 </div>
             </div>
         </div>
@@ -575,7 +608,7 @@
                     <canvas id="volatility-chart"></canvas>
                 </div>
                 <div class="export-buttons">
-                    <button class="btn btn-primary" onclick="exportChartToPNG('volatility-chart', 'Vote_Share_Volatility.png')">🖼️ Export to PNG</button>
+                    <button class="btn btn-primary" onclick="exportChartToPNG('volatility-chart', 'Vote_Share_Volatility.png')">Export to PNG</button>
                 </div>
             </div>
             
@@ -589,7 +622,7 @@
                     <canvas id="growth-chart"></canvas>
                 </div>
                 <div class="export-buttons">
-                    <button class="btn btn-primary" onclick="exportChartToPNG('growth-chart', 'Growth_Analysis.png')">🖼️ Export to PNG</button>
+                    <button class="btn btn-primary" onclick="exportChartToPNG('growth-chart', 'Growth_Analysis.png')">Export to PNG</button>
                 </div>
             </div>
         </div>
@@ -676,7 +709,7 @@
             
             <h3>5. Implications for Electoral Competition</h3>
             <div class="insight-box">
-                <h4>🔍 Key Takeaways for Political Analysis</h4>
+                <h4>Key Takeaways for Political Analysis</h4>
                 <p><strong>Electoral Realignment:</strong> The period 2014-2023 marks a significant realignment with BJP emergence and TRS/BRS entry changing traditional two-party (AIMIM-TDP) dynamics.</p>
                 <p><strong>Opposition Fragmentation:</strong> Multiple opposition parties (BJP, INC, TRS, TDP) compete for anti-incumbency votes, benefiting AIMIM through vote splitting.</p>
                 <p><strong>Changing Demographics:</strong> Declining AIMIM margins in constituencies like Yakutpura and Charminar may indicate demographic shifts or changing voter preferences.</p>
