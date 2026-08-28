@@ -1,13 +1,17 @@
 # Sustained representation, sustained poverty
 
-Hyderabad's old city has returned the same party for a generation. It is also
-markedly poorer than the rest of its own district. This note sets out that
-coincidence, and is careful about what it does and does not establish.
+Hyderabad's old city has returned the same party for a generation, and its
+households remain the poorest in the district — half the cooking gas, half the
+internet, a third of the car ownership of the rest of the city, every gap
+significant at p < 0.0001. This note sets that out, and is careful about what
+it does and does not establish.
 
-The finding that makes it worth writing down is **negative**: the old city is not
-under-served. On every measure of municipal service delivery it is level with the
-rest of Hyderabad district, and on two it is marginally ahead. The gap is
-somewhere else entirely.
+One fact does most of the work: the poverty is not explained by missing
+services. On water, drainage and sanitation the old city matches the rest of
+Hyderabad district, and on two measures it is marginally ahead. Whatever kept
+these households poor, it was not the absence of pipes — which strips the
+easiest alibi off the question of what a generation of the same representation
+delivered.
 
 ---
 
@@ -36,7 +40,7 @@ old-city mandals against the 56 elsewhere:
 Ward medians; two-sided Mann–Whitney. Half the cooking-gas penetration, half the
 internet, a third of the car ownership.
 
-## The fact that reframes the argument
+## The services are not the explanation
 
 Set those against what a municipal corporation actually builds:
 

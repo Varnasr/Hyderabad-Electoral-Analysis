@@ -19,7 +19,7 @@ That is the whole scope. It is a descriptive vote-share series — useful for se
 
 There is also a second dataset and a written analysis: **[ANALYSIS.md](ANALYSIS.md) — sustained representation, sustained poverty**, pairing the electoral record with Census 2011 ward-level amenity and asset data for all 108 GHMC wards in Hyderabad district.
 
-Its central finding is negative and worth stating up front: **the old city is not under-served.** On every measure of municipal service delivery it is level with the rest of its district, and on two it is marginally ahead. The gap is in household economic status — cooking fuel, banking, internet, vehicle ownership — not in pipes and drains.
+The central comparison: **the old city's deficit is in how its households live, not in what was built for them.** On cooking fuel, banking, internet and vehicle ownership the old city sits far behind the rest of its district, every gap significant at p < 0.0001. On water, drainage and sanitation it is level, and on two measures marginally ahead. The parity matters because it removes the easiest explanation — these are not neglected neighbourhoods that were denied services; they are fully serviced neighbourhoods that stayed poor.
 
 ## What this is *not*
 
@@ -41,7 +41,7 @@ Read alongside the [limits](METHODOLOGY.md#what-this-cannot-establish).
 
 **Malakpet is the outlier throughout.** It is the only seat where AIMIM has never crossed 50%, and the only one with a genuine four-way contest. The 1999 and 2004 rows are unusual and should not be read as trend points — see the data notes below.
 
-**The old city is poorer, not less served.** Across 108 GHMC wards in Census 2011, the six old-city mandals match the rest of Hyderabad district on treated tap water (97.1% vs 97.4%), closed drainage (98.4% vs 97.5%) and bathroom access (98.9% vs 99.0%) — none of those differences significant. They fall far behind on LPG for cooking (55.9% vs 77.1%), banking (51.4% vs 68.7%), internet (9.1% vs 20.0%) and vehicle ownership (5.9% vs 15.7%), all at p&nbsp;<&nbsp;0.0001. Ward 43 in Bahadurpura has the district's lowest LPG penetration at 22.0% alongside 92.9% treated tap water. Full working in [ANALYSIS.md](ANALYSIS.md).
+**The old city is poorer, not less served.** Across 108 GHMC wards in Census 2011, the six old-city mandals fall far behind the rest of Hyderabad district on LPG for cooking (55.9% vs 77.1%), banking (51.4% vs 68.7%), internet (9.1% vs 20.0%) and vehicle ownership (5.9% vs 15.7%), all at p&nbsp;<&nbsp;0.0001 — while matching it on treated tap water (97.1% vs 97.4%), closed drainage (98.4% vs 97.5%) and bathroom access (98.9% vs 99.0%), none of those differences significant. The extremes are wider still: Charminar ward 39 has 100% closed drainage and 2.3% internet; Ameerpet ward 99, in the same district, has 47.5% internet. Full working in [ANALYSIS.md](ANALYSIS.md).
 
 ## The data
 
