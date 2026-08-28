@@ -1,176 +1,93 @@
-# Hyderabad Electoral Analysis (1999-2023)
+# Hyderabad Electoral Analysis, 1999–2023
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Data: Election Commission](https://img.shields.io/badge/Data-Election%20Commission-blue.svg)](https://eci.gov.in/)
 
-Interactive analysis of Hyderabad District Assembly Elections spanning 24 years (1999-2023): Vote share trends, party performance metrics, and constituency-level political economy insights.
+Vote-share trends across five old-city assembly constituencies in Hyderabad district, over six election cycles.
 
-## 📊 Overview
-
-This repository provides a comprehensive quantitative analysis of electoral patterns in Hyderabad District across six assembly election cycles (1999, 2004, 2009, 2014, 2018, and 2023). The analysis covers five constituencies: Bahadurpura, Chandrayangutta, Charminar, Malakpet, and Yakutpura, tracking vote share dynamics for major political parties including AIMIM, INC, BJP, TRS/BRS, TDP, and MBT.
-
-### Key Features
-
-- **Interactive HTML Dashboard**: Self-contained, single-file report with responsive visualizations
-- **Comprehensive Data Analysis**: 27 data points across 6 parties and 5 constituencies
-- **Statistical Metrics**: Volatility analysis, growth rates, and comparative performance indicators
-- **Export Capabilities**: PDF, PNG (charts), and CSV (data tables) export functionality
-- **Political Economy Interpretation**: Contextual analysis of electoral dynamics and party systems
-
-## 🎯 Research Questions Addressed
-
-1. How have party vote shares evolved across Hyderabad constituencies over 24 years?
-2. What patterns of electoral dominance, competition, and realignment are observable?
-3. How do constituency-specific factors influence party performance?
-4. What is the trajectory of emerging political forces (BJP, TRS/BRS) in the region?
-5. How does vote share volatility vary across parties and constituencies?
-
-## 📁 Repository Structure
-
-```
-hyderabad-electoral-analysis/
-├── data/
-│   ├── HYD-DIST-RESULTS.csv                    # Primary election data
-│   └── Hyderabad-INC-VoteShare-1999-2023.docx  # Supplementary analysis
-├── outputs/
-│   └── Hyderabad_Electoral_Analysis_Report.html # Interactive report
-├── .gitignore
-├── LICENSE
-└── README.md
-```
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Modern web browser (Chrome, Firefox, Safari, or Edge)
-- No installation required - the report is a self-contained HTML file
-
-### Usage
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Varnasr/hyderabad-electoral-analysis.git
-   cd hyderabad-electoral-analysis
-   ```
-
-2. **Open the report:**
-   - Simply open `outputs/Hyderabad_Electoral_Analysis_Report.html` in your web browser
-   - Or double-click the file to launch it
-
-3. **Export functionality:**
-   - **PDF**: Click "Export Full Report to PDF" button (uses browser print)
-   - **PNG**: Each chart has an individual PNG export button
-   - **CSV**: Export complete dataset or individual tables
-
-## 📈 Data Sources
-
-- **Primary Source**: Election Commission of India (constituency-level results)
-- **Time Period**: 1999-2023 (6 election cycles)
-- **Geographic Scope**: Hyderabad District, Telangana
-- **Variables**: Party-wise vote share percentages for each constituency and year
-
-### Data Notes
-
-- Empty cells indicate party did not contest in that constituency/year
-- Vote shares are expressed as percentages of total valid votes
-- The 2004 Malakpet anomaly (INC: 52.12%) occurred due to AIMIM not fielding a candidate
-
-## 🔍 Key Findings
-
-### Electoral Dominance
-- **AIMIM** maintains consistent electoral superiority with vote shares ranging from 30-78%
-- Particularly strong in Bahadurpura (78.46% in 2014) and Charminar constituencies
-
-### Party Trajectories
-- **BJP**: Significant growth from marginal presence (1999) to competitive positions (15-27% in 2023)
-- **TRS/BRS**: Emerged as significant player post-2014, particularly in Bahadurpura and Yakutpura
-- **TDP**: Systematic decline from competitive positions to marginal presence
-- **INC**: Variable performance with notable constituency-specific patterns
-
-### Constituency Dynamics
-- **Bahadurpura**: AIMIM fortress (62-78% vote share)
-- **Charminar**: Most competitive; BJP emerging as strong challenger
-- **Malakpet**: Highest volatility; multi-party competition
-- **Yakutpura**: AIMIM showing recent vulnerability (decline from 57% to 33%)
-- **Chandrayangutta**: Consistent AIMIM dominance with growing BJP-TRS challenge
-
-## 📊 Methodology
-
-### Analytical Approach
-- **Descriptive Statistics**: Mean, median, standard deviation of vote shares
-- **Trend Analysis**: Time-series examination of party performance
-- **Volatility Metrics**: Standard deviation as measure of electoral stability
-- **Comparative Analysis**: Constituency-level and party-level cross-sectional comparisons
-- **Growth Rate Analysis**: Period-over-period changes (1999 vs 2023)
-
-### Visualization Techniques
-- Line charts for temporal trends
-- Bar charts for comparative analysis
-- Grouped visualizations for multi-party competition
-- Color-coded party identification for clarity
-
-## 🛠️ Technical Stack
-
-- **Data Processing**: JavaScript (native)
-- **Visualization**: Chart.js v4.4.0
-- **Export Functions**: html2canvas, jsPDF
-- **Styling**: Custom CSS with responsive design
-- **Format**: Self-contained HTML (no external dependencies required at runtime)
-
-## 📚 Academic Context
-
-This analysis contributes to understanding:
-- **Electoral Geography**: Urban voting patterns in Indian metropolitan constituencies
-- **Party Systems**: Dominant party systems and multi-party competition dynamics
-- **Political Economy**: Identity politics, regional dynamics, and national party performance in local contexts
-- **Voter Behavior**: Vote bank stability, swing patterns, and electoral volatility
-
-## 🤝 Contributing
-
-Contributions are welcome! Areas for enhancement:
-- Additional statistical tests (e.g., regression analysis, correlation matrices)
-- Demographic overlay analysis
-- Comparison with other metropolitan constituencies
-- Predictive modeling for future elections
-- Interactive filters and drill-down capabilities
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 📧 Contact
-
-**Varna Sri Raman**  
-Pinpoint Ventures  
-Development Economist
-
-For questions, suggestions, or collaborations:
-- Open an issue in this repository
-- Connect via GitHub: [@Varnasr](https://github.com/Varnasr)
-- Academic inquiries welcome
-
-## 🙏 Acknowledgments
-
-- Election Commission of India for public data availability
-- Political analysts and researchers whose work informs this analysis
-- Open-source community for visualization and analysis tools
-
-## 📖 Citation
-
-If you use this analysis in your research, please cite:
-
-```bibtex
-@misc{hyderabad_electoral_2024,
-  title={Hyderabad Electoral Analysis 1999-2023: Vote Share Trends and Political Economy Insights},
-  author={Raman, Varna Sri},
-  year={2024},
-  publisher={GitHub},
-  organization={Pinpoint Ventures},
-  url={https://github.com/Varnasr/hyderabad-electoral-analysis}
-}
-```
+**[Open the interactive report →](https://varnasr.github.io/H-VSAINC/)** · [The data](Data/HYD-DIST-RESULTS.csv) · [Methodology and limits](METHODOLOGY.md)
 
 ---
 
-**Note**: This is an independent academic analysis. Vote share data is based on official Election Commission results. Interpretations and analysis represent scholarly assessment of electoral patterns.
+## What this is
+
+A single dataset and a single-page interactive report tracking party vote share in **Bahadurpura, Chandrayangutta, Charminar, Malakpet and Yakutpura** across the assembly elections of **1999, 2004, 2009, 2014, 2018 and 2023**.
+
+Parties tracked: **AIMIM, TDP, MBT, INC, BJP, and TRS/BRS**.
+
+That is the whole scope. It is a descriptive vote-share series — useful for seeing how competition in these seats has changed, and for pointing at a specific number in an argument.
+
+## What this is *not*
+
+**There is no infrastructure data in this repository.** Earlier metadata described it as a "voting patterns and public infrastructure analysis." That was never accurate: the dataset holds vote shares only, and the report does not mention infrastructure anywhere. The description has been corrected rather than left to mislead. If a vote-share-against-service-delivery comparison is wanted, that is a new data-collection project — see [Open questions](#open-questions).
+
+It is also **not a causal analysis**. It shows what vote shares were, not why. Nothing here identifies the effect of representation on anything. [METHODOLOGY.md](METHODOLOGY.md) sets out exactly what the comparison can and cannot support, and is worth reading before quoting any of it.
+
+## What the data shows
+
+Read alongside the [limits](METHODOLOGY.md#what-this-cannot-establish).
+
+**AIMIM's dominance is real but has been narrowing.** The party holds all five seats, but its share has fallen in four of them since 2014. The clearest movement is in **Yakutpura**, from 45.8% (2014) to **32.9%** (2023) — its weakest recorded position in the series, on the district's lowest turnout that year (39.6%).
+
+**BJP has grown from nothing to second place in parts of the old city.** Absent or marginal in 1999–2009, it reached **26.8% in Charminar** and 18.0% in Malakpet by 2023. In Charminar its rise tracks AIMIM's decline from 73.5% (2004) to 50.1% (2023) almost step for step.
+
+**The old regional players collapsed.** TDP fielded candidates in most of these seats through 2009 and has essentially vanished from the series by 2023. MBT persists only in pockets — though notably it returned to **32.2% in Yakutpura in 2023**, which is most of the explanation for AIMIM's drop there.
+
+**BRS peaked and receded.** Effectively absent before 2009, it climbed to double digits across the district by 2018, then fell back in 2023 — consistent with the statewide swing that year.
+
+**Malakpet is the outlier throughout.** It is the only seat where AIMIM has never crossed 50%, and the only one with a genuine four-way contest. The 1999 and 2004 rows are unusual and should not be read as trend points — see the data notes below.
+
+## The data
+
+[`Data/HYD-DIST-RESULTS.csv`](Data/HYD-DIST-RESULTS.csv) — 27 constituency-year rows, one column per party, values as vote-share percentages. Full dictionary and provenance in [`Data/README.md`](Data/README.md).
+
+Three things to know before using it:
+
+1. **Bahadurpura is missing for 2009.** The seat was created in the 2008 delimitation and *was* contested in 2009 — AIMIM's Mohammad Moazam Khan won it. The row is absent from this dataset, so any 2009 district total understates AIMIM. This is a known gap, not a zero. See [`Data/README.md`](Data/README.md#known-gaps).
+2. **Rows do not sum to 100%.** There is no "Others"/independents/NOTA column. A gap of 10–20 points is normal and does not indicate missing party data.
+3. **Blank ≠ zero.** A blank cell means the party did not contest that seat that year.
+
+## Open questions
+
+Things this repository does not answer and could:
+
+- **The infrastructure comparison.** Sourcing constituency-level service-delivery data (ward-level GHMC works, water and sanitation coverage, school and PHC provision) for 1999–2023 is the substantial piece of work implied by the old name. It is tractable via GHMC ward records and Census/NFHS ward-level data, but it is a collection project, not a re-labelling.
+- **Turnout as a variable.** 2023 turnout is known per seat (Yakutpura 39.6%, Malakpet 41.3%, Charminar 43.3%, Chandrayangutta 45.3%, Bahadurpura 45.5%) but is not in the dataset. Vote share moves differently from votes cast, and the Yakutpura result in particular is hard to read without it.
+- **Absolute vote counts.** Shares alone hide whether a party's base grew or the electorate shrank around it.
+- **Delimitation discontinuity.** The 2008 boundary redraw means pre-2009 and post-2009 rows are not strictly the same geographies. Treated properly this needs a caveat on every cross-period comparison.
+
+## Using the report
+
+`index.html` is self-contained apart from three CDN libraries (Chart.js, html2canvas, jsPDF) loaded at runtime, so it needs a network connection on first load.
+
+```bash
+git clone https://github.com/Varnasr/H-VSAINC.git
+cd H-VSAINC
+open index.html          # or: python3 -m http.server 8000
+```
+
+Every section is deep-linkable — `index.html#constituency-analysis`, `#statistical-analysis`, `#interpretation` and so on — so a specific finding can be sent to someone directly.
+
+Charts export to PNG individually; tables export to CSV; the whole report prints to PDF.
+
+## Sources
+
+- Election Commission of India — constituency-level results, [eci.gov.in](https://eci.gov.in/)
+- [`Docs/`](Docs/) — the compiled analysis PDF
+- Cross-checks against Wikipedia constituency pages and IndiaVotes are recorded in [`Data/README.md`](Data/README.md)
+
+## Contributing
+
+Corrections to the data are the most valuable contribution — particularly the missing 2009 Bahadurpura row, sourced to an ECI record. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Citation
+
+See [CITATION.cff](CITATION.cff).
+
+## License
+
+MIT — see [LICENSE](LICENSE).
+
+---
+
+**Note:** An independent analysis using official Election Commission results. Interpretations are the author's. Where a claim rests on a single secondary source rather than an ECI record, the data documentation says so.

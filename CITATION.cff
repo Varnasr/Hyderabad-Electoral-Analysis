@@ -1,22 +1,30 @@
 cff-version: 1.2.0
 message: "If you use this project in your research, please cite it as below."
-type: software
-title: "H-VSAINC: Hyderabad Voting Patterns and Public Infrastructure Analysis (1999-2023)"
+type: dataset
+title: "Hyderabad Electoral Analysis, 1999-2023: constituency vote shares for five old-city assembly seats"
+abstract: >-
+  Party vote-share data and an interactive report covering six assembly
+  election cycles (1999, 2004, 2009, 2014, 2018, 2023) across five
+  constituencies in Hyderabad district: Bahadurpura, Chandrayangutta,
+  Charminar, Malakpet and Yakutpura. Parties tracked are AIMIM, TDP, MBT,
+  INC, BJP and TRS/BRS. This is a descriptive series and contains no
+  infrastructure or service-delivery data; see METHODOLOGY.md for what the
+  comparison can and cannot establish.
 authors:
   - family-names: Raman
     given-names: Varna Sri
 url: "https://github.com/Varnasr/H-VSAINC"
 repository-code: "https://github.com/Varnasr/H-VSAINC"
 license: MIT
+version: "2026.1.0"
+date-released: "2026-08-28"
 keywords:
   - hyderabad
+  - telangana
   - elections
-  - voting-patterns
-  - infrastructure
+  - vote-share
+  - electoral-analysis
   - political-economy
   - india
-  - aimim
-  - data-visualization
   - constituency-analysis
-date-released: "2024-01-01"
-
+  - data-visualization
