@@ -5,7 +5,7 @@
 
 Vote-share trends across five old-city assembly constituencies in Hyderabad district, over six election cycles.
 
-**[Open the interactive report →](https://varnasr.github.io/H-VSAINC/)** · [The data](Data/HYD-DIST-RESULTS.csv) · [Methodology and limits](METHODOLOGY.md)
+**[Open the interactive report →](https://varnasr.github.io/Hyderabad-Electoral-Analysis/)** · [The data](Data/HYD-DIST-RESULTS.csv) · [Methodology and limits](METHODOLOGY.md)
 
 ---
 
@@ -61,8 +61,8 @@ Things this repository does not answer and could:
 `index.html` is self-contained apart from three CDN libraries (Chart.js, html2canvas, jsPDF) loaded at runtime, so it needs a network connection on first load.
 
 ```bash
-git clone https://github.com/Varnasr/H-VSAINC.git
-cd H-VSAINC
+git clone https://github.com/Varnasr/Hyderabad-Electoral-Analysis.git
+cd Hyderabad-Electoral-Analysis
 open index.html          # or: python3 -m http.server 8000
 ```
 
