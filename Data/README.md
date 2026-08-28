@@ -21,7 +21,7 @@
 
 **A blank cell means the party did not contest that seat that year. It does not mean zero.** Treating blanks as zeros will drag every average down and invent declines that did not happen. In Python: `pandas.read_csv(...)` gives `NaN`, which is correct — do not `fillna(0)`.
 
-**Rows do not sum to 100%.** There is no column for independents, smaller parties, or NOTA. Totals typically land between 80% and 95%. The residual is real votes, not missing data.
+**Rows do not sum to 100%.** There is no column for independents, smaller parties, or NOTA. The residual runs from 0 to 15.6 points with a median of 3.5; 21 of the 27 rows fall under 6 points, so totals typically land between 94% and 98%. The six largest residuals are Malakpet 1999 (15.6), Yakutpura 2023 (14.0), Yakutpura 2009 (13.6), Malakpet 2009 (12.6), Malakpet 2014 (8.4) and Chandrayangutta 2009 (7.8). The residual is real votes, not missing data.
 
 **TRS and BRS are the same party.** Renamed in 2022. The column keeps the `TRS_` name across the whole series for continuity.
 
