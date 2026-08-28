@@ -17,11 +17,15 @@ Parties tracked: **AIMIM, TDP, MBT, INC, BJP, and TRS/BRS**.
 
 That is the whole scope. It is a descriptive vote-share series — useful for seeing how competition in these seats has changed, and for pointing at a specific number in an argument.
 
+There is also a second dataset and a written analysis: **[ANALYSIS.md](ANALYSIS.md) — sustained representation, sustained poverty**, pairing the electoral record with Census 2011 ward-level amenity and asset data for all 108 GHMC wards in Hyderabad district.
+
+Its central finding is negative and worth stating up front: **the old city is not under-served.** On every measure of municipal service delivery it is level with the rest of its district, and on two it is marginally ahead. The gap is in household economic status — cooking fuel, banking, internet, vehicle ownership — not in pipes and drains.
+
 ## What this is *not*
 
-**There is no infrastructure data in this repository.** Earlier metadata described it as a "voting patterns and public infrastructure analysis." That was never accurate: the dataset holds vote shares only, and the report does not mention infrastructure anywhere. The description has been corrected rather than left to mislead. If a vote-share-against-service-delivery comparison is wanted, that is a new data-collection project — see [Open questions](#open-questions).
+**Not a causal analysis.** It shows what vote shares were and what household conditions were, not why either. Nothing here identifies the effect of representation on anything — and it cannot, because there is no variation in representation to exploit: AIMIM has won every one of these seats, every cycle. [METHODOLOGY.md](METHODOLOGY.md) sets out exactly what the comparison can and cannot support, and is worth reading before quoting any of it.
 
-It is also **not a causal analysis**. It shows what vote shares were, not why. Nothing here identifies the effect of representation on anything. [METHODOLOGY.md](METHODOLOGY.md) sets out exactly what the comparison can and cannot support, and is worth reading before quoting any of it.
+**Not an infrastructure-denial argument.** An earlier version of this repository was described as a "voting patterns and public infrastructure analysis," implying under-provision. The Census data added here contradicts that: water, drainage and sanitation coverage in the old city are statistically indistinguishable from the rest of the district.
 
 ## What the data shows
 
@@ -36,6 +40,8 @@ Read alongside the [limits](METHODOLOGY.md#what-this-cannot-establish).
 **BRS peaked and receded.** Effectively absent before 2009, it climbed to double digits across the district by 2018, then fell back in 2023 — consistent with the statewide swing that year.
 
 **Malakpet is the outlier throughout.** It is the only seat where AIMIM has never crossed 50%, and the only one with a genuine four-way contest. The 1999 and 2004 rows are unusual and should not be read as trend points — see the data notes below.
+
+**The old city is poorer, not less served.** Across 108 GHMC wards in Census 2011, the six old-city mandals match the rest of Hyderabad district on treated tap water (97.1% vs 97.4%), closed drainage (98.4% vs 97.5%) and bathroom access (98.9% vs 99.0%) — none of those differences significant. They fall far behind on LPG for cooking (55.9% vs 77.1%), banking (51.4% vs 68.7%), internet (9.1% vs 20.0%) and vehicle ownership (5.9% vs 15.7%), all at p&nbsp;<&nbsp;0.0001. Ward 43 in Bahadurpura has the district's lowest LPG penetration at 22.0% alongside 92.9% treated tap water. Full working in [ANALYSIS.md](ANALYSIS.md).
 
 ## The data
 
