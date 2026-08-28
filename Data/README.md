@@ -103,3 +103,52 @@ The consistent small negative delta points to a **denominator difference** — v
 ## Contributing corrections
 
 Cite an ECI record, note the denominator used, and say which row changes. Corrections to the 2009 Bahadurpura gap are especially welcome.
+
+---
+
+# GHMC-WARD-AMENITIES-2011.csv
+
+Census 2011 household amenities and assets for **108 GHMC wards** in Hyderabad
+district. Used in [`../ANALYSIS.md`](../ANALYSIS.md).
+
+## Dictionary
+
+| Column | Description |
+|---|---|
+| `mandal` | Sub-district (tehsil) the ward sits in |
+| `ward_no` | GHMC ward number |
+| `old_city` | `yes` for the six old-city mandals — Bahadurpura, Charminar, Bandlaguda, Saidabad, Asifnagar, Golconda |
+| `tap_water_treated` | % households, main drinking-water source is treated tap water |
+| `water_within_premises` | % households, water source within premises |
+| `closed_drainage` | % households, waste water to closed drainage |
+| `bathroom_within_premises` | % households with a bathroom within premises |
+| `lpg_png_cooking` | % households cooking on LPG/PNG |
+| `avails_banking` | % households availing banking services |
+| `computer_internet` | % households with a computer/laptop **with** internet |
+| `car_jeep_van` | % households owning a car, jeep or van |
+| `no_listed_assets` | % households with none of the listed assets |
+
+All values are percentages of households in that ward.
+
+## Provenance
+
+Census of India 2011, **Houselisting & Housing Census, table HH-14** —
+"Percentage of households to total households by amenities and assets", district
+536 (Hyderabad), Andhra Pradesh as then constituted. Retrieved from the Census
+release republished by [OpenCity](https://data.opencity.in/dataset/hyderabad-census-2011-data)
+in August 2026 and reduced to the columns above; no values were altered.
+
+## Reading it correctly
+
+**Mandals are not assembly constituencies.** `old_city` marks the six mandals that
+contain the five seats in `HYD-DIST-RESULTS.csv`, but the boundaries are not
+identical. Any comparison using this flag is between parts of a city, not between
+electorates.
+
+**One time point.** Census 2011 pre-dates most of the 2014–2023 electoral period,
+so this supports statements about *levels*, not about change over the period of
+representation.
+
+**Complete enumeration, not a sample.** There are no sampling errors on these
+figures. Significance tests in `ANALYSIS.md` compare ward distributions between two
+groups of wards, which is a different question from sampling uncertainty.

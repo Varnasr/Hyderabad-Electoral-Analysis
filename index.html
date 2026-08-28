@@ -595,6 +595,33 @@
         </div>
 
         <!-- Interpretation and Insights -->
+        <div class="section" id="representation-and-poverty">
+            <h2>Representation and Poverty</h2>
+
+            <p>The five seats above have returned the same party in every cycle since 1999. Set that record beside how the same neighbourhoods actually live, and the result is not the one usually assumed.</p>
+
+            <p>Census 2011 enumerated <strong>108 GHMC wards</strong> in Hyderabad district. Comparing the <strong>52 wards</strong> in the six old-city mandals against the <strong>56 elsewhere</strong> splits cleanly in two &mdash; and the split is not where an under-provision argument would put it.</p>
+
+            <div class="chart-container">
+                <h3>Municipal service versus household economics, Census 2011</h3>
+                <div class="chart-wrapper">
+                    <canvas id="amenities-chart"></canvas>
+                </div>
+                <div class="export-buttons">
+                    <button class="btn btn-primary" onclick="exportChartToPNG('amenities-chart', 'old_city_vs_rest.png')">Export to PNG</button>
+                </div>
+            </div>
+
+            <div class="data-caveat">
+                <strong>What this shows.</strong> On the four municipal-service measures &mdash; the things a corporation or an MLA delivers &mdash; the old city is level with the rest of its district. Not one difference is statistically significant, and closed drainage marginally favours the old city. On the four household-economic measures the gap is large and unambiguous, every one at <em>p</em>&nbsp;&lt;&nbsp;0.0001.
+                <ul>
+                    <li>The district's <strong>worst-served ward</strong> on treated water (49.1%) and closed drainage (49.8%) is ward 1, Musheerabad &mdash; <strong>not</strong> in the old city.</li>
+                    <li>Ward 43 in Bahadurpura has the district's <strong>lowest LPG penetration at 22.0%</strong>, alongside 92.9% treated tap water and 95.6% closed drainage. Poor households on a well-served network.</li>
+                </ul>
+                <strong>What it does not show.</strong> This is a coincidence of two long-run facts, not a causal finding. There is no variation in representation to exploit &mdash; AIMIM won every one of these seats, every cycle &mdash; and urban infrastructure in India runs through the municipal corporation and state departments, not the MLA. Census 2011 is a single time point, and mandals only approximate constituency boundaries. See <a href="ANALYSIS.md">ANALYSIS.md</a>.
+            </div>
+        </div>
+
         <div class="section" id="interpretation">
             <h2>Political Economy Interpretation</h2>
             
@@ -797,6 +824,63 @@
             });
             throw new Error('Chart.js unavailable — charts replaced with a notice.');
         }
+
+
+        // ---- Representation and poverty: Census 2011 ward medians ------------
+        // Two families of indicators, one group comparison. A grouped bar reads
+        // the dissociation directly: the municipal block is flat, the economic
+        // block is not. Two series only, so slots 1 and 2 of the palette.
+        const AMENITY_ROWS = [
+            { label: 'Tap water (treated)',   old: 97.1, rest: 97.4, family: 'municipal' },
+            { label: 'Water in premises',     old: 94.8, rest: 94.5, family: 'municipal' },
+            { label: 'Closed drainage',       old: 98.4, rest: 97.5, family: 'municipal' },
+            { label: 'Bathroom in premises',  old: 98.9, rest: 99.0, family: 'municipal' },
+            { label: 'LPG/PNG cooking',       old: 55.9, rest: 77.1, family: 'economic'  },
+            { label: 'Avails banking',        old: 51.4, rest: 68.7, family: 'economic'  },
+            { label: 'Computer + internet',   old:  9.1, rest: 20.0, family: 'economic'  },
+            { label: 'Car / jeep / van',      old:  5.9, rest: 15.7, family: 'economic'  }
+        ];
+        new Chart(document.getElementById('amenities-chart'), {
+            type: 'bar',
+            data: {
+                labels: AMENITY_ROWS.map(r => r.label),
+                datasets: [
+                    { label: 'Old city (52 wards)',
+                      data: AMENITY_ROWS.map(r => r.old),
+                      backgroundColor: cssVar('--series-1'),
+                      borderRadius: 4, borderSkipped: false, barPercentage: .82 },
+                    { label: 'Rest of district (56 wards)',
+                      data: AMENITY_ROWS.map(r => r.rest),
+                      backgroundColor: cssVar('--series-2'),
+                      borderRadius: 4, borderSkipped: false, barPercentage: .82 }
+                ]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: {
+                        callbacks: {
+                            afterBody: function (items) {
+                                const r = AMENITY_ROWS[items[0].dataIndex];
+                                const gap = (r.old - r.rest).toFixed(1);
+                                return (r.family === 'municipal'
+                                    ? 'Municipal service — difference not significant'
+                                    : 'Household economics — p < 0.0001')
+                                    + '\ngap ' + (gap > 0 ? '+' : '') + gap + ' points';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: { beginAtZero: true, max: 100,
+                         title: { display: true, text: '% of households (ward median)' } },
+                    y: { grid: { display: false } }
+                }
+            }
+        });
 
         // AIMIM Chart
         const aimimData = getPartyDataByConstituency('AIMIM_VoteShare');
