@@ -334,11 +334,6 @@ em { font-style: italic; }
 .rc-aimim { background: var(--accent-soft); color: var(--ink); border: 1px solid transparent; }
 .rc-other { background: var(--surface); color: var(--muted); border: 1px dashed var(--rule-strong); font-size: 10.5px; }
 .rc-none  { background: transparent; color: var(--rule-strong); border: 1px solid var(--rule); font-size: 15px; }
-.rc-gap {
-    border: 1px dashed var(--accent); color: var(--accent); font-size: 9.5px; text-align: center;
-    background: repeating-linear-gradient(45deg, transparent, transparent 4px, var(--hatch) 4px, var(--hatch) 5px);
-    padding: 2px;
-}
 .record-key {
     display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 12px;
     color: var(--muted); margin-top: 16px;
@@ -511,7 +506,7 @@ td.lead { font-weight: 600; color: var(--ink); }
     <h1>Held for a generation. Poor for a generation.</h1>
     <p class="dek">AIMIM has won the old city&rsquo;s five assembly seats in every election it entered since 1999. The people who live there are still the poorest in Hyderabad.</p>
     <div class="measure standfirst">
-      <p>Bahadurpura, Chandrayangutta, Charminar, Malakpet, Yakutpura. AIMIM has led twenty-five of the twenty-seven contests held in these seats since 1999 &mdash; every one it entered &mdash; and has held all five without a break since 2009.</p>
+      <p>Bahadurpura, Chandrayangutta, Charminar, Malakpet, Yakutpura. AIMIM has led twenty-six of the twenty-eight contests held in these seats since 1999 &mdash; every one it entered &mdash; and has held all five without a break since 2009.</p>
       <p>Over that same generation these have stayed the poorest neighbourhoods in their own district. Half the cooking gas, half the internet, a third of the car ownership. Fewer people in work &mdash; 37% against 44% &mdash; and far fewer women in work. In Charminar&rsquo;s poorest ward, one household in fifty had internet. In Ameerpet, across town, one in two.</p>
       <p><strong>The problem is work and income.</strong> It is not slums: the share of people in listed slums matches the rest of the city. It is not services: water, drainage and bathrooms are at full coverage. Fewer people have work, far fewer women have work, and the things income buys are scarce &mdash; in ordinary, legal houses with every service connected.</p>
       <p>Where the old city has caught up since 2011, national schemes did it. Ujjwala closed the cooking-gas gap and Jan Dhan almost certainly closed the banking gap; both reached every ward in India at once, so the catch-up says nothing about local performance. We also ran the standard causal test of whether AIMIM&rsquo;s wins helped or harmed these places, and it cannot answer: <a href="#limits">six close contests exist in the party&rsquo;s entire history</a>. What stands is the record itself: one party for a generation, in neighbourhoods that still work less and earn less than the city around them.</p>
@@ -585,7 +580,7 @@ td.lead { font-weight: 600; color: var(--ink); }
   <section id="record" class="rule-top tab-panel">
     <span id="constituency-analysis"></span><span id="party-trends"></span><span id="statistical-analysis"></span><span id="evidence"></span>
     <div class="overline">The record</div>
-    <h2>Twenty-seven contests. AIMIM led twenty-five.</h2>
+    <h2>Twenty-eight contests. AIMIM led twenty-six.</h2>
     <div class="measure">
       <p>Each cell shows the leading party&rsquo;s vote share in that seat and year.</p>
     </div>
@@ -599,7 +594,7 @@ td.lead { font-weight: 600; color: var(--ink); }
         <div class="rc-seat">Bahadurpura</div>
         <div class="rc rc-none" title="Seat did not exist before the 2008 delimitation">&middot;</div>
         <div class="rc rc-none" title="Seat did not exist before the 2008 delimitation">&middot;</div>
-        <div class="rc rc-gap" title="Contested and won by AIMIM in 2009; the row is missing from this dataset">row<br>missing</div>
+        <div class="rc rc-aimim">70.8</div>
         <div class="rc rc-aimim">78.5</div><div class="rc rc-aimim">74.3</div><div class="rc rc-aimim">62.0</div>
 
         <div class="rc-seat">Chandrayangutta</div>
@@ -624,7 +619,6 @@ td.lead { font-weight: 600; color: var(--ink); }
     <div class="record-key">
       <span><i class="key-sw" style="background:var(--accent-soft)"></i> AIMIM led</span>
       <span><i class="key-sw" style="border:1px dashed var(--rule-strong);background:var(--surface)"></i> Another party led</span>
-      <span><i class="key-sw" style="border:1px dashed var(--accent);background:repeating-linear-gradient(45deg,transparent,transparent 3px,var(--hatch) 3px,var(--hatch) 4px)"></i> Missing row, not a loss</span>
       <span><i class="key-sw" style="border:1px solid var(--rule)"></i> Seat did not exist</span>
     </div>
 
@@ -635,7 +629,7 @@ td.lead { font-weight: 600; color: var(--ink); }
     <div class="chart-block">
       <h3>AIMIM&rsquo;s share by seat, 1999&ndash;2023</h3>
       <div class="chart-wrapper"><canvas id="aimim-chart"></canvas></div>
-      <p class="chart-note">Bahadurpura begins in 2014: the seat was created in the 2008 delimitation and its 2009 row is missing from the dataset. Malakpet begins in 2009, the first cycle AIMIM contested it. A gap in a line means the party did not contest, not zero.</p>
+      <p class="chart-note">Bahadurpura begins in 2009, its first contest after the 2008 delimitation created the seat; that year the runner-up was CPI, at 9.4%. Malakpet begins in 2009 too, the first cycle AIMIM contested it. A gap in a line means the party did not contest, not zero.</p>
     </div>
   </section>
 
@@ -949,7 +943,7 @@ td.lead { font-weight: 600; color: var(--ink); }
     <div class="measure">
       <p>So the claim that survives every check in this repository is this one:</p>
       <p><em>One party has represented the old city for a generation. Its people still work less and earn less than the rest of their district, in legal, fully serviced neighbourhoods &mdash; and the only gaps that closed were closed by national schemes.</em></p>
-      <p>The 2008 boundary redraw remains the one untried design, blocked on a ward crosswalk that is not public; it is set out in <a href="analysis.html">the full analysis</a> with the officeholder record and its sources.</p>
+      <p>The 2008 boundary redraw remains the one untried design, blocked on a ward crosswalk that is not public; it is set out in <a href="analysis.html">the full analysis</a> with the officeholder record and its sources, and leads <a href="roadmap.html">the roadmap</a>.</p>
     </div>
   </section>
 
@@ -970,7 +964,7 @@ td.lead { font-weight: 600; color: var(--ink); }
             <tr><th scope="col">Dataset</th><th scope="col">Covers</th><th scope="col">Is anything newer available?</th></tr>
           </thead>
           <tbody>
-            <tr><td>Election results, five seats</td><td>1999&ndash;2023</td><td>No &mdash; 2023 was the most recent assembly election.</td></tr>
+            <tr><td>Election results, five seats</td><td>1999&ndash;2023</td><td>No &mdash; 2023 was the most recent assembly election. Electorate and valid-vote counts run to 2018, the latest in the TCPD file; 2023 turnout is from ECI figures as press-reported.</td></tr>
             <tr><td>Ward census: amenities, literacy, work</td><td>2011</td><td>No &mdash; the 2021 census was never conducted; the next is expected around 2027. This is the latest ward-level data in existence.</td></tr>
             <tr><td>NFHS-5 district health survey</td><td>2019&ndash;21</td><td>No &mdash; the latest published district factsheets. Used here to check which 2011 gaps have since closed.</td></tr>
             <tr><td>GHMC slum survey</td><td>early 2010s</td><td>No public update; the survey year is not stated in the file.</td></tr>
@@ -985,8 +979,8 @@ td.lead { font-weight: 600; color: var(--ink); }
     <div class="caveat">
       <h3>Before quoting the numbers</h3>
       <ul>
-        <li><strong>Bahadurpura&rsquo;s 2009 row is missing.</strong> The seat was contested and won by AIMIM that year; district totals for 2009 understate the party.</li>
-        <li><strong>Rows do not sum to 100%.</strong> No column for independents or NOTA; the residual has a median of 3.5 points. A blank is &ldquo;did not contest&rdquo;, not zero. Figures are good to about &plusmn;1 point.</li>
+        <li><strong>Two sources feed the election table.</strong> Vote shares come from ECI results cross-checked against Wikipedia and IndiaVotes. The 2009 Bahadurpura row and the turnout, electorate and valid-vote figures come from the TCPD results file (via SHRUG); its full candidate list confirms that TDP, MBT and TRS did not contest that seat that year, and that the runner-up was CPI at 9.43% &mdash; a party outside the six columns, which is why the row&rsquo;s shares sum well short of 100.</li>
+        <li><strong>Rows do not sum to 100%.</strong> No column for independents or NOTA; the residual has a median of 3.6 points, and reaches 15.9 in 2009 Bahadurpura, where the runner-up was CPI. A blank is &ldquo;did not contest&rdquo;, not zero. Figures are good to about &plusmn;1 point.</li>
         <li><strong>Mandals are not constituencies</strong>, and the 2008 delimitation redrew boundaries, so pre- and post-2009 rows are not the same geographies.</li>
         <li><strong>Census 2011 is one time point.</strong> Levels, not change; no controls for density, housing age or land title. Female work participation reflects norms as well as opportunity, and one result runs against a uniform-deprivation reading: the male&ndash;female literacy gap is <em>smaller</em> in the old city.</li>
         <li><strong>The slum figures are administrative</strong> (GHMC-listed, vintage unstated) and the NFHS-5 figures are confirmed against the official IIPS district factsheet, a copy of which is in <a href="Docs/NFHS-5-Hyderabad-District-Factsheet.pdf">Docs/</a>.</li>
@@ -995,12 +989,13 @@ td.lead { font-weight: 600; color: var(--ink); }
 
     <div class="table-scroll">
       <table id="dataTable">
-        <caption>Party vote share by constituency and cycle, percent. An em dash means the party did not contest that seat that year. Bold marks the leading party among the six tracked.</caption>
+        <caption>Party vote share by constituency and cycle, percent. An em dash means the party did not contest that seat that year. Bold marks the leading party among the six tracked. The last column is turnout &mdash; the share of registered electors who voted.</caption>
         <thead>
           <tr>
             <th scope="col">Year</th><th scope="col">Constituency</th>
             <th scope="col">AIMIM</th><th scope="col">TDP</th><th scope="col">MBT</th>
             <th scope="col">INC</th><th scope="col">BJP</th><th scope="col">TRS/BRS</th>
+            <th scope="col">Turnout</th>
           </tr>
         </thead>
         <tbody id="dataTableBody"></tbody>
@@ -1014,12 +1009,13 @@ td.lead { font-weight: 600; color: var(--ink); }
       <a href="Data/GHMC-WARD-SLUMS.csv">GHMC slum survey by ward (CSV)</a>
       <button type="button" onclick="window.print()">Print or save as PDF</button>
       <a href="analysis.html">Full written analysis</a>
+      <a href="roadmap.html">What comes next</a>
       <a href="CITATION.cff">Cite this</a>
     </div>
 
     <h3>Sources</h3>
     <p class="chart-note">
-      <strong>Elections:</strong> Election Commission of India constituency results, cross-checked against Wikipedia and IndiaVotes; cross-check table and denominator note in <a href="data-notes.html">the data notes</a>.<br>
+      <strong>Elections:</strong> Election Commission of India constituency results, cross-checked against Wikipedia and IndiaVotes; the 2009 Bahadurpura row and the turnout and electorate columns from TCPD results via SHRUG v2; cross-check table and denominator note in <a href="data-notes.html">the data notes</a>.<br>
       <strong>Wards:</strong> Census of India 2011 &mdash; Houselisting table HH-14 and the ward Primary Census Abstract, via <a href="https://data.opencity.in/dataset/hyderabad-census-2011-data">OpenCity</a>; GHMC slum survey via the same platform, join validated geographically.<br>
       <strong>Since 2011:</strong> NFHS-5 (2019&ndash;21) district and state factsheets, IIPS.<br>
       <strong>Officeholders:</strong> MPLADS portal figures as press-reported (Citizen Matters; Siasat, August 2026); PRS Legislative Research; Deccan Chronicle (Telangana CDP, 2017&ndash;18).<br>
@@ -1029,7 +1025,7 @@ td.lead { font-weight: 600; color: var(--ink); }
 
   <footer class="footer">
     <p><strong>Hyderabad Electoral Analysis, 1999&ndash;2023.</strong> An independent analysis using official Election Commission results and Census of India data. Interpretations are the author&rsquo;s. Where a claim rests on a single secondary source rather than a primary record, the text says so.</p>
-    <p>MIT licensed. <a href="https://github.com/Varnasr/Hyderabad-Electoral-Analysis">Source and data on GitHub</a> &middot; corrections to the missing 2009 Bahadurpura row are especially welcome.</p>
+    <p>MIT licensed. <a href="https://github.com/Varnasr/Hyderabad-Electoral-Analysis">Source and data on GitHub</a> &middot; corrections are welcome by issue or pull request &middot; open questions on <a href="roadmap.html">the roadmap</a>.</p>
   </footer>
 
 </div>
@@ -1048,6 +1044,7 @@ const electionData = [
     {YEAR: 2004, ACNAME: "CHARMINAR", AIMIM_VoteShare: 73.52, TDP_VoteShare: 12.9, MBT_VoteShare: 2.61, INC_VoteShare: 9.06, BJP_VoteShare: null, TRS_VoteShare: null},
     {YEAR: 2004, ACNAME: "MALAKPET", AIMIM_VoteShare: null, TDP_VoteShare: 43.35, MBT_VoteShare: null, INC_VoteShare: 52.12, BJP_VoteShare: null, TRS_VoteShare: null},
     {YEAR: 2004, ACNAME: "YAKUTPURA", AIMIM_VoteShare: 57.54, TDP_VoteShare: null, MBT_VoteShare: 17.86, INC_VoteShare: 8.13, BJP_VoteShare: 15.51, TRS_VoteShare: 0.96},
+    {YEAR: 2009, ACNAME: "BAHADURPURA", AIMIM_VoteShare: 70.80, TDP_VoteShare: null, MBT_VoteShare: null, INC_VoteShare: 7.84, BJP_VoteShare: 5.48, TRS_VoteShare: null},
     {YEAR: 2009, ACNAME: "CHANDRAYANGUTTA", AIMIM_VoteShare: 46.59, TDP_VoteShare: null, MBT_VoteShare: 31.05, INC_VoteShare: 8.07, BJP_VoteShare: 5.49, TRS_VoteShare: 1.01},
     {YEAR: 2009, ACNAME: "CHARMINAR", AIMIM_VoteShare: 48.61, TDP_VoteShare: 36.72, MBT_VoteShare: null, INC_VoteShare: 6.33, BJP_VoteShare: 4.72, TRS_VoteShare: null},
     {YEAR: 2009, ACNAME: "MALAKPET", AIMIM_VoteShare: 30.44, TDP_VoteShare: 22.18, MBT_VoteShare: null, INC_VoteShare: 18.01, BJP_VoteShare: 16.78, TRS_VoteShare: null},
@@ -1070,6 +1067,18 @@ const electionData = [
 ];
 
 const YEARS   = [1999, 2004, 2009, 2014, 2018, 2023];
+
+/* Turnout, percent of electors voting, keyed year|seat. 1999-2018 from the
+   TCPD results file via SHRUG; 2023 from ECI figures as press-reported,
+   recorded in the data notes. */
+const TURNOUT = {
+    "1999|CHANDRAYANGUTTA": 71.29, "1999|CHARMINAR": 65.72, "1999|MALAKPET": 54.17, "1999|YAKUTPURA": 69.35,
+    "2004|CHANDRAYANGUTTA": 43.73, "2004|CHARMINAR": 52.41, "2004|MALAKPET": 51.72, "2004|YAKUTPURA": 41.47,
+    "2009|BAHADURPURA": 48.82, "2009|CHANDRAYANGUTTA": 55.43, "2009|CHARMINAR": 53.89, "2009|MALAKPET": 52.33, "2009|YAKUTPURA": 50.83,
+    "2014|BAHADURPURA": 55.85, "2014|CHANDRAYANGUTTA": 51.58, "2014|CHARMINAR": 56.20, "2014|MALAKPET": 47.70, "2014|YAKUTPURA": 51.37,
+    "2018|BAHADURPURA": 50.39, "2018|CHANDRAYANGUTTA": 47.80, "2018|CHARMINAR": 50.32, "2018|MALAKPET": 42.39, "2018|YAKUTPURA": 42.55,
+    "2023|BAHADURPURA": 45.50, "2023|CHANDRAYANGUTTA": 45.26, "2023|CHARMINAR": 43.27, "2023|MALAKPET": 41.32, "2023|YAKUTPURA": 39.64
+};
 const PARTIES = ["AIMIM", "TDP", "MBT", "INC", "BJP", "TRS"];
 const SEATS   = ["BAHADURPURA", "CHANDRAYANGUTTA", "CHARMINAR", "MALAKPET", "YAKUTPURA"];
 const TITLE   = { BAHADURPURA: "Bahadurpura", CHANDRAYANGUTTA: "Chandrayangutta",
@@ -1137,7 +1146,11 @@ themeButtons.forEach(function (b) {
                 const v = row[p + "_VoteShare"];
                 if (v === null) { return '<td class="nil">&mdash;</td>'; }
                 return '<td class="' + (p === lead ? "lead" : "") + '">' + v.toFixed(2) + "</td>";
-            }).join("");
+            }).join("") +
+            (function () {
+                const t = TURNOUT[row.YEAR + "|" + row.ACNAME];
+                return t === undefined ? '<td class="nil">&mdash;</td>' : "<td>" + t.toFixed(1) + "</td>";
+            })();
         frag.appendChild(tr);
     });
     tbody.appendChild(frag);
@@ -1354,12 +1367,13 @@ window.addEventListener("hashchange", routeHash);
 
 /* ---------------- CSV export ---------------- */
 function exportAllDataToCSV() {
-    const head = "YEAR,ACNAME," + PARTIES.map(function (p) { return p + "_VoteShare"; }).join(",");
+    const head = "YEAR,ACNAME," + PARTIES.map(function (p) { return p + "_VoteShare"; }).join(",") + ",TURNOUT_PCT";
     const body = electionData.map(function (r) {
+        const t = TURNOUT[r.YEAR + "|" + r.ACNAME];
         return [r.YEAR, r.ACNAME].concat(PARTIES.map(function (p) {
             const v = r[p + "_VoteShare"];
             return v === null ? "" : v;      // a blank stays blank: a gap is not a zero
-        })).join(",");
+        })).concat([t === undefined ? "" : t]).join(",");
     });
     const blob = new Blob([head + "\n" + body.join("\n") + "\n"], { type: "text/csv;charset=utf-8" });
     const url = URL.createObjectURL(blob);

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What comes next — Hyderabad's old city, 1999–2023</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+:root {
+    --paper:#f7f3ec; --surface:#fdfbf7; --ink:#211d16; --muted:#6e675a;
+    --rule:#ddd5c6; --rule-strong:#b8ae9a; --accent:#a84b2f;
+}
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --paper:#151310; --surface:#1d1a16; --ink:#ece6d9; --muted:#a09786;
+        --rule:#3a352c; --rule-strong:#554e40; --accent:#e08a5f;
+    }
+}
+:root[data-theme="dark"] {
+    --paper:#151310; --surface:#1d1a16; --ink:#ece6d9; --muted:#a09786;
+    --rule:#3a352c; --rule-strong:#554e40; --accent:#e08a5f;
+}
+body {
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Newsreader','Iowan Old Style',Georgia,serif;
+    font-size:18px; line-height:1.65; -webkit-font-smoothing:antialiased;
+}
+.wrap { max-width:860px; margin:0 auto; padding:0 24px 80px; }
+.top {
+    position:sticky; top:0; background:var(--paper); border-bottom:1px solid var(--rule);
+    font-family:'IBM Plex Sans',system-ui,sans-serif; font-size:13px; z-index:10;
+}
+.top-in { max-width:860px; margin:0 auto; padding:14px 24px; }
+.top a { color:var(--muted); text-decoration:none; }
+.top a:hover { color:var(--ink); }
+h1 { font-size:clamp(1.9rem,5vw,2.7rem); font-weight:500; line-height:1.1;
+     letter-spacing:-.015em; margin:44px 0 8px; }
+.subtitle { font-family:'IBM Plex Sans',system-ui,sans-serif; font-size:13px;
+     color:var(--muted); margin-bottom:36px; }
+h2 { font-size:1.45rem; font-weight:500; letter-spacing:-.01em; margin:44px 0 12px;
+     padding-top:26px; border-top:1px solid var(--rule); }
+h3 { font-size:1.1rem; font-weight:500; margin:30px 0 8px; }
+p, li { max-width:70ch; }
+a { color:var(--accent); }
+strong { font-weight:600; }
+blockquote { margin:20px 0; padding:2px 22px; border-left:3px solid var(--accent);
+     color:var(--muted); font-style:italic; }
+table { border-collapse:collapse; width:100%; margin:20px 0;
+     font-family:'IBM Plex Sans',system-ui,sans-serif; font-size:13.5px;
+     font-feature-settings:"tnum" 1; background:var(--surface); }
+th, td { padding:8px 12px; border-bottom:1px solid var(--rule); text-align:left; }
+thead th { font-size:10.5px; text-transform:uppercase; letter-spacing:.07em;
+     color:var(--muted); border-bottom:1px solid var(--rule-strong); }
+.table-scroll { overflow-x:auto; border:1px solid var(--rule); border-radius:10px; }
+.table-scroll table { margin:0; }
+code { font-family:ui-monospace,'SF Mono',Menlo,monospace; font-size:.85em;
+     background:var(--surface); border:1px solid var(--rule); border-radius:4px;
+     padding:1px 5px; }
+pre { background:var(--surface); border:1px solid var(--rule); border-radius:10px;
+     padding:16px 18px; overflow-x:auto; font-size:13px; line-height:1.5; }
+pre code { border:none; background:none; padding:0; }
+hr { border:none; border-top:1px solid var(--rule); margin:40px 0; }
+</style>
+</head>
+<body>
+<div class="top"><div class="top-in"><a href="index.html">&larr; Back to the report</a></div></div>
+<div class="wrap">
+<h1>What comes next</h1>
+<p class="subtitle">Part of <a href="index.html">Hyderabad&rsquo;s old city, 1999&ndash;2023</a> &middot; source file: <a href="ROADMAP.md">ROADMAP.md</a></p>
+<h1 id="open-questions-and-what-would-close-them">Open questions, and what would close them</h1>
+<p>This site has taken the question — a generation of AIMIM wins, a generation of
+old-city poverty, does one explain the other? — as far as public data currently
+allows. The record is established, the poverty is measured at ward level, the
+easy explanations are eliminated, and the one formal causal test that could be
+run came back uninformative. What follows is the work that would move the
+argument further, in rough order of how much each item would add, and what each
+one is waiting on.</p>
+<p>If you can supply any of the missing pieces, open an issue or a pull request on
+<a href="https://github.com/Varnasr/Hyderabad-Electoral-Analysis">GitHub</a>.</p>
+<h2 id="1-the-delimitation-experiment-the-one-that-matters">1. The delimitation experiment — the one that matters</h2>
+<p>The 2008 boundary redraw moved wards between assembly constituencies without
+anyone in those wards changing how they voted. Wards that moved into or out of
+AIMIM-held seats, compared before and after on the 2001 and 2011 censuses, would
+be the cleanest test of representation effects available for this question —
+far stronger than the national close-contest design, which had only three
+usable bare wins.</p>
+<p><strong>Blocked on:</strong> a ward-boundary crosswalk between the 2001 and 2011 census
+wards for Hyderabad. None is public. The pieces that would unblock it are the
+2001 municipal ward maps (on paper in MCH/GHMC records) and the delimitation
+notification assigning localities to the new constituencies. Digitising the two
+and matching them is a bounded project — GIS skills and a focused week — and it
+would be a genuine contribution to the literature, not just to this site. The
+design is set out in <a href="analysis.html">the full analysis</a>.</p>
+<h2 id="2-refresh-the-causal-test-when-the-data-catches-up">2. Refresh the causal test when the data catches up</h2>
+<p>The close-contest test used TCPD election results through 2022 and VIIRS night
+lights through 2021. The 2023 Telangana and 2024 Maharashtra elections both had
+AIMIM contesting widely and would add contests — possibly new near-ties, which
+is what the design is starved of.</p>
+<p><strong>Waiting on:</strong> the next TCPD/SHRUG data release. Nothing to do until it ships;
+worth checking the Harvard Dataverse a couple of times a year. The same release
+would fill the blank 2023 <code>ELECTORS</code> and <code>VALID_VOTES</code> cells in the election
+file.</p>
+<h2 id="3-what-the-corporators-actually-spent">3. What the corporators actually spent</h2>
+<p>MP and MLA funds are small — roughly ₹250 a head over a full term. The money
+that builds a neighbourhood is the GHMC ward budget, and ward-wise capital
+works and spending are not published anywhere. A decade of ward-wise works data
+would answer a question nothing public can touch: are old-city wards underfunded
+per head, or funded and still poor?</p>
+<p><strong>Needs:</strong> an RTI to GHMC (works and town-planning wings) from an applicant in
+Telangana, asking for ward-wise capital expenditure, ideally 2016 onwards.</p>
+<h2 id="4-mplads-by-party-as-a-series">4. MPLADS by party, as a series</h2>
+<p>The MPLADS portal publishes MP-wise detail only from 2023–24; before that, the
+public record is aggregate. MP-wise utilisation for earlier terms exists in
+annexures to Lok Sabha questions. Assembling those would turn the funds section
+from a handful of press-reported figures into a proper by-party series.</p>
+<p><strong>Needs:</strong> patience with the Lok Sabha question archive, or an RTI to the
+Ministry of Statistics, which administers the scheme.</p>
+<h2 id="5-date-the-slum-survey">5. Date the slum survey</h2>
+<p>The GHMC slum list used for the ward-level slum shares carries no survey year;
+this site calls it "early 2010s" and treats it as a single time point. A records
+request to GHMC's Urban Community Development wing would pin the year down and
+say whether a newer round exists.</p>
+<h2 id="6-a-second-post-2011-anchor">6. A second post-2011 anchor</h2>
+<p>The updated ward estimates rest on NFHS-5 (2019–21) plus one stated assumption
+about banking. NFHS-6, whenever fieldwork happens, would add measured anchors
+for more indicators. And the next census — expected around 2027 — will replace
+the 2011 ward base entirely; when its ward tables publish, every level on this
+site can be re-estimated rather than projected.</p>
+<hr />
+<p><strong>Closed since launch</strong> (August 2026): the missing Bahadurpura 2009 row,
+recovered in full from the TCPD candidates file, and turnout, electorate and
+valid-vote columns for 1999–2023 — details in <a href="data-notes.html">the data notes</a>.</p>
+</div>
+</body>
+</html>
