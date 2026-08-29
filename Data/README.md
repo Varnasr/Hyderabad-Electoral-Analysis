@@ -242,3 +242,35 @@ rank tests are robust to this; individual ward values are indicative.
 **"Slum" is an administrative category.** GHMC listing reflects official
 recognition as much as housing conditions. Under-notification in any area,
 including the old city, cannot be ruled out from this data.
+
+---
+
+# AIMIM-CONTESTS-1999-2022.csv and AIMIM-CLOSE-CONTESTS-LIGHTS.csv
+
+The close-election test described in `../ANALYSIS.md`, run in August 2026.
+
+`AIMIM-CONTESTS-1999-2022.csv` — every general assembly election AIMIM contested
+in the TCPD data (324 rows): state, constituency, year, whether AIMIM led, its
+vote share, and its margin against the winner (negative) or runner-up (positive).
+Bye-elections excluded. The similarly-abbreviated "All India
+Majlis-E-Inquilab-E-Millat" is excluded as a different party.
+
+`AIMIM-CLOSE-CONTESTS-LIGHTS.csv` — the 2014–2019 contests joined to VIIRS night
+lights by post-2008 assembly constituency: `dlog` is the change in log annual
+lights (mean of up to three post-election years minus mean of pre-years from 2012).
+
+## Provenance
+
+Election results: Trivedi Centre for Political Data (Lok Dhaba), as distributed in
+**SHRUG v2** (Development Data Lab; Asher, Lunt, Matsuura and Novosad), Harvard
+Dataverse doi:10.7910/DVN/DPESAK, files `trivedi_elections_clean` and
+`trivedi_candidates_clean`; coverage ends 2022. Night lights: VIIRS annual
+composites aggregated to `ac08_id` constituencies, same source, `viirs_annual_con08`
+("average-masked" series), 2012–2021.
+
+## Reading it correctly
+
+The test's own diagnostics (in `../ANALYSIS.md`) matter more than its point
+estimate: three treated constituencies, all high-baseline urban cores, permutation
+p = 0.12, and a −0.40 correlation between baseline brightness and growth. It is
+reported as an uninformative result, not as evidence in either direction.
