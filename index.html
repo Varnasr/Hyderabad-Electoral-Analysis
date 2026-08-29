@@ -126,6 +126,10 @@ a:hover { text-decoration-thickness: 2px; }
 section { padding: 0 0 12px; scroll-margin-top: 68px; }
 [id] { scroll-margin-top: 68px; }
 .rule-top { border-top: 1px solid var(--rule); margin-top: 72px; padding-top: 40px; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.tab-panel.rule-top { border-top: none; margin-top: 0; padding-top: 30px; }
+.hero.tab-panel { padding-top: clamp(30px, 5vw, 56px); }
 
 .overline {
     font-size: 11px; font-weight: 600; letter-spacing: .09em;
@@ -423,6 +427,7 @@ td.lead { font-weight: 600; color: var(--ink); }
 
 /* ---------------- print ---------------- */
 @media print {
+    .tab-panel { display: block !important; }
     :root, :root[data-theme="dark"] {
         --paper: #fff; --surface: #fff; --ink: #000; --muted: #444;
         --rule: #ccc; --rule-strong: #999; --accent: #000;
@@ -446,6 +451,7 @@ td.lead { font-weight: 600; color: var(--ink); }
   <div class="masthead-in">
     <span class="brand">Hyderabad&rsquo;s old city &middot; 1999&ndash;2023</span>
     <nav>
+      <a href="#finding">The story</a>
       <a href="#record">The record</a>
       <a href="#closeup">Up close</a>
       <a href="#not-the-reason">Diagnosis</a>
@@ -464,7 +470,7 @@ td.lead { font-weight: 600; color: var(--ink); }
 <div class="wrap">
 
   <!-- ============ THE ARGUMENT ============ -->
-  <section class="hero" id="finding">
+  <section class="hero tab-panel" id="finding">
     <span id="executive-summary"></span><span id="representation-and-poverty"></span><span id="still-holds"></span>
     <div class="overline">Assembly elections 1999&ndash;2023 &middot; Census 2011 &middot; 108 GHMC wards</div>
     <h1>Held for a generation. Poor for a generation.</h1>
@@ -505,7 +511,7 @@ td.lead { font-weight: 600; color: var(--ink); }
         <div class="score-row">
           <div class="score-name">People in work, age 7+</div>
           <div class="score-nums">37.1 &rarr; 44.3</div>
-          <div class="score-track"><i class="score-bar" style="width:30%"></i><span class="score-note">The strongest statistical gap in the analysis, and it survives the old city&rsquo;s younger age profile.</span></div>
+          <div class="score-track"><i class="score-bar" style="width:30%"></i><span class="score-note">The biggest, most reliable gap in the data &mdash; and not because the old city has more children.</span></div>
         </div>
         <div class="score-row">
           <div class="score-name">Able to read, age 7+</div>
@@ -515,7 +521,7 @@ td.lead { font-weight: 600; color: var(--ink); }
         <div class="score-row">
           <div class="score-name">Water, drainage, bathrooms</div>
           <div class="score-nums">94&ndash;99 both</div>
-          <div class="score-track"><i class="score-tick"></i><span class="score-note">Level. No significant difference on any of four measures; drainage slightly favours the old city.</span></div>
+          <div class="score-track"><i class="score-tick"></i><span class="score-note">Level. No meaningful difference on any of four measures; drainage slightly favours the old city.</span></div>
         </div>
         <div class="score-row">
           <div class="score-name">Living in a listed slum</div>
@@ -525,7 +531,7 @@ td.lead { font-weight: 600; color: var(--ink); }
       </div>
 
       <p class="score-verdict">Every gap is in what income buys or earns. The two biggest were closed by national schemes. What the state builds is level.</p>
-      <p class="chart-note">Old city &rarr; rest of district, ward medians across 108 wards, Census 2011 (work and literacy from the ward Primary Census Abstract; slum share from GHMC&rsquo;s survey over 99 cleanly joined wards). Bars show the 2011 gap in percentage points on a shared scale; hollow bars mark gaps closed since, per NFHS-5 (2019&ndash;21). Every filled gap is significant at p&nbsp;&le;&nbsp;0.001. Full method and tests in <a href="ANALYSIS.md">ANALYSIS.md</a> and <a href="METHODOLOGY.md">METHODOLOGY.md</a>.</p>
+      <p class="chart-note">Each bar is the size of the 2011 gap between the old city and the rest of the district, in percentage points on one shared scale; hollow bars mark gaps that have closed since, per NFHS-5 (2019&ndash;21). Typical (median) ward values across 108 wards, Census 2011; work and literacy from the ward census tables, slum share from GHMC&rsquo;s survey. Every filled gap passes a formal significance test (p&nbsp;&le;&nbsp;0.001). Full method and tests in <a href="ANALYSIS.md">ANALYSIS.md</a> and <a href="METHODOLOGY.md">METHODOLOGY.md</a>.</p>
     </figure>
 
     <div class="statline">
@@ -541,7 +547,7 @@ td.lead { font-weight: 600; color: var(--ink); }
   </section>
 
   <!-- ============ THE RECORD ============ -->
-  <section id="record" class="rule-top">
+  <section id="record" class="rule-top tab-panel">
     <span id="constituency-analysis"></span><span id="party-trends"></span><span id="statistical-analysis"></span><span id="evidence"></span>
     <div class="overline">The record</div>
     <h2>Twenty-seven contests. AIMIM led twenty-five.</h2>
@@ -599,7 +605,7 @@ td.lead { font-weight: 600; color: var(--ink); }
   </section>
 
   <!-- ============ UP CLOSE ============ -->
-  <section id="closeup" class="rule-top">
+  <section id="closeup" class="rule-top tab-panel">
     <div class="overline">Up close</div>
     <h2>A few kilometres apart, in the same city.</h2>
 
@@ -649,12 +655,12 @@ td.lead { font-weight: 600; color: var(--ink); }
   </section>
 
   <!-- ============ NOT THE REASON ============ -->
-  <section id="not-the-reason" class="rule-top">
+  <section id="not-the-reason" class="rule-top tab-panel">
     <div class="overline">The diagnosis</div>
     <h2>The problem is work and income. Three other explanations fail.</h2>
 
     <div class="measure">
-      <p>Start with what the data says positively. <strong>37.1% of old-city residents aged seven and over work, against 44.3% in the rest of the district</strong> &mdash; the largest and most certain gap in this analysis, and it holds at every age cut. Among women it is 17.9% against 25.3%. Households that earn less own less, and that is the rest of the pattern: less gas, less banking, less internet, fewer vehicles. Literacy is only four points behind, so basic schooling is not the wall.</p>
+      <p>Start with what the data actually shows. <strong>Only about a third of old-city residents have work of any kind &mdash; 37%, against 44% in the rest of the district.</strong> Among women it is 18% against 25%. This is the biggest and most reliable difference in all the data, and it is not because the old city has more children &mdash; the gap is the same when you count only adults. People who earn less own less, and that is the rest of the pattern: less cooking gas, less banking, less internet, fewer vehicles. Reading and writing are only a few points behind, so basic schooling is not the wall.</p>
       <p>Why do fewer people work? Ward data cannot separate the causes, but it can name the candidates: schooling that stops early even where basic literacy is close; few formal jobs within reach of these neighbourhoods; weak access to credit for the self-employed; discrimination in hiring; and norms that keep much of women&rsquo;s work unpaid and at home. Which of these binds, and how hard, is the open question &mdash; and the one worth putting to anyone who represents these seats. What the same data rules out is below.</p>
 
       <h3>&ldquo;The old city was denied services&rdquo;</h3>
@@ -800,7 +806,7 @@ td.lead { font-weight: 600; color: var(--ink); }
   </section>
 
   <!-- ============ PROOF AND LIMITS ============ -->
-  <section id="limits" class="rule-top">
+  <section id="limits" class="rule-top tab-panel">
     <span id="interpretation"></span>
     <div class="overline">Proof and limits</div>
     <h2>What this shows, and what it cannot.</h2>
@@ -818,11 +824,11 @@ td.lead { font-weight: 600; color: var(--ink); }
         </div>
         <div>
           <div class="tri-n">p&thinsp;=&thinsp;0.12</div>
-          <div class="tri-l">Exact permutation test on the growth difference &mdash; no detectable effect</div>
+          <div class="tri-l">A standard statistical check finds no effect either way</div>
         </div>
       </div>
       <p class="panel-verdict">Whether AIMIM&rsquo;s wins helped or harmed these places cannot be shown from public data. Running the test is what shows it.</p>
-      <p class="chart-note">The standard design: compare constituencies a party barely won against ones it barely lost, where winning is as good as random. Run on every AIMIM assembly contest nationally (TCPD results via SHRUG), with VIIRS night-lights growth as the outcome. The raw comparison points to slower growth after bare wins, but it fails the permutation test and is confounded: all three bare wins &mdash; Byculla, Dhule City, Nampally &mdash; are dense city cores three times brighter at baseline than the losses, and bright places grow slower in lights for sensor reasons unrelated to who won. Full working in <a href="ANALYSIS.md">ANALYSIS.md</a>; data in <a href="Data/AIMIM-CONTESTS-1999-2022.csv">AIMIM-CONTESTS-1999-2022.csv</a> and <a href="Data/AIMIM-CLOSE-CONTESTS-LIGHTS.csv">AIMIM-CLOSE-CONTESTS-LIGHTS.csv</a>.</p>
+      <p class="chart-note">The idea: compare places a party barely won with places it barely lost &mdash; near the line, winning is close to a coin flip, so any later difference should be the winning itself. Run on every AIMIM assembly contest in the country (TCPD results via SHRUG), with satellite night-light growth as the outcome. The raw comparison points to slower growth after bare wins, but it fails the permutation test and is confounded: all three bare wins &mdash; Byculla, Dhule City, Nampally &mdash; are dense city cores three times brighter at baseline than the losses, and bright places grow slower in lights for sensor reasons unrelated to who won. Full working in <a href="ANALYSIS.md">ANALYSIS.md</a>; data in <a href="Data/AIMIM-CONTESTS-1999-2022.csv">AIMIM-CONTESTS-1999-2022.csv</a> and <a href="Data/AIMIM-CLOSE-CONTESTS-LIGHTS.csv">AIMIM-CLOSE-CONTESTS-LIGHTS.csv</a>.</p>
     </figure>
 
     <div class="ledger">
@@ -858,7 +864,7 @@ td.lead { font-weight: 600; color: var(--ink); }
   </section>
 
   <!-- ============ DATA ============ -->
-  <section id="data" class="rule-top">
+  <section id="data" class="rule-top tab-panel">
     <span id="data-section"></span>
     <div class="overline">Data and method</div>
     <h2>The full series.</h2>
@@ -1024,26 +1030,45 @@ themeButtons.forEach(function (b) {
     tbody.appendChild(frag);
 })();
 
-/* ---------------- scroll spy ---------------- */
-(function spy() {
-    const links = Array.prototype.slice.call(
-        document.querySelectorAll('.masthead nav a[href^="#"]'));
-    const targets = links
-        .map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); })
-        .filter(Boolean);
-    if (!targets.length || !("IntersectionObserver" in window)) { return; }
+/* ---------------- tabs ---------------- */
+const TAB_IDS = ["finding", "record", "closeup", "not-the-reason", "limits", "data"];
+/* legacy deep-link ids live inside these tabs */
+const TAB_ALIAS = {
+    "executive-summary": "finding", "representation-and-poverty": "finding",
+    "still-holds": "finding", "story": "finding",
+    "constituency-analysis": "record", "party-trends": "record",
+    "statistical-analysis": "record", "evidence": "record",
+    "interpretation": "limits", "data-section": "data"
+};
+const tabLinks = Array.prototype.slice.call(
+    document.querySelectorAll('.masthead nav a[href^="#"]'));
 
-    const io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-            if (!e.isIntersecting) { return; }
-            links.forEach(function (a) {
-                a.setAttribute("aria-current",
-                    a.getAttribute("href") === "#" + e.target.id ? "true" : "false");
-            });
+function showTab(tab, innerId) {
+    TAB_IDS.forEach(function (id) {
+        document.getElementById(id).classList.toggle("active", id === tab);
+    });
+    tabLinks.forEach(function (a) {
+        a.setAttribute("aria-current",
+            a.getAttribute("href") === "#" + tab ? "true" : "false");
+    });
+    if (typeof Chart !== "undefined") {
+        requestAnimationFrame(function () {
+            charts.forEach(function (c) { c.resize(); });
         });
-    }, { rootMargin: "-52px 0px -70% 0px", threshold: 0 });
-    targets.forEach(function (t) { io.observe(t); });
-})();
+    }
+    const target = innerId && document.getElementById(innerId);
+    if (target) { target.scrollIntoView(); }
+    else { window.scrollTo({ top: 0, behavior: "instant" }); }
+}
+function routeHash() {
+    const id = decodeURIComponent(location.hash.slice(1));
+    if (TAB_IDS.indexOf(id) !== -1) { showTab(id, null); }
+    else if (TAB_ALIAS[id]) { showTab(TAB_ALIAS[id], id); }
+    else { showTab("finding", null); }
+}
+window.addEventListener("hashchange", routeHash);
+/* the initial route runs at the end of this script, after the charts
+   array exists — showTab touches it to resize charts on reveal */
 
 /* ---------------- CSV export ---------------- */
 function exportAllDataToCSV() {
@@ -1190,6 +1215,8 @@ if (mq.addEventListener) { mq.addEventListener("change", onSystemChange); }
 else if (mq.addListener) { mq.addListener(onSystemChange); }
 
 window.addEventListener("beforeprint", repaintCharts);
+
+routeHash();
 </script>
 </body>
 </html>
