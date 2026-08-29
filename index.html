@@ -386,6 +386,30 @@ td.lead { font-weight: 600; color: var(--ink); }
 .footer p { margin-bottom: .6em; max-width: 74ch; }
 .footer strong { color: var(--ink); }
 
+/* ---------------- the scorecard (hero figure) ---------------- */
+.score-row {
+    display: grid; grid-template-columns: 168px 96px 1fr; gap: 14px;
+    align-items: center; padding: 10px 0; border-top: 1px solid var(--rule);
+    font-size: 13.5px;
+}
+.score-head + .score-row, .score-row:first-child { border-top: none; }
+.score-name { color: var(--ink); line-height: 1.3; }
+.score-nums { color: var(--muted); font-size: 12.5px; white-space: nowrap; text-align: right; }
+.score-track { display: block; }
+.score-bar { display: block; height: 13px; border-radius: 3px; background: var(--accent); margin: 2px 0 6px; }
+.score-bar.closed { background: transparent; border: 1.5px solid var(--rule-strong); }
+.score-tick { display: block; width: 3px; height: 13px; border-radius: 2px; background: var(--rule-strong); margin: 2px 0 6px; }
+.score-note { display: block; font-size: 12px; color: var(--muted); line-height: 1.4; max-width: 58ch; }
+.score-verdict {
+    font-family: 'Newsreader', Georgia, serif; font-style: italic;
+    font-size: 1.05rem; color: var(--ink); margin: 16px 0 0;
+}
+@media (max-width: 700px) {
+    .score-row { grid-template-columns: 106px 1fr; gap: 8px; font-size: 12px; }
+    .score-nums { display: none; }
+    .score-note { font-size: 11px; }
+}
+
 /* ---------------- print ---------------- */
 @media print {
     :root, :root[data-theme="dark"] {
@@ -411,11 +435,10 @@ td.lead { font-weight: 600; color: var(--ink); }
   <div class="masthead-in">
     <span class="brand">Hyderabad&rsquo;s old city &middot; 1999&ndash;2023</span>
     <nav>
-      <a href="#finding">Finding</a>
-      <a href="#still-holds">Still true?</a>
       <a href="#record">The record</a>
-      <a href="#evidence">Evidence</a>
-      <a href="#limits">Limits</a>
+      <a href="#closeup">Up close</a>
+      <a href="#not-the-reason">Not the reason</a>
+      <a href="#limits">Proof &amp; limits</a>
       <a href="#data">Data</a>
       <button class="toggle" id="themeToggle" type="button" aria-label="Switch colour theme">Theme</button>
     </nav>
@@ -425,40 +448,210 @@ td.lead { font-weight: 600; color: var(--ink); }
 <main id="main">
 <div class="wrap">
 
-  <!-- ============ HERO ============ -->
-  <section class="hero">
+  <!-- ============ THE ARGUMENT ============ -->
+  <section class="hero" id="finding">
+    <span id="executive-summary"></span><span id="representation-and-poverty"></span><span id="still-holds"></span>
     <div class="overline">Assembly elections 1999&ndash;2023 &middot; Census 2011 &middot; 108 GHMC wards</div>
     <h1>Held for a generation. Poor for a generation.</h1>
     <p class="dek">AIMIM has won the old city&rsquo;s five assembly seats in every election it entered since 1999. The people who live there are still the poorest in Hyderabad.</p>
     <div class="measure standfirst">
-      <p>Bahadurpura, Chandrayangutta, Charminar, Malakpet, Yakutpura. Six elections, one winner. Over the same years, Census 2011 found the households of these constituencies at half the cooking gas, half the internet and a third of the car ownership of the rest of their own district. In Charminar&rsquo;s poorest ward, 2.3% of households had a computer with internet. In Ameerpet, across town, 47.5% did.</p>
-      <p>It is not that the state skipped the old city&rsquo;s infrastructure. Water, drainage and bathrooms have the same coverage as everywhere else in the district. Whatever explains how far behind these households are, it is not missing pipes, and that closes off the easiest excuse. The sections below set out the election record, the living-standards gap, what has changed since 2011, and what this evidence can and cannot prove.</p>
-    </div>
-    <div class="statline">
-      <span><b>27</b> constituency&ndash;year rows</span>
-      <span><b>6</b> election cycles</span>
-      <span><b>5</b> seats</span>
-      <span><b>108</b> GHMC wards</span>
-      <span><a href="Data/HYD-DIST-RESULTS.csv">Electoral data</a></span>
-      <span><a href="Data/GHMC-WARD-AMENITIES-2011.csv">Census amenities</a></span>
-      <span><a href="Data/GHMC-WARD-PCA-2011.csv">Census literacy &amp; work</a></span>
-      <span><a href="METHODOLOGY.md">Methodology</a></span>
-      <span><a href="https://github.com/Varnasr/Hyderabad-Electoral-Analysis">Repository</a></span>
-    </div>
-  </section>
-
-  <!-- ============ THE FINDING ============ -->
-  <section id="finding" class="rule-top">
-    <span id="executive-summary"></span><span id="representation-and-poverty"></span>
-    <div class="overline">The finding</div>
-    <h2>The gap is in how people live, not in what was built.</h2>
-    <div class="measure">
-      <p>Census 2011 covered 108 GHMC wards in Hyderabad district: <strong>52</strong> in the six old-city mandals, <strong>56</strong> elsewhere. On every measure of household living standards the old city is far behind. On every measure of municipal service delivery it is level.</p>
+      <p>Bahadurpura, Chandrayangutta, Charminar, Malakpet, Yakutpura. AIMIM has led twenty-five of the twenty-seven contests held in these seats since 1999 &mdash; every one it entered &mdash; and has held all five without a break since 2009.</p>
+      <p>Over that same generation these have stayed the poorest neighbourhoods in their own district. Half the cooking gas, half the internet, a third of the car ownership. Fewer people in work &mdash; 37% against 44% &mdash; and far fewer women in work. In Charminar&rsquo;s poorest ward, one household in fifty had internet. In Ameerpet, across town, one in two.</p>
+      <p>The poverty has a specific shape, and it is not the one usually argued about. It is not slum poverty: the share of people living in listed slums is the same as in the rest of the city. It is not service poverty: water, drainage and bathrooms are at full coverage, slightly better than elsewhere. It is low work and low income inside ordinary, legal, fully serviced homes.</p>
+      <p>And where the old city has caught up since 2011, nothing local did the catching. The cooking-gas gap was closed by Ujjwala, the banking gap almost certainly by Jan Dhan &mdash; national schemes that reached every ward in India at once. None of this proves who is to blame, and the <a href="#limits">last section</a> is precise about what it cannot show. What the record itself shows is narrower and harder to dismiss: a generation of one party&rsquo;s representation, and a deficit that only Delhi has ever dented.</p>
     </div>
 
     <figure class="fig">
       <div class="fig-head">
-        <figcaption class="fig-title">Old city versus the rest of Hyderabad district, Census 2011</figcaption>
+        <figcaption class="fig-title">Every gap between the old city and the rest of its district</figcaption>
+      </div>
+
+      <div class="score">
+        <div class="score-row">
+          <div class="score-name">Cooking gas at home</div>
+          <div class="score-nums">55.9 &rarr; 77.1</div>
+          <div class="score-track"><i class="score-bar closed" style="width:88%"></i><span class="score-note">21 points behind in 2011. Closed by 2021 &mdash; by Ujjwala, a national scheme.</span></div>
+        </div>
+        <div class="score-row">
+          <div class="score-name">A bank account</div>
+          <div class="score-nums">51.4 &rarr; 68.7</div>
+          <div class="score-track"><i class="score-bar closed" style="width:72%"></i><span class="score-note">17 points behind. Almost certainly closed &mdash; by Jan Dhan, from 2014.</span></div>
+        </div>
+        <div class="score-row">
+          <div class="score-name">Internet at home</div>
+          <div class="score-nums">9.1 &rarr; 20.0</div>
+          <div class="score-track"><i class="score-bar" style="width:45%"></i><span class="score-note">Less than half the rest of the district. No scheme delivers this.</span></div>
+        </div>
+        <div class="score-row">
+          <div class="score-name">A car in the household</div>
+          <div class="score-nums">5.9 &rarr; 15.7</div>
+          <div class="score-track"><i class="score-bar" style="width:41%"></i><span class="score-note">A third of the rest. No scheme delivers this either.</span></div>
+        </div>
+        <div class="score-row">
+          <div class="score-name">People in work, age 7+</div>
+          <div class="score-nums">37.1 &rarr; 44.3</div>
+          <div class="score-track"><i class="score-bar" style="width:30%"></i><span class="score-note">The strongest statistical gap in the analysis, and it survives the old city&rsquo;s younger age profile.</span></div>
+        </div>
+        <div class="score-row">
+          <div class="score-name">Able to read, age 7+</div>
+          <div class="score-nums">82.1 &rarr; 86.3</div>
+          <div class="score-track"><i class="score-bar" style="width:18%"></i><span class="score-note">Behind, but modestly.</span></div>
+        </div>
+        <div class="score-row">
+          <div class="score-name">Water, drainage, bathrooms</div>
+          <div class="score-nums">94&ndash;99 both</div>
+          <div class="score-track"><i class="score-tick"></i><span class="score-note">Level. No significant difference on any of four measures; drainage slightly favours the old city.</span></div>
+        </div>
+        <div class="score-row">
+          <div class="score-name">Living in a listed slum</div>
+          <div class="score-nums">20.5 &rarr; 19.7</div>
+          <div class="score-track"><i class="score-tick"></i><span class="score-note">Level. The city&rsquo;s slum belts are along the Musi and in the north-west, not the old city.</span></div>
+        </div>
+      </div>
+
+      <p class="score-verdict">Every gap is in what income buys or earns. The two biggest have since been closed &mdash; from Delhi. Everything the state builds or lists is level.</p>
+      <p class="chart-note">Old city &rarr; rest of district, ward medians across 108 wards, Census 2011 (work and literacy from the ward Primary Census Abstract; slum share from GHMC&rsquo;s survey over 99 cleanly joined wards). Bars show the 2011 gap in percentage points on a shared scale; hollow bars mark gaps closed since, per NFHS-5 (2019&ndash;21). Every filled gap is significant at p&nbsp;&le;&nbsp;0.001. Full method and tests in <a href="ANALYSIS.md">ANALYSIS.md</a> and <a href="METHODOLOGY.md">METHODOLOGY.md</a>.</p>
+    </figure>
+
+    <div class="statline">
+      <span><b>27</b> constituency&ndash;year rows</span>
+      <span><b>6</b> election cycles</span>
+      <span><b>108</b> wards</span>
+      <span><a href="Data/HYD-DIST-RESULTS.csv">Electoral data</a></span>
+      <span><a href="Data/GHMC-WARD-AMENITIES-2011.csv">Amenities</a></span>
+      <span><a href="Data/GHMC-WARD-PCA-2011.csv">Literacy &amp; work</a></span>
+      <span><a href="Data/GHMC-WARD-SLUMS.csv">Slums</a></span>
+      <span><a href="https://github.com/Varnasr/Hyderabad-Electoral-Analysis">Repository</a></span>
+    </div>
+  </section>
+
+  <!-- ============ THE RECORD ============ -->
+  <section id="record" class="rule-top">
+    <span id="constituency-analysis"></span><span id="party-trends"></span><span id="statistical-analysis"></span><span id="evidence"></span>
+    <div class="overline">The record</div>
+    <h2>Twenty-seven contests. AIMIM led twenty-five.</h2>
+    <div class="measure">
+      <p>Each cell shows the leading party&rsquo;s vote share in that seat and year.</p>
+    </div>
+
+    <div class="record">
+      <div class="record-grid">
+        <div></div>
+        <div class="rc-h">1999</div><div class="rc-h">2004</div><div class="rc-h">2009</div>
+        <div class="rc-h">2014</div><div class="rc-h">2018</div><div class="rc-h">2023</div>
+
+        <div class="rc-seat">Bahadurpura</div>
+        <div class="rc rc-none" title="Seat did not exist before the 2008 delimitation">&middot;</div>
+        <div class="rc rc-none" title="Seat did not exist before the 2008 delimitation">&middot;</div>
+        <div class="rc rc-gap" title="Contested and won by AIMIM in 2009; the row is missing from this dataset">row<br>missing</div>
+        <div class="rc rc-aimim">78.5</div><div class="rc rc-aimim">74.3</div><div class="rc rc-aimim">62.0</div>
+
+        <div class="rc-seat">Chandrayangutta</div>
+        <div class="rc rc-aimim">34.9</div><div class="rc rc-aimim">42.5</div><div class="rc rc-aimim">46.6</div>
+        <div class="rc rc-aimim">59.2</div><div class="rc rc-aimim">68.0</div><div class="rc rc-aimim">64.9</div>
+
+        <div class="rc-seat">Charminar</div>
+        <div class="rc rc-aimim">66.2</div><div class="rc rc-aimim">73.5</div><div class="rc rc-aimim">48.6</div>
+        <div class="rc rc-aimim">57.1</div><div class="rc rc-aimim">53.4</div><div class="rc rc-aimim">50.1</div>
+
+        <div class="rc-seat">Malakpet</div>
+        <div class="rc rc-other" title="BJP 53.24% — AIMIM did not contest">BJP<br>53.2</div>
+        <div class="rc rc-other" title="INC 52.12% — AIMIM did not contest">INC<br>52.1</div>
+        <div class="rc rc-aimim">30.4</div>
+        <div class="rc rc-aimim">47.2</div><div class="rc rc-aimim">42.9</div><div class="rc rc-aimim">42.3</div>
+
+        <div class="rc-seat">Yakutpura</div>
+        <div class="rc rc-aimim">48.1</div><div class="rc rc-aimim">57.5</div><div class="rc rc-aimim">53.8</div>
+        <div class="rc rc-aimim">45.8</div><div class="rc rc-aimim">49.1</div><div class="rc rc-aimim">32.9</div>
+      </div>
+    </div>
+    <div class="record-key">
+      <span><i class="key-sw" style="background:var(--accent-soft)"></i> AIMIM led</span>
+      <span><i class="key-sw" style="border:1px dashed var(--rule-strong);background:var(--surface)"></i> Another party led</span>
+      <span><i class="key-sw" style="border:1px dashed var(--accent);background:repeating-linear-gradient(45deg,transparent,transparent 3px,var(--hatch) 3px,var(--hatch) 4px)"></i> Missing row, not a loss</span>
+      <span><i class="key-sw" style="border:1px solid var(--rule)"></i> Seat did not exist</span>
+    </div>
+
+    <div class="measure">
+      <p>The two exceptions are both Malakpet, in cycles AIMIM sat out. Since 2014 the party&rsquo;s share has fallen in four of the five seats &mdash; furthest in Yakutpura, where 2023 was nearly a tie with MBT (32.9% to 32.2%) on the district&rsquo;s lowest turnout. The hold is intact; the margins are not what they were.</p>
+    </div>
+
+    <div class="chart-block">
+      <h3>AIMIM&rsquo;s share by seat, 1999&ndash;2023</h3>
+      <div class="chart-wrapper"><canvas id="aimim-chart"></canvas></div>
+      <p class="chart-note">Bahadurpura begins in 2014: the seat was created in the 2008 delimitation and its 2009 row is missing from the dataset. Malakpet begins in 2009, the first cycle AIMIM contested it. A gap in a line means the party did not contest, not zero.</p>
+    </div>
+  </section>
+
+  <!-- ============ UP CLOSE ============ -->
+  <section id="closeup" class="rule-top">
+    <div class="overline">Up close</div>
+    <h2>A few kilometres apart, in the same city.</h2>
+
+    <figure class="fig">
+      <div class="fig-head"><figcaption class="fig-title">Two wards of the same city, Census 2011</figcaption></div>
+      <div class="table-scroll" style="margin:14px 0 6px; border:none;">
+        <table>
+          <thead>
+            <tr><th scope="col">% of households / people</th><th scope="col">Charminar ward 39 (old city)</th><th scope="col">Ameerpet ward 99</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Computer with internet</td><td class="lead">2.3</td><td>47.5</td></tr>
+            <tr><td>Car / jeep / van</td><td class="lead">1.6</td><td>44.3</td></tr>
+            <tr><td>Avails banking</td><td class="lead">18.9</td><td>86.4</td></tr>
+            <tr><td>Literate, age 7+</td><td class="lead">79.8</td><td>90.5</td></tr>
+            <tr><td>Working, age 7+</td><td class="lead">32.8</td><td>45.7</td></tr>
+            <tr><td>Treated tap water</td><td>99.7</td><td>99.0</td></tr>
+            <tr><td>Closed drainage</td><td>100.0</td><td>99.6</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="chart-note">Charminar ward 39 has fuller piped-water and drainage coverage than Ameerpet ward 99, and one-twentieth the internet access. The Jubilee Hills and Khairatabad wards sit at Ameerpet&rsquo;s level. And this comparison flatters the old city: HITEC City and Gachibowli are in Ranga Reddy district, outside these 108 wards entirely.</p>
+    </figure>
+
+    <figure class="fig">
+      <div class="fig-head"><figcaption class="fig-title">Ward 43, Bahadurpura</figcaption></div>
+      <div class="triptych">
+        <div>
+          <div class="tri-n lead">22.0%</div>
+          <div class="tri-l">Cooking gas &mdash; the lowest of all 108 wards in the district</div>
+        </div>
+        <div>
+          <div class="tri-n">92.9%</div>
+          <div class="tri-l">Treated tap water</div>
+        </div>
+        <div>
+          <div class="tri-n">9.7%</div>
+          <div class="tri-l">Of its people in listed slums &mdash; half the city average</div>
+        </div>
+      </div>
+      <p class="panel-verdict">Poor households, well-served network, ordinary housing. The whole pattern in one ward &mdash; which also has the district&rsquo;s lowest female literacy.</p>
+    </figure>
+
+    <div class="measure">
+      <p>The old city is not uniform. Ward 73 in Asifnagar banks like Jubilee Hills, and the district&rsquo;s worst-served ward on water and drainage is ward 1 in Musheerabad, outside the old city. The pattern holds across 52 wards, not because every ward fits it.</p>
+    </div>
+  </section>
+
+  <!-- ============ NOT THE REASON ============ -->
+  <section id="not-the-reason" class="rule-top">
+    <div class="overline">Three explanations that fail</div>
+    <h2>It is not the pipes, not the slums, and not for want of Delhi&rsquo;s schemes.</h2>
+
+    <div class="measure">
+      <h3>&ldquo;The old city was denied services&rdquo;</h3>
+      <p>The Census refutes this directly. Treated tap water 97.1% against 97.4%, closed drainage 98.4% against 97.5%, bathrooms 98.9% against 99.0% &mdash; no difference significant, drainage slightly favouring the old city. And the finding cannot have decayed since 2011: both halves were already at 94&ndash;99%, coverage that high has nowhere to fall, and NFHS-5 puts the whole district at 99.6% improved water and 99.9% electricity by 2019&ndash;21.</p>
+
+      <h3>&ldquo;It&rsquo;s the slums&rdquo;</h3>
+      <p>The share of people in GHMC-listed slums is statistically the same inside the old city as outside it &mdash; medians 20.5% against 19.7%, p&nbsp;=&nbsp;0.61. The city&rsquo;s slum concentrations sit along the Musi and in the north-west. Old-city poverty lives in ordinary, legal, serviced housing, which is precisely what makes it harder to explain away.</p>
+
+      <h3>&ldquo;Things must have improved since 2011&rdquo;</h3>
+      <p>Two gaps did close, and how they closed is the point. NFHS-5 records 99.5% of district households on clean cooking fuel by 2019&ndash;21, so the 21-point gas gap is gone; and with 84% of Telangana&rsquo;s women holding their own bank account after Jan Dhan, the banking gap has almost certainly gone too. Both were closed by national schemes that reached every ward in India at once &mdash; they are not evidence of local development, any more than the 2011 shortfalls were evidence of local neglect. The gaps with no scheme behind them &mdash; internet, vehicles, work &mdash; have never been measured again at ward level, and there is no reason to assume they closed.</p>
+    </div>
+
+    <figure class="fig">
+      <div class="fig-head">
+        <figcaption class="fig-title">The full comparison, Census 2011</figcaption>
         <div class="legend">
           <span><i class="dot-old"></i> Old city (52 wards)</span>
           <span><i class="dot-rest"></i> Rest of district (56 wards)</span>
@@ -504,7 +697,6 @@ td.lead { font-weight: 600; color: var(--ink); }
           <div class="db-sig hit">p&lt;0.0001</div>
         </div>
       </div>
-      <p class="panel-verdict">Half the cooking gas, half the internet, a third of the cars. Every difference significant at p&lt;0.0001.</p>
 
       <div class="panel-label">Schooling and work</div>
       <div class="dumbbell">
@@ -543,7 +735,6 @@ td.lead { font-weight: 600; color: var(--ink); }
           <div class="db-sig hit">p&lt;0.0001</div>
         </div>
       </div>
-      <p class="panel-verdict">Schooling modestly behind. Work seven points behind, and that holds after adjusting for the old city&rsquo;s younger population.</p>
 
       <div class="panel-label">What the corporation built</div>
       <div class="dumbbell">
@@ -580,231 +771,50 @@ td.lead { font-weight: 600; color: var(--ink); }
           <div class="db-sig">n.s.</div>
         </div>
       </div>
-      <p class="panel-verdict">All four at parity. No significant difference, and drainage slightly favours the old city.</p>
 
       <div class="db-axis">
         <div></div>
         <div class="db-axis-in"><span>0</span><span>25</span><span>50</span><span>75</span><span>100%</span></div>
         <div></div>
       </div>
-      <p class="chart-note">Every measure on this page is a rate &mdash; a share of households or of people, never a total &mdash; so the comparison is per-capita throughout. Ward medians; all panels share one 0&ndash;100% scale. The household rows are percentages of households, the schooling and work rows percentages of people (age 7 and over, the Census literacy convention &mdash; used for work too because the old city&rsquo;s younger population would otherwise depress its rate mechanically). Significance is a two-sided Mann&ndash;Whitney&nbsp;U on the ward distributions &mdash; a rank test, chosen because ward percentages are bounded and skewed rather than normal. <strong>n.s.</strong> = not significant; those four <em>p</em>-values run from 0.07 to 0.90.</p>
-    </figure>
-
-    <div class="measure">
-      <p>The spread inside the district is enormous, and it falls along the old-city line. The table below puts the poorest Charminar ward beside a ward in the Ameerpet&ndash;Punjagutta belt. These are neighbourhoods a few kilometres apart, in the same city, counted in the same census.</p>
-    </div>
-
-    <figure class="fig">
-      <div class="fig-head"><figcaption class="fig-title">Two wards of the same city, Census 2011</figcaption></div>
-      <div class="table-scroll" style="margin:14px 0 6px; border:none;">
-        <table>
-          <thead>
-            <tr><th scope="col">% of households</th><th scope="col">Charminar ward 39 (old city)</th><th scope="col">Ameerpet ward 99</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Computer with internet</td><td class="lead">2.3</td><td>47.5</td></tr>
-            <tr><td>Car / jeep / van</td><td class="lead">1.6</td><td>44.3</td></tr>
-            <tr><td>Avails banking</td><td class="lead">18.9</td><td>86.4</td></tr>
-            <tr><td>Literate, age 7+</td><td class="lead">79.8</td><td>90.5</td></tr>
-            <tr><td>Working, age 7+</td><td class="lead">32.8</td><td>45.7</td></tr>
-            <tr><td>Treated tap water</td><td>99.7</td><td>99.0</td></tr>
-            <tr><td>Closed drainage</td><td>100.0</td><td>99.6</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="chart-note">The Jubilee Hills ward (Shaikpet 104) and the Khairatabad ward 98 sit at the same level as Ameerpet 99. Note also what this comparison leaves out: HITEC City, Gachibowli and the rest of the IT corridor are in Ranga Reddy district, outside these 108 wards, so the district comparison understates how far the old city sits behind the city&rsquo;s richest belt. Charminar ward 39 has full piped-water and drainage coverage &mdash; higher than Ameerpet&rsquo;s &mdash; while one household in fifty has internet. The old city is not uniform either: ward 73 in Asifnagar ranks with the richest wards on banking. But the pattern holds across 52 wards, not a handful.</p>
-    </figure>
-
-    <div class="measure">
-      <p>Two details worth holding onto. The worst-served ward in the district on treated water (49.1%) and closed drainage (49.8%) is ward 1 in Musheerabad, which is not in the old city. And the clearest single case of the whole pattern is in Bahadurpura.</p>
-    </div>
-
-    <figure class="fig">
-      <div class="fig-head"><figcaption class="fig-title">Ward 43, Bahadurpura</figcaption></div>
-      <div class="triptych">
-        <div>
-          <div class="tri-n lead">22.0%</div>
-          <div class="tri-l">LPG for cooking &mdash; the lowest of all 108 wards in the district</div>
-        </div>
-        <div>
-          <div class="tri-n">92.9%</div>
-          <div class="tri-l">Treated tap water</div>
-        </div>
-        <div>
-          <div class="tri-n">95.6%</div>
-          <div class="tri-l">Waste water to closed drainage</div>
-        </div>
-      </div>
-      <p class="panel-verdict">Poor households on a well-served network.</p>
+      <p class="chart-note">Every measure is a rate &mdash; a share of households or of people, never a total &mdash; so the comparison is per-capita throughout. Ward medians; all panels share one 0&ndash;100% scale; work and literacy use the age-7+ population so the old city&rsquo;s younger age profile cannot depress its rates mechanically. Significance is a two-sided Mann&ndash;Whitney&nbsp;U on the ward distributions. <strong>n.s.</strong> = not significant (<em>p</em> from 0.07 to 0.90).</p>
     </figure>
   </section>
 
-  <!-- ============ DOES IT STILL HOLD ============ -->
-  <section id="still-holds" class="rule-top">
-    <div class="overline">Projecting forward</div>
-    <h2>Does a 2011 census still describe 2026?</h2>
-    <div class="measure">
-      <p>Partly. The service numbers and the living-standards numbers age in different ways, for reasons that come down to arithmetic.</p>
-
-      <h3>The service parity still holds</h3>
-      <p>In 2011 both halves of the district were already between <strong>94% and 99%</strong> on every municipal measure. Coverage that high has nowhere to fall and almost nowhere to rise, so no gap can have opened since. NFHS-5 (2019&ndash;21) puts the whole district at <strong>99.6%</strong> for improved drinking water and <strong>99.9%</strong> for electricity, which fits.</p>
-
-      <h3>The cooking-gas gap has closed</h3>
-      <p>NFHS-5 found <strong>99.5%</strong> of the district&rsquo;s households on clean cooking fuel by 2019&ndash;21. The old city is about half the district, so it cannot be below 99% &mdash; the other half would have to be above 100%. The 21-point gap of 2011 is gone, and Ward 43&rsquo;s 22.0% with it.</p>
-
-      <h3>The banking gap has probably closed</h3>
-      <p>Jan Dhan accounts opened from 2014, and by 2019&ndash;21 <strong>84%</strong> of women in Telangana had a bank account of their own. That is a different measure from the Census household figure, so it does not settle the question at ward level, but a 17-point gap is unlikely to have survived it.</p>
-
-      <h3>Internet and vehicles are another matter</h3>
-      <p>These stood at <strong>9.1%</strong> and <strong>5.9%</strong> in the old city in 2011. No government scheme hands out cars or computers; they follow income. Nobody has measured either at ward level since, and there is no reason to assume the distance has closed.</p>
-
-      <h3>What closed those gaps</h3>
-      <p>Ujjwala (2016) and Jan Dhan (2014). Both are central schemes, delivered nationally, everywhere at once. The old city&rsquo;s cooking-gas and banking gaps closed because Delhi ran a programme, not because anything changed locally. Where no scheme reaches &mdash; assets, connectivity, the things bought with income &mdash; there is nothing on record to suggest the old city has caught up.</p>
-    </div>
-
-    <div class="caveat measure-wide">
-      <h3>How firm is this section</h3>
-      <p>The ceiling argument on municipal services needs no new data and is as strong as the 2011 figures themselves. The LPG conclusion rests on a single district-level figure plus a bounding argument, and carries three caveats: NFHS &ldquo;clean fuel&rdquo; is a broader category than the Census&rsquo;s &ldquo;LPG/PNG&rdquo;; the bound assumes ward counts are a reasonable proxy for population shares; and NFHS is a sample survey with sampling error, where the Census is a complete enumeration.</p>
-      <p>The NFHS-5 district figures are confirmed against the official IIPS <a href="Docs/NFHS-5-Hyderabad-District-Factsheet.pdf"><em>District Fact Sheet: Hyderabad</em></a> (a copy is in this repository): electricity 99.9%, improved water 99.6%, sanitation 84.4%, clean cooking fuel 99.5%. The factsheet carries <strong>no NFHS-4 comparison for this district</strong> &mdash; Telangana&rsquo;s district reorganisation made 2015&ndash;16 estimates non-comparable &mdash; so no district-level trend can be quoted. The bank-account figure is from the official Telangana <strong>state</strong> factsheet (84.4%; urban 83.0%), as the district sheet does not carry it. The banking statement is deliberately weaker than the LPG one, and is offered as an inference rather than a measurement.</p>
-    </div>
-  </section>
-
-  <!-- ============ THE RECORD ============ -->
-  <section id="record" class="rule-top">
-    <span id="constituency-analysis"></span>
-    <div class="overline">The electoral record</div>
-    <h2>Twenty-seven contests. AIMIM led twenty-five.</h2>
-    <div class="measure">
-      <p>Each cell shows the leading party&rsquo;s vote share in that seat and year. AIMIM led every contest it entered.</p>
-    </div>
-
-    <div class="record">
-      <div class="record-grid">
-        <div></div>
-        <div class="rc-h">1999</div><div class="rc-h">2004</div><div class="rc-h">2009</div>
-        <div class="rc-h">2014</div><div class="rc-h">2018</div><div class="rc-h">2023</div>
-
-        <div class="rc-seat">Bahadurpura</div>
-        <div class="rc rc-none" title="Seat did not exist before the 2008 delimitation">&middot;</div>
-        <div class="rc rc-none" title="Seat did not exist before the 2008 delimitation">&middot;</div>
-        <div class="rc rc-gap" title="Contested and won by AIMIM in 2009; the row is missing from this dataset">row<br>missing</div>
-        <div class="rc rc-aimim">78.5</div><div class="rc rc-aimim">74.3</div><div class="rc rc-aimim">62.0</div>
-
-        <div class="rc-seat">Chandrayangutta</div>
-        <div class="rc rc-aimim">34.9</div><div class="rc rc-aimim">42.5</div><div class="rc rc-aimim">46.6</div>
-        <div class="rc rc-aimim">59.2</div><div class="rc rc-aimim">68.0</div><div class="rc rc-aimim">64.9</div>
-
-        <div class="rc-seat">Charminar</div>
-        <div class="rc rc-aimim">66.2</div><div class="rc rc-aimim">73.5</div><div class="rc rc-aimim">48.6</div>
-        <div class="rc rc-aimim">57.1</div><div class="rc rc-aimim">53.4</div><div class="rc rc-aimim">50.1</div>
-
-        <div class="rc-seat">Malakpet</div>
-        <div class="rc rc-other" title="BJP 53.24% — AIMIM did not contest">BJP<br>53.2</div>
-        <div class="rc rc-other" title="INC 52.12% — AIMIM did not contest">INC<br>52.1</div>
-        <div class="rc rc-aimim">30.4</div>
-        <div class="rc rc-aimim">47.2</div><div class="rc rc-aimim">42.9</div><div class="rc rc-aimim">42.3</div>
-
-        <div class="rc-seat">Yakutpura</div>
-        <div class="rc rc-aimim">48.1</div><div class="rc rc-aimim">57.5</div><div class="rc rc-aimim">53.8</div>
-        <div class="rc rc-aimim">45.8</div><div class="rc rc-aimim">49.1</div><div class="rc rc-aimim">32.9</div>
-      </div>
-    </div>
-    <div class="record-key">
-      <span><i class="key-sw" style="background:var(--accent-soft)"></i> AIMIM led</span>
-      <span><i class="key-sw" style="border:1px dashed var(--rule-strong);background:var(--surface)"></i> Another party led</span>
-      <span><i class="key-sw" style="border:1px dashed var(--accent);background:repeating-linear-gradient(45deg,transparent,transparent 3px,var(--hatch) 3px,var(--hatch) 4px)"></i> Missing row, not a loss</span>
-      <span><i class="key-sw" style="border:1px solid var(--rule)"></i> Seat did not exist</span>
-    </div>
-
-    <div class="measure">
-      <p><strong>Malakpet is the exception.</strong> AIMIM did not field a candidate there in 1999 or 2004, and BJP took the seat with 53.2%, then Congress with 52.1%. Those are the only two contests in the series AIMIM did not lead. It has held all five seats without a break since 2009.</p>
-      <p><strong>The margins are narrowing.</strong> Since 2014 AIMIM&rsquo;s share has fallen in four of the five seats. The largest fall is in <strong>Yakutpura</strong>, from 45.8% to <strong>32.9%</strong>, on the district&rsquo;s lowest turnout that year (39.6%). Chandrayangutta is the one seat where its share rose, by 5.7 points.</p>
-      <p><strong>Yakutpura 2023 was nearly a tie</strong>: AIMIM 32.9%, MBT 32.2%. Most of AIMIM&rsquo;s fall there is MBT&rsquo;s recovery.</p>
-    </div>
-  </section>
-
-  <!-- ============ EVIDENCE ============ -->
-  <section id="evidence" class="rule-top">
-    <span id="party-trends"></span><span id="statistical-analysis"></span>
-    <div class="overline">The evidence</div>
-    <h2>Three views of a narrowing hold.</h2>
-
-    <div class="chart-block">
-      <h3>AIMIM&rsquo;s share has fallen in four of five seats since 2014</h3>
-      <div class="chart-wrapper"><canvas id="aimim-chart"></canvas></div>
-      <p class="chart-note">Bahadurpura begins in 2014: the seat was created in the 2008 delimitation, and its 2009 row is missing from this dataset. Malakpet begins in 2009, the first cycle AIMIM contested it. A gap in a line means the party did not contest, not that it scored zero.</p>
-    </div>
-
-    <div class="chart-block">
-      <h3>BJP&rsquo;s rise is in the two seats it used to skip entirely</h3>
-      <div class="chart-wrapper"><canvas id="bjp-chart"></canvas></div>
-      <p class="chart-note">BJP&rsquo;s highest share in this series is its <strong>53.2% in Malakpet in 1999</strong>, so it did not grow from nothing. What changed is where it competes: absent from Chandrayangutta and Charminar until 2009, it reached <strong>26.8% in Charminar</strong> by 2023, over the same years in which AIMIM fell there from 73.5% to 50.1%.</p>
-    </div>
-
-    <div class="chart-block">
-      <h3>In 2023 the challenge is a different party in almost every seat</h3>
-      <div class="chart-wrapper"><canvas id="c2023-chart"></canvas></div>
-      <p class="chart-note">BJP in Charminar, Congress in Malakpet, MBT in Yakutpura, BRS in Bahadurpura. No single party opposes AIMIM across the old city, and the opposition vote splits several ways in every seat.</p>
-    </div>
-  </section>
-
-  <!-- ============ LIMITS ============ -->
+  <!-- ============ PROOF AND LIMITS ============ -->
   <section id="limits" class="rule-top">
     <span id="interpretation"></span>
-    <div class="overline">Interpretation</div>
-    <h2>What this supports, and what it does not.</h2>
+    <div class="overline">Proof and limits</div>
+    <h2>What this shows, and what it cannot.</h2>
 
     <div class="ledger">
       <div>
-        <h3 class="yes">Supported</h3>
-        <div class="item"><p>The old city has been led by one party in every contest that party entered, across six cycles, and has held all five seats continuously since 2009.</p></div>
-        <div class="item"><p>In 2011 those same neighbourhoods were statistically indistinguishable from the rest of their district on every municipal service measure available, and far behind on every household economic measure available.</p></div>
-        <div class="item"><p>The service-parity finding is robust to the age of the census, because both groups were already near the ceiling when it was taken.</p></div>
+        <h3 class="yes">Shown</h3>
+        <div class="item"><p>One party has led every contest it entered in these seats across six elections, and held all five seats continuously since 2009.</p></div>
+        <div class="item"><p>The same neighbourhoods are far behind the rest of their district on work, income and assets, modestly behind on literacy, and level on services and slum housing. Every claim is tested ward by ward.</p></div>
+        <div class="item"><p>The only gaps that have closed since 2011 were closed by national schemes, delivered everywhere at once.</p></div>
       </div>
       <div>
-        <h3>Not supported</h3>
+        <h3>Not shown</h3>
         <div class="item">
           <b>That AIMIM caused the poverty.</b>
-          <p>The data shows two things happening in the same place over the same years. To show one caused the other you would need places that differed in who represented them, and there are almost none here: AIMIM lost no contest it entered.</p>
+          <p>Proving that needs places that differed in who represented them, and there are almost none: the party lost nothing it entered. Poverty also shapes voting as much as voting shapes poverty, and nothing here says which way the arrow runs.</p>
         </div>
         <div class="item">
-          <b>That the old city was denied infrastructure.</b>
-          <p>The Census says the opposite. Anyone arguing under-provision of municipal services will be refuted by the data on this page.</p>
+          <b>That an MLA could have fixed it.</b>
+          <p>Urban services run through the corporation, the state and central schemes; through this whole period the state and GHMC were held by TDP, Congress, then TRS/BRS. This weakens blame and credit alike.</p>
         </div>
         <div class="item">
-          <b>That an MLA could have changed either.</b>
-          <p>Urban infrastructure runs through the municipal corporation, state departments and central schemes. MLA funds are about &#8377;3 crore a year, small next to municipal capital budgets, and through this whole period the state and GHMC were held by TDP, Congress, then TRS/BRS. This weakens the case for blaming an MLA for the poverty, and equally the case for crediting one with the pipes.</p>
-        </div>
-        <div class="item">
-          <b>That the direction runs one way.</b>
-          <p>Poverty shapes voting as much as voting shapes poverty. Poor, dense, old neighbourhoods hold onto parties that speak for them. Nothing in this data says which way the arrow runs.</p>
+          <b>That the officeholders were idle.</b>
+          <p>The Hyderabad MP&rsquo;s constituency fund was badly under-spent &mdash; about &#8377;7 crore used of a &#8377;25 crore entitlement in the 16th Lok Sabha &mdash; but his parliamentary record is strong, with double the average questions asked. And the same fund under-spending shows up in the city&rsquo;s BJP and TRS legislators too. The funds indict Hyderabad&rsquo;s political class collectively, not one party.</p>
         </div>
       </div>
     </div>
 
     <div class="measure">
-      <h3>The form of the argument that holds up</h3>
-      <p>Say &ldquo;the old city has no development&rdquo; and this Census table refutes you by lunchtime, because the roads, water and drains are all there. The claim that holds is different: <em>the old city has voted for the same party for a generation, and its people are still the poorest in the city &mdash; in neighbourhoods where the basic services were built long ago.</em> The service parity is not a defence of anyone&rsquo;s record. It removes the one excuse that would explain the poverty as neglect from outside, and leaves the harder question of why full pipes and full drains sit over empty bank accounts.</p>
-      <p>If services are level and lives are not, whatever binds these households is somewhere else: land title, credit, schooling, work. Three of those four now have ward-level measures. Schooling is modestly behind and work participation seven points behind at any age cut. The tenure proxy comes back level: the share of people in GHMC-listed slums is statistically the same in the old city as outside it (medians 20.5% against 19.7%, p&nbsp;=&nbsp;0.61) &mdash; the old city&rsquo;s poverty is not slum housing waiting for regularisation, it is poverty in ordinary serviced homes. Credit and land title proper stay unmeasured; RBI&rsquo;s credit data stops at the district and title records are not public. A vote-share chart settles none of it, but it does establish who was in the room the whole time.</p>
-    </div>
-
-    <div class="caveat measure-wide">
-      <h3>Limits of the comparison</h3>
-      <ul>
-        <li><strong>Female work participation measures norms as well as opportunity.</strong> A low rate reflects who seeks work, not only who can find it. And one schooling result runs against the deprivation story: the male&ndash;female literacy gap is <em>smaller</em> in the old city (6.3 points vs 8.3, p&nbsp;=&nbsp;0.0008).</li>
-        <li><strong>The wards differ in composition.</strong> The old city has a much lower Scheduled Caste share (3.1% vs 7.7%) and a younger population; neither is controlled for.</li>
-        <li><strong>Mandals are not constituencies.</strong> The six old-city mandals approximate the five assembly seats, but the boundaries are not identical. This compares parts of a city, not electorates.</li>
-        <li><strong>These are levels, not change.</strong> Levels largely record history; a poor area in 2011 may have been poor in 1951. Detecting whether representation changed a trajectory needs at least two ward-level time points, which do not exist &mdash; census ward boundaries are renumbered between rounds and do not correspond.</li>
-        <li><strong>No controls.</strong> Old-city wards differ in density, housing-stock age, unauthorised construction and land-title status, all of which predict economic outcomes independently of who represents them.</li>
-        <li><strong>One census.</strong> &ldquo;Sustained&rdquo; on the poverty side rests on a single time point. The forward projection above bounds part of that problem; it does not remove it.</li>
-      </ul>
-    </div>
-
-    <div class="measure">
-      <h3>How the stronger claim could actually be established</h3>
-      <p>To prove that AIMIM&rsquo;s wins did little for these constituencies, you would need somewhere similar that voted differently, and there isn&rsquo;t one &mdash; the party lost no contest it entered. There is also an awkward fact for the claim: services are the one thing AIMIM&rsquo;s people directly ran, through its bloc of GHMC corporators, and services are the one thing that reached parity. Household income, where the real shortfall is, is what an MLA touches least.</p>
-      <p>What can be tested today is what the officeholders did with the money they controlled. <strong>The MP fund record is poor.</strong> In the 16th Lok Sabha the Hyderabad MP used about &#8377;7.1&nbsp;crore of a &#8377;25&nbsp;crore entitlement; in the 17th, 8 of the 69 recommended works were completed. <strong>The parliamentary record is strong:</strong> 60 debates against a national average of 46.7, 366 questions against 210, three private member&rsquo;s bills against 1.5 (PRS, 17th&nbsp;LS). And the same under-spending shows up <strong>in every party&rsquo;s MLAs</strong>: in 2017&ndash;18 Hyderabad&rsquo;s sixteen legislators together spent under &#8377;10&nbsp;crore of the &#8377;36&nbsp;crore released to them, and the bottom five included BJP and TRS names next to AIMIM&rsquo;s. The funds went unspent across the city, whoever held the seat. For a proper causal test &mdash; comparing close AIMIM wins against close losses nationally, or using the 2008 boundary redraw &mdash; see <a href="ANALYSIS.md">ANALYSIS.md</a>.</p>
-
+      <p>So the claim that survives every check in this repository is this one:</p>
+      <p><em>A generation of unbroken representation has coincided with a generation of the district&rsquo;s worst living standards &mdash; in neighbourhoods where the pipes were laid, the homes are legal, and the only gaps ever closed were closed from Delhi.</em></p>
+      <p>Designs that could turn the coincidence into a causal test &mdash; close-election comparisons across AIMIM&rsquo;s seats nationally, or the 2008 boundary redraw as a natural experiment &mdash; are set out in <a href="ANALYSIS.md">ANALYSIS.md</a>, with the officeholder record and its sources.</p>
     </div>
   </section>
 
@@ -815,14 +825,13 @@ td.lead { font-weight: 600; color: var(--ink); }
     <h2>The full series.</h2>
 
     <div class="caveat measure-wide">
-      <h3>Before reading the numbers</h3>
+      <h3>Before quoting the numbers</h3>
       <ul>
-        <li><strong>Bahadurpura has no 1999&ndash;2009 rows.</strong> The seat was created in the 2008 delimitation, but it <em>was</em> contested in 2009 and won by AIMIM. That row is missing here, so any 2009 district total understates AIMIM.</li>
-        <li><strong>Rows do not sum to 100%.</strong> There is no column for independents, smaller parties or NOTA. The residual runs from 0 to 15.6 points with a median of 3.5; twenty-one of the twenty-seven rows are under 6.</li>
-        <li><strong>A blank is &ldquo;did not contest&rdquo;, not zero.</strong> Treating blanks as zeros will invent declines that did not happen.</li>
-        <li><strong>Figures are good to about &plusmn;1 point.</strong> Spot-checks differ slightly from other sources, most likely a valid-votes versus votes-polled denominator difference.</li>
-        <li><strong>The 2008 delimitation redrew these boundaries</strong>, so pre- and post-2009 rows are not strictly the same geographies.</li>
-        <li><strong>&ldquo;Led&rdquo; is not quite &ldquo;won&rdquo;.</strong> This dataset tracks six parties. Leading among those six is decisive wherever the leader clears 50%, which covers both non-AIMIM contests, but for a handful of rows an untracked independent cannot be formally ruled out.</li>
+        <li><strong>Bahadurpura&rsquo;s 2009 row is missing.</strong> The seat was contested and won by AIMIM that year; district totals for 2009 understate the party.</li>
+        <li><strong>Rows do not sum to 100%.</strong> No column for independents or NOTA; the residual has a median of 3.5 points. A blank is &ldquo;did not contest&rdquo;, not zero. Figures are good to about &plusmn;1 point.</li>
+        <li><strong>Mandals are not constituencies</strong>, and the 2008 delimitation redrew boundaries, so pre- and post-2009 rows are not the same geographies.</li>
+        <li><strong>Census 2011 is one time point.</strong> Levels, not change; no controls for density, housing age or land title. Female work participation reflects norms as well as opportunity, and one result runs against a uniform-deprivation reading: the male&ndash;female literacy gap is <em>smaller</em> in the old city.</li>
+        <li><strong>The slum figures are administrative</strong> (GHMC-listed, vintage unstated) and the NFHS-5 figures are confirmed against the official IIPS district factsheet, a copy of which is in <a href="Docs/NFHS-5-Hyderabad-District-Factsheet.pdf">Docs/</a>.</li>
       </ul>
     </div>
 
@@ -852,10 +861,10 @@ td.lead { font-weight: 600; color: var(--ink); }
 
     <h3>Sources</h3>
     <p class="chart-note">
-      <strong>Electoral results:</strong> Election Commission of India, constituency-level results, cross-checked against Wikipedia constituency pages and IndiaVotes; see <a href="Data/README.md">Data/README.md</a> for the cross-check table and the denominator note.<br>
-      <strong>Ward amenities:</strong> Census of India 2011, Houselisting &amp; Housing Census, table HH-14, district 536 (Hyderabad), retrieved from the release republished by <a href="https://data.opencity.in/dataset/hyderabad-census-2011-data">OpenCity</a>.<br>
-      <strong>Forward indicators:</strong> NFHS-5 (2019&ndash;21) &mdash; the official IIPS <a href="Docs/NFHS-5-Hyderabad-District-Factsheet.pdf">Hyderabad district factsheet</a> (copy in <code>Docs/</code>) and the Telangana state factsheet.<br>
-      <strong>Officeholder record:</strong> MPLADS fund position as press-reported from the MPLADS portal (Citizen Matters; Siasat, August 2026); parliamentary record from PRS Legislative Research; Telangana CDP figures from Deccan Chronicle (2017&ndash;18). Detail and caveats in <a href="ANALYSIS.md">ANALYSIS.md</a>.
+      <strong>Elections:</strong> Election Commission of India constituency results, cross-checked against Wikipedia and IndiaVotes; cross-check table and denominator note in <a href="Data/README.md">Data/README.md</a>.<br>
+      <strong>Wards:</strong> Census of India 2011 &mdash; Houselisting table HH-14 and the ward Primary Census Abstract, via <a href="https://data.opencity.in/dataset/hyderabad-census-2011-data">OpenCity</a>; GHMC slum survey via the same platform, join validated geographically.<br>
+      <strong>Since 2011:</strong> NFHS-5 (2019&ndash;21) district and state factsheets, IIPS.<br>
+      <strong>Officeholders:</strong> MPLADS portal figures as press-reported (Citizen Matters; Siasat, August 2026); PRS Legislative Research; Deccan Chronicle (Telangana CDP, 2017&ndash;18).
     </p>
   </section>
 
@@ -1083,52 +1092,6 @@ if (typeof Chart === "undefined") {
         options: lineOpts(90)
     }));
 
-    charts.push(new Chart(document.getElementById("bjp-chart"), {
-        type: "line",
-        data: { labels: YEARS, datasets: lineSeries("BJP") },
-        options: lineOpts(60)
-    }));
-
-    const d2023 = SEATS.map(function (s) {
-        return electionData.find(function (d) { return d.YEAR === 2023 && d.ACNAME === s; });
-    });
-    charts.push(new Chart(document.getElementById("c2023-chart"), {
-        type: "bar",
-        data: {
-            labels: SEATS.map(function (s) { return TITLE[s]; }),
-            datasets: ["AIMIM", "MBT", "INC", "BJP", "TRS"].map(function (p, i) {
-                return {
-                    label: p === "TRS" ? "BRS" : p,
-                    partyIndex: i,
-                    data: d2023.map(function (r) { return r ? r[p + "_VoteShare"] : null; }),
-                    borderRadius: 3,
-                    borderSkipped: false
-                };
-            })
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { position: "bottom" },
-                tooltip: {
-                    callbacks: {
-                        label: function (c) {
-                            return c.dataset.label + ": " +
-                                (c.parsed.y === null ? "did not contest" : c.parsed.y.toFixed(2) + "%");
-                        }
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true, max: 70,
-                    title: { display: true, text: "Vote share, 2023 (%)" },
-                    ticks: { callback: function (v) { return v + "%"; } }
-                },
-                x: { grid: { display: false } }
-            }
-        }
-    }));
 }
 
 /* Re-read every token and repaint. A CSS-only theme switch would leave the
