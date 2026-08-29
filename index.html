@@ -306,6 +306,8 @@ em { font-style: italic; }
     border-radius: 4px; padding: 1px 6px; margin-left: 6px; vertical-align: 1px;
 }
 .db-gap { text-align: right; font-size: 11.5px; color: var(--muted); white-space: nowrap; }
+.db-row.stale .db-pt, .db-row.stale .db-link, .db-row.stale .db-med { opacity: .3; }
+.db-row.stale .db-name, .db-row.stale .db-val { color: var(--rule-strong); }
 .db-gap b { color: var(--ink); font-weight: 600; }
 
 /* ---------------- the record grid ---------------- */
@@ -690,7 +692,7 @@ td.lead { font-weight: 600; color: var(--ink); }
     <div class="overline">Explore</div>
     <h2>Compare any two wards.</h2>
     <div class="measure">
-      <p>Pick any of the 108 wards and set it against another ward, or against the district median. Everything comes from the same Census 2011 ward tables used across this site. The thin grey tick on each line marks the district median.</p>
+      <p>The census last counted these things ward by ward in 2011, and nothing has counted them since &mdash; the 2021 census was never held. So the comparison starts there. The update switch carries each line forward to the newest measurement that exists, from 2019&ndash;21: cooking gas is recomputed to match today&rsquo;s near-universal coverage, the service lines were already full and stay put, and the lines with no newer measurement fade and say so instead of pretending. Nothing supports a 2026 number for any of them.</p>
     </div>
 
     <figure class="fig">
@@ -705,10 +707,14 @@ td.lead { font-weight: 600; color: var(--ink); }
         <select class="wsel" id="wardA" aria-label="First ward"></select>
         <span class="wmeta">against</span>
         <select class="wsel" id="wardB" aria-label="Comparison ward"></select>
+        <div class="theme-seg" id="modeSeg" role="group" aria-label="Data vintage">
+          <button type="button" data-vint="2011" class="active">2011 census</button>
+          <button type="button" data-vint="new">Updated to 2019&ndash;21</button>
+        </div>
       </div>
       <p class="wmeta" id="wardMeta"></p>
       <div id="wardRows"></div>
-      <p class="chart-note">Values are percentages of households, or of people aged seven and over for reading and work. Ward numbers follow the census tables; wards are labelled by their mandal since the census gives no ward names. Slum shares come from GHMC&rsquo;s survey and are unavailable for the nine Cantonment and Osmania University wards. The gap column is first ward minus comparison, in percentage points &mdash; a difference between two wards, with no statistical test implied.</p>
+      <p class="chart-note" id="exploreNote">Values are percentages of households, or of people aged seven and over for reading and work. Ward numbers follow the census tables; wards are labelled by their mandal since the census gives no ward names. Slum shares come from GHMC&rsquo;s survey and are unavailable for the nine Cantonment and Osmania University wards. The gap column is first ward minus comparison, in percentage points &mdash; a difference between two wards, with no statistical test implied.</p>
     </figure>
   </section>
 
@@ -869,7 +875,7 @@ td.lead { font-weight: 600; color: var(--ink); }
     <div class="overline">Proof and limits</div>
     <h2>What this shows, and what it cannot.</h2>
     <div class="measure">
-      <p>This page keeps the argument honest. The box below is the strongest causal test we could run and what it found. After it, two lists: what the data proves, and what people might want it to prove but it does not.</p>
+      <p>The box below is the strongest causal test we could run, and what it found. Then two lists: what the data shows, and what it does not.</p>
     </div>
 
     <figure class="fig" style="border-left:3px solid var(--accent)">
@@ -1180,6 +1186,34 @@ const W_GROUPS = [
 
     const fmt = function (v) { return v === null ? "&mdash;" : v.toFixed(1); };
 
+    /* Vintage update. LPG has a clean 2019-21 anchor: NFHS-5 puts the whole
+       district at 99.5% clean cooking fuel, so each ward is assumed to have
+       closed the same fraction of its remaining 2011 gap (the only assumption
+       consistent with a near-saturated total). Services were already at 94-99%
+       in 2011 and NFHS-5 confirms saturation, so they hold. Everything else
+       has no ward-safe newer measurement and is shown faded, not guessed. */
+    let vintage = "2011";
+    const totPop = WARDS.reduce(function (t, r) { return t + r.pop; }, 0);
+    const lpgMean2011 = WARDS.reduce(function (t, r) { return t + r.lpg * r.pop; }, 0) / totPop;
+    const LPG_K = (100 - 99.5) / (100 - lpgMean2011);
+    const updateVal = function (key, v) {
+        if (v === null) { return null; }
+        return key === "lpg" ? 100 - (100 - v) * LPG_K : v;
+    };
+    const HOLDS = { tap: 1, wprem: 1, drain: 1, bath: 1 };   // saturated by 2011
+    const STALE_WHY = {
+        bank: "Jan Dhan changed this everywhere after 2014; no ward-level measurement since 2011",
+        net: "the 2011 measure counted home computers; the smartphone era is unmeasured at ward level",
+        car: "no ward-level measurement since 2011",
+        lit: "no ward-level measurement since 2011 (NFHS-5 puts women's literacy at 83.6% district-wide)",
+        flit: "no ward-level measurement since 2011",
+        work: "no ward-level measurement since 2011",
+        fwork: "no ward-level measurement since 2011",
+        slum: "administrative survey, early 2010s; no public update"
+    };
+    const NOTE_2011 = document.getElementById("exploreNote").innerHTML;
+    const NOTE_NEW = "In the updated view, cooking gas is recomputed so the district total matches NFHS-5&rsquo;s 99.5% clean-fuel coverage for 2019&ndash;21, with every ward assumed to close the same share of its remaining 2011 gap. The four service lines stay at their 2011 values because both halves of the district were already at 94&ndash;99% and NFHS-5 confirms saturation. Faded lines have no newer ward-level measurement of any kind &mdash; hover them for the reason. NFHS-5 is the newest measurement there is; no data supports a 2026 figure.";
+
     function render() {
         const a = WARDS[+selA.value];
         const bIsMed = selB.value === "med";
@@ -1202,7 +1236,14 @@ const W_GROUPS = [
             html += '<div class="dumbbell">';
             grp[1].forEach(function (row) {
                 const key = row[0], label = row[1];
-                const va = a[key], vb = b[key], med = DISTRICT_MEDIAN[key];
+                const updating = vintage === "new";
+                const stale = updating && STALE_WHY[key] && !HOLDS[key] && key !== "lpg";
+                let va = a[key], vb = b[key];
+                const med0 = DISTRICT_MEDIAN[key];
+                if (updating && !stale) {
+                    va = updateVal(key, va); vb = updateVal(key, vb);
+                }
+                const med = updating && !stale ? updateVal(key, med0) : med0;
                 if (va === null || vb === null || vb === undefined) {
                     html += '<div class="db-row"><div class="db-name">' + label +
                         '</div><div class="db-track"></div><div class="db-gap">no data</div></div>';
@@ -1210,7 +1251,15 @@ const W_GROUPS = [
                 }
                 const lo = Math.min(va, vb), hi = Math.max(va, vb);
                 const gap = va - vb;
-                html += '<div class="db-row"><div class="db-name">' + label + "</div>" +
+                const tag = !updating ? "" :
+                    key === "lpg" ? " &middot; recomputed" :
+                    HOLDS[key] ? " &middot; unchanged" : "";
+                const gapCell = stale
+                    ? "2011 &mdash; no newer data"
+                    : "<b>" + (gap > 0 ? "+" : "") + gap.toFixed(1) + "</b> pts" + tag;
+                html += '<div class="db-row' + (stale ? " stale" : "") + '"' +
+                    (stale ? ' title="' + STALE_WHY[key] + '"' : "") + '>' +
+                    '<div class="db-name">' + label + "</div>" +
                     '<div class="db-track">' +
                     '<i class="db-link" style="left:' + lo + "%;width:" + (hi - lo) + '%"></i>' +
                     (bIsMed ? "" : '<i class="db-med" style="left:' + med + '%"></i>') +
@@ -1219,7 +1268,7 @@ const W_GROUPS = [
                     '<span class="db-val" style="left:' + va + '%">' + fmt(va) + "</span>" +
                     (Math.abs(va - vb) > 4 ? '<span class="db-val" style="left:' + vb + '%">' + fmt(vb) + "</span>" : "") +
                     "</div>" +
-                    '<div class="db-gap"><b>' + (gap > 0 ? "+" : "") + gap.toFixed(1) + "</b> pts</div></div>";
+                    '<div class="db-gap">' + gapCell + "</div></div>";
             });
             html += "</div>";
         });
@@ -1230,6 +1279,17 @@ const W_GROUPS = [
     }
     selA.addEventListener("change", render);
     selB.addEventListener("change", render);
+    const modeBtns = Array.prototype.slice.call(
+        document.querySelectorAll("#modeSeg button"));
+    modeBtns.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            vintage = btn.getAttribute("data-vint");
+            modeBtns.forEach(function (x) { x.classList.toggle("active", x === btn); });
+            document.getElementById("exploreNote").innerHTML =
+                vintage === "new" ? NOTE_NEW : NOTE_2011;
+            render();
+        });
+    });
     render();
 })();
 
