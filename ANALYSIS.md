@@ -273,21 +273,39 @@ answer before publishing rather than after.
 
 ### Designs that would actually identify an effect
 
-**1. Close-election regression discontinuity — the right tool.** Pool every AIMIM
-contest nationally, not just Hyderabad: Telangana, Maharashtra (Aurangabad, Nanded,
-Malegaon), the Bihar Seemanchal seats won in 2020, plus UP and Jharkhand. Use AIMIM's
-margin as the running variable and compare constituencies where it barely won against
-those where it barely lost. Near the threshold, winning is as good as random, which
-removes the confounding that defeats the present comparison. Outcomes come from SHRUG
-at village and town level — night lights, Economic Census employment, asset indices —
-or from Census rounds where the timing lines up. This is the standard template for
-"does party X in office change anything" in India, and it has been run for Congress
-and for minority legislators; the novelty here would be applying it to AIMIM. The
-binding constraint is power: AIMIM contests few seats and close ones are fewer still,
-so expect a sample in the tens and treat the result as suggestive rather than decisive.
-Note also that SHRUG's constituency-level data excludes large cities, so this design
-works on AIMIM's small-town and rural seats and *not* on Hyderabad itself — which is a
-real limitation on external validity, since the old city is the case of interest.
+**1. Close-election comparison — run, August 2026.** The design: pool every AIMIM
+assembly contest nationally, use the margin of victory as the running variable, and
+compare constituencies the party barely won against those it barely lost — near the
+threshold, winning is as good as random. We ran it with TCPD election data (via
+SHRUG, through 2022) and VIIRS night lights aggregated to post-2008 assembly
+constituencies.
+
+*The sample.* AIMIM contested 324 general assembly elections in the data (1999–2022)
+and won 38. Within ±5 points of the threshold there are **six contests in the
+party's entire national history**; within ±10, twenty-one. Restricting to elections
+with usable lights windows (2014–2019) leaves **13 close contests: 3 bare wins, 10
+bare losses**. That is the identification base, all of it.
+
+*The result.* Lights growth (Δ log VIIRS, three post-election years against
+pre-years) was 0.225 log points *lower* after bare AIMIM wins than bare losses —
+nominally a ~20% slower-growth effect. It does not survive scrutiny. An exact
+permutation test gives **p = 0.12**. And the comparison is confounded exactly where
+the night-lights literature warns: the three bare wins — Byculla in Mumbai, Dhule
+City, Nampally in Hyderabad — are dense urban cores with baseline luminance three
+times the losses' (32 vs 10 nW), and baseline brightness correlates −0.40 with
+subsequent growth in this sample. Bright places grow slower in lights for sensor
+and density reasons that have nothing to do with who won.
+
+*What this establishes.* The test is not merely underpowered in principle; it is
+uninformative in fact, and its diagnostics show why: AIMIM's bare wins occur only in
+big-city cores, which is precisely where lights stop measuring development. The
+claim "AIMIM's wins caused slower development" cannot be supported — and neither can
+its opposite — from any public data now available. Data:
+[`Data/AIMIM-CONTESTS-1999-2022.csv`](Data/AIMIM-CONTESTS-1999-2022.csv) (every
+contest with margins) and
+[`Data/AIMIM-CLOSE-CONTESTS-LIGHTS.csv`](Data/AIMIM-CLOSE-CONTESTS-LIGHTS.csv) (the
+analysis set). The election data ends in 2022, so the 2023 Telangana and 2024
+Maharashtra rounds — which may add close contests — are the natural update.
 
 **2. The 2008 delimitation as a natural experiment.** The redraw moved wards between
 constituencies, so some wards changed which party represented them while their
