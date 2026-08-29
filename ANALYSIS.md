@@ -362,7 +362,15 @@ city-wide, cross-party pattern, not an AIMIM trait.
 
 **Reading it honestly.** The MPLADS utilisation numbers are genuinely poor, and they
 are the strongest single piece of evidence available for the folk claim — discretionary
-money the MP controlled, left unspent. Against that: works are executed by the
+money the MP controlled, left unspent. Two things about them are true at once and
+should be said together. Leaving the money unspent is a real, directly attributable
+failure of representation — the only one in this analysis that is the officeholders'
+own act rather than an outcome they may or may not have influenced. And the money is
+far too small for its full use to have changed the outcomes measured here: the entire
+five-year entitlement is about ₹25 crore for a constituency of roughly twenty lakh
+electors — around ₹250 a head for the whole term, spent on small works — against gaps
+measured in employment and household income. Unspent funds convict the officeholders
+of not using their tools; they do not show the tools could have closed the gap. Against that: works are executed by the
 district authority, not the MP, so completion counts partly measure GHMC and the
 collectorate; expenditure figures trail recommendations by years as bills post; the
 17th-term envelope reflects the national MPLADS suspension of 2020–21; and the
