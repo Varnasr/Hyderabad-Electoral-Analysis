@@ -17,7 +17,7 @@ delivered.
 
 ## The two facts
 
-**Representation has been stable and one-sided.** AIMIM leads 25 of the 27
+**Representation has been stable and one-sided.** AIMIM leads 26 of the 28
 constituency–year rows in this dataset, across six assembly elections from 1999 to
 2023, and has held all five seats continuously since 2009. Vote shares run from 30%
 to 78%.
@@ -252,7 +252,7 @@ would be needed, in rough order of how much work it is against how much it buys.
 ### Why the current design cannot deliver it
 
 The obstacle is not data volume, it is the absence of variation in the treatment.
-AIMIM leads 25 of 27 contests here; the two exceptions are one seat, before the
+AIMIM leads 26 of 28 contests here; the two exceptions are one seat, before the
 delimitation, in cycles the party did not enter. Comparing old-city wards to the rest
 of the district does not isolate representation, because the old city differs in
 density, housing-stock age, unauthorised construction, land-title status and

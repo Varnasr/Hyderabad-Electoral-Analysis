@@ -9,6 +9,7 @@ PAGES = [
     ("ANALYSIS.md",    "analysis.html",    "The full analysis"),
     ("METHODOLOGY.md", "methodology.html", "Methodology and limits"),
     ("Data/README.md", "data-notes.html",  "Data notes and dictionaries"),
+    ("ROADMAP.md",     "roadmap.html",     "What comes next"),
 ]
 
 SHELL = """<!DOCTYPE html>
@@ -93,6 +94,7 @@ def fix_links(html, src):
     # md cross-links -> the generated pages; keep CSVs and PDFs as-is
     repl = {
         "ANALYSIS.md": "analysis.html", "METHODOLOGY.md": "methodology.html",
+        "ROADMAP.md": "roadmap.html",
         "Data/README.md": "data-notes.html", "../ANALYSIS.md": "analysis.html",
         "README.md": "data-notes.html" if src.startswith("Data/") else "README.md",
     }

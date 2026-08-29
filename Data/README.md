@@ -14,66 +14,59 @@
 | `INC_VoteShare` | float | Indian National Congress, % |
 | `BJP_VoteShare` | float | Bharatiya Janata Party, % |
 | `TRS_VoteShare` | float | Telangana Rashtra Samithi, renamed Bharat Rashtra Samithi (BRS) in 2022, % |
+| `TURNOUT_PCT` | float | Share of registered electors who voted, %. 1999–2018 from the TCPD results file via SHRUG v2; 2023 from ECI figures as press-reported |
+| `ELECTORS` | integer | Registered electors. 1999–2018 only (TCPD); blank for 2023, which TCPD has not yet published |
+| `VALID_VOTES` | integer | Valid votes counted. 1999–2018 only (TCPD); blank for 2023 |
 
-**Rows:** 27. **Coverage:** 1999–2023, six cycles.
+**Rows:** 28. **Coverage:** 1999–2023, six cycles.
+
+Absolute votes for any party-row through 2018 can be recovered as
+`VALID_VOTES × VoteShare / 100`, to within rounding of the published share.
 
 ## Reading the file correctly
 
 **A blank cell means the party did not contest that seat that year. It does not mean zero.** Treating blanks as zeros will drag every average down and invent declines that did not happen. In Python: `pandas.read_csv(...)` gives `NaN`, which is correct — do not `fillna(0)`.
 
-**Rows do not sum to 100%.** There is no column for independents, smaller parties, or NOTA. The residual runs from 0 to 15.6 points with a median of 3.5; 21 of the 27 rows fall under 6 points, so totals typically land between 94% and 98%. The six largest residuals are Malakpet 1999 (15.6), Yakutpura 2023 (14.0), Yakutpura 2009 (13.6), Malakpet 2009 (12.6), Malakpet 2014 (8.4) and Chandrayangutta 2009 (7.8). The residual is real votes, not missing data.
+**Rows do not sum to 100%.** There is no column for independents, smaller parties, or NOTA. The residual runs from 0 to 15.9 points with a median of 3.6; 21 of the 28 rows fall under 6 points, so totals typically land between 94% and 98%. The six largest residuals are Bahadurpura 2009 (15.9, runner-up CPI), Malakpet 1999 (15.6), Yakutpura 2023 (14.0), Yakutpura 2009 (13.6), Malakpet 2009 (12.6) and Malakpet 2014 (8.4). The residual is real votes, not missing data.
 
 **TRS and BRS are the same party.** Renamed in 2022. The column keeps the `TRS_` name across the whole series for continuity.
 
-## Known gaps
+## Gaps closed in August 2026
 
-### Bahadurpura, 2009 — missing row
+### Bahadurpura, 2009 — recovered from TCPD
 
-The dataset jumps from no Bahadurpura rows (1999–2009) to a 2014 row. That is misleading. Bahadurpura was created in the **2008 delimitation and was contested in 2009**, won by **Mohammad Moazam Khan (AIMIM)**.
-
-Consequence: any district-level aggregate for 2009 omits what is consistently AIMIM's strongest seat, and therefore **understates AIMIM in 2009**. Cross-cycle comparisons involving 2009 are affected.
-
-**What has been recovered so far** (August 2026, secondary sources, two independent
-results agreeing — not yet confirmed against an ECI record):
+Earlier versions of this file had no 2009 Bahadurpura row, and refused to add a
+partial one: the seat's runner-up was CPI, which has no column here, and it could
+not be established which of the six tracked parties actually contested. Both
+problems are resolved by the **TCPD candidates file (via SHRUG v2)**, which carries
+the full field of 11 candidates for AC-69 in 2009 and matches the two secondary
+sources recovered earlier to the vote:
 
 | Candidate | Party | Votes | Share |
 |---|---|---|---|
-| Mohammad Moazam Khan | AIMIM | 65,453 | 70.80% |
-| Mir Ahmed Ali | **CPI** | 8,718 | 9.43% |
+| Mohammad Moazam Khan | **AIMIM** | 65,453 | 70.80% |
+| Mir Ahmed Ali | CPI | 8,718 | 9.43% |
+| Syed Raza Hussain Azad | INC | 7,246 | 7.84% |
+| Mohd Sirajuddin | BJP | 5,067 | 5.48% |
+| (PRAP, SP, BSP, four independents) | | 5,970 | 6.45% |
 
-**Why the row is still not in the CSV.** The runner-up was **CPI**, which has no column in
-this dataset. The schema carries AIMIM, TDP, MBT, INC, BJP and TRS only. Adding a row with
-AIMIM at 70.80 and every other column blank would assert, under this file's own convention,
-that INC, BJP, TDP and MBT *did not contest* Bahadurpura in 2009 — which is not established
-and is probably false. A partial row would therefore corrupt the dataset rather than complete
-it, and would do so silently.
-
-This is itself a finding about the schema: the six tracked parties do not cover every serious
-contender in these seats. In 2009 Bahadurpura the second-placed party is not represented at
-all.
-
-**To close this properly**, the row needs the full candidate list with each party's share,
-from the ECI's *Statistical Report on the 2009 General Election to the Andhra Pradesh
-Legislative Assembly* (constituency-wise detail, or the Form 20 for AC-69). Sources tried and
-exhausted without success: Wikipedia (constituency and candidate pages — no 2009 table),
-IndiaVotes, ElectionPandit (503), ResultUniversity (520), and the Indiastat constituency
-factbook (a scanned PDF with no extractable text).
+TDP, MBT and TRS did **not** field candidates, so their blanks in the 2009
+Bahadurpura row mean exactly what blanks mean everywhere else in the file. The
+row's tracked shares sum to 84.1% — the largest residual in the dataset, because
+the second-placed party sits outside the schema. That remains a finding about the
+schema worth knowing when averaging.
 
 The pre-2009 absence of Bahadurpura is correct and expected — the seat did not exist.
 
-### Turnout and absolute votes — not collected
+### Turnout and electorate — now collected
 
-The dataset holds shares only. Known 2023 turnout, for reference, not currently in the file:
-
-| Constituency | 2023 turnout |
-|---|---|
-| Yakutpura | 39.64% |
-| Malakpet | 41.32% |
-| Charminar | 43.27% |
-| Chandrayangutta | 45.26% |
-| Bahadurpura | 45.50% |
-
-These were the lowest in the state that cycle, which bears directly on how the 2023 shifts should be read.
+`TURNOUT_PCT`, `ELECTORS` and `VALID_VOTES` were added in August 2026. 1999–2018
+come from the TCPD results file via SHRUG v2 (turnout there is total votes over
+registered electors). The 2023 turnout figures are ECI numbers as press-reported —
+39.64% (Yakutpura) to 45.50% (Bahadurpura), the five lowest in the state that
+cycle, which bears directly on how the 2023 shifts should be read. TCPD has not
+yet published the 2023 Telangana election, so 2023 `ELECTORS` and `VALID_VOTES`
+are blank; they should be filled from the same file when a new TCPD vintage ships.
 
 ## Cross-checks performed
 
@@ -97,12 +90,13 @@ The consistent small negative delta points to a **denominator difference** — v
 ## Provenance
 
 - **Primary:** Election Commission of India, constituency-level results — [eci.gov.in](https://eci.gov.in/)
+- **2009 Bahadurpura row, turnout, electors, valid votes:** TCPD candidates file via SHRUG v2 (Development Data Lab), Harvard Dataverse doi:10.7910/DVN/DPESAK
 - **Cross-check:** Wikipedia constituency pages; IndiaVotes
 - **Compiled:** see [`../Docs/`](../Docs/)
 
 ## Contributing corrections
 
-Cite an ECI record, note the denominator used, and say which row changes. Corrections to the 2009 Bahadurpura gap are especially welcome.
+Cite an ECI record, note the denominator used, and say which row changes.
 
 ---
 
