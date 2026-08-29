@@ -70,12 +70,48 @@ gap is smaller in the old city** (6.3 points vs 8.3, p&nbsp;=&nbsp;0.0008). Old-
 women read at a smaller disadvantage to their men than women elsewhere in the
 district.
 
+### Slum housing: the gap that isn't there
+
+GHMC's slum survey — 1,351 notified and non-notified slums with ward numbers,
+households and population — gives a proxy for the tenure question. Joined to the
+Census ward populations (99 wards join cleanly; the nine Cantonment and Osmania
+University wards are outside GHMC's slum survey and are excluded, and the join was
+validated geographically against slum coordinates), the result is a null:
+
+| | Old city | Rest of district | p |
+|---|---|---|---|
+| Population in GHMC-listed slums (ward median) | 20.5% | 19.7% | 0.61 |
+| Aggregate share | 23.4% | 26.6% | — |
+
+The old city does not hold more of its people in listed slums than the rest of the
+district. Its deprivation is not the classic slum form — informal settlements
+waiting for services. It is poverty in ordinary, serviced housing: Ward 43 in
+Bahadurpura has 9.7% of its people in listed slums, full water and drainage
+coverage, and the district's lowest cooking-gas use and lowest female literacy.
+The city's big slum concentrations sit elsewhere, along the Musi and in the
+north and west.
+
+Caveats: this is an administrative dataset of unstated vintage (GHMC's slum
+surveys date from the early 2010s), joined to 2011 Census denominators — one ward
+(Yousufguda, 108) comes out above 100%, which shows the mismatch. "Slum" here
+means GHMC-listed, which measures official recognition as much as housing
+conditions, and under-notification in the old city cannot be ruled out from this
+data.
+
+### The scorecard
+
 Of the four constraints the services finding points to — schooling, work, credit,
-land title — the first two can now be measured, and both run in the expected
-direction, work much more strongly than schooling. The last two cannot be measured
-at ward level from public data: RBI's credit statistics stop at the district, and
-land-title records are not published. Census 2011's slum tables would give a
-tenure-security proxy and remain uncollected here.
+land title — three now have ward-level measures. Schooling: modestly behind. Work:
+far behind. Tenure (via the slum proxy): at parity. Credit and land title proper
+cannot be measured at ward level from public data: RBI's credit statistics stop at
+the district, and title records are not published.
+
+Every indicator in this analysis is a rate — a share of households or people —
+not a total. The comparison is per-capita throughout; what no public dataset
+provides at ward level is income or consumption itself, which is why household
+assets stand in for it.
+
+Data: [`Data/GHMC-WARD-SLUMS.csv`](Data/GHMC-WARD-SLUMS.csv).
 
 Data: [`Data/GHMC-WARD-PCA-2011.csv`](Data/GHMC-WARD-PCA-2011.csv), derived from the
 ward-level Primary Census Abstract; dictionary in

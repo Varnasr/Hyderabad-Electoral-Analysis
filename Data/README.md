@@ -194,3 +194,51 @@ literacy over the age-7+ population; the same denominator is offered for work
 participation because the old city's higher child share (13.0% vs 10.7%) would
 otherwise depress its whole-population rate mechanically. Both variants are in the
 file.
+
+---
+
+# GHMC-WARD-SLUMS.csv
+
+GHMC slum-survey population aggregated to ward level, for the tenure-proxy
+comparison in [`../ANALYSIS.md`](../ANALYSIS.md). **99 wards**, not 108: the eight
+Tirumalagiri (Secunderabad Cantonment) wards and the Osmania University census-town
+ward are outside GHMC's slum survey and outside its ward-numbering scheme, so they
+are excluded rather than mis-joined.
+
+## Dictionary
+
+| Column | Description |
+|---|---|
+| `ward_no`, `mandal`, `old_city` | As in the other ward files |
+| `n_slums` | GHMC-listed slums with this ward number |
+| `slum_population` | Sum of surveyed slum population |
+| `slum_households` | Sum of surveyed slum households |
+| `ward_population_2011` | Census 2011 ward population (from the PCA file) |
+| `slum_pop_share_pct` | slum_population / ward_population_2011 × 100 |
+| `notified_pop_share_pct` | % of the ward's slum population in Notified (vs Non-Notified) slums |
+
+## Provenance and join validation
+
+Source: "Hyderabad - Slums" KML republished by
+[OpenCity](https://data.opencity.in/dataset/hyderabad-slums) from GHMC — 1,351
+polygons carrying slum name, notified status, ward number, households and
+population; 1,268 have non-zero population. Survey year is not stated in the file;
+GHMC's slum surveys date from the early 2010s.
+
+The KML's ward numbers are GHMC's 150-ward scheme. Ward numbers 1–12 in that
+scheme are north-eastern wards (Kapra–Uppal belt) outside Hyderabad district,
+while the census files use Cantonment and census-town numbering for nine
+low-numbered wards — a collision. The join was therefore validated by computing
+each ward number's slum-polygon centroids: wards 18–19 land in Saidabad and match
+the census rows; wards 1–8 land in the north-east and do not. Only the 99
+unambiguous wards are included.
+
+## Reading it correctly
+
+**Mixed vintages.** Administrative survey population over 2011 Census
+denominators; Yousufguda (ward 108) exceeds 100% as a result. Ward medians and
+rank tests are robust to this; individual ward values are indicative.
+
+**"Slum" is an administrative category.** GHMC listing reflects official
+recognition as much as housing conditions. Under-notification in any area,
+including the old city, cannot be ruled out from this data.
