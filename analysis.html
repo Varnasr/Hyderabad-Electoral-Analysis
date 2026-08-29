@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The full analysis — Hyderabad's old city, 1999–2023</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+:root {
+    --paper:#f7f3ec; --surface:#fdfbf7; --ink:#211d16; --muted:#6e675a;
+    --rule:#ddd5c6; --rule-strong:#b8ae9a; --accent:#a84b2f;
+}
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --paper:#151310; --surface:#1d1a16; --ink:#ece6d9; --muted:#a09786;
+        --rule:#3a352c; --rule-strong:#554e40; --accent:#e08a5f;
+    }
+}
+:root[data-theme="dark"] {
+    --paper:#151310; --surface:#1d1a16; --ink:#ece6d9; --muted:#a09786;
+    --rule:#3a352c; --rule-strong:#554e40; --accent:#e08a5f;
+}
+body {
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Newsreader','Iowan Old Style',Georgia,serif;
+    font-size:18px; line-height:1.65; -webkit-font-smoothing:antialiased;
+}
+.wrap { max-width:860px; margin:0 auto; padding:0 24px 80px; }
+.top {
+    position:sticky; top:0; background:var(--paper); border-bottom:1px solid var(--rule);
+    font-family:'IBM Plex Sans',system-ui,sans-serif; font-size:13px; z-index:10;
+}
+.top-in { max-width:860px; margin:0 auto; padding:14px 24px; }
+.top a { color:var(--muted); text-decoration:none; }
+.top a:hover { color:var(--ink); }
+h1 { font-size:clamp(1.9rem,5vw,2.7rem); font-weight:500; line-height:1.1;
+     letter-spacing:-.015em; margin:44px 0 8px; }
+.subtitle { font-family:'IBM Plex Sans',system-ui,sans-serif; font-size:13px;
+     color:var(--muted); margin-bottom:36px; }
+h2 { font-size:1.45rem; font-weight:500; letter-spacing:-.01em; margin:44px 0 12px;
+     padding-top:26px; border-top:1px solid var(--rule); }
+h3 { font-size:1.1rem; font-weight:500; margin:30px 0 8px; }
+p, li { max-width:70ch; }
+a { color:var(--accent); }
+strong { font-weight:600; }
+blockquote { margin:20px 0; padding:2px 22px; border-left:3px solid var(--accent);
+     color:var(--muted); font-style:italic; }
+table { border-collapse:collapse; width:100%; margin:20px 0;
+     font-family:'IBM Plex Sans',system-ui,sans-serif; font-size:13.5px;
+     font-feature-settings:"tnum" 1; background:var(--surface); }
+th, td { padding:8px 12px; border-bottom:1px solid var(--rule); text-align:left; }
+thead th { font-size:10.5px; text-transform:uppercase; letter-spacing:.07em;
+     color:var(--muted); border-bottom:1px solid var(--rule-strong); }
+.table-scroll { overflow-x:auto; border:1px solid var(--rule); border-radius:10px; }
+.table-scroll table { margin:0; }
+code { font-family:ui-monospace,'SF Mono',Menlo,monospace; font-size:.85em;
+     background:var(--surface); border:1px solid var(--rule); border-radius:4px;
+     padding:1px 5px; }
+pre { background:var(--surface); border:1px solid var(--rule); border-radius:10px;
+     padding:16px 18px; overflow-x:auto; font-size:13px; line-height:1.5; }
+pre code { border:none; background:none; padding:0; }
+hr { border:none; border-top:1px solid var(--rule); margin:40px 0; }
+</style>
+</head>
+<body>
+<div class="top"><div class="top-in"><a href="index.html">&larr; Back to the report</a></div></div>
+<div class="wrap">
+<h1>The full analysis</h1>
+<p class="subtitle">Part of <a href="index.html">Hyderabad&rsquo;s old city, 1999&ndash;2023</a> &middot; source file: <a href="ANALYSIS.md">ANALYSIS.md</a></p>
+<h1 id="sustained-representation-sustained-poverty">Sustained representation, sustained poverty</h1>
+<p>Hyderabad's old city has returned the same party for a generation, and its
+households remain the poorest in the district — half the cooking gas, half the
+internet, a third of the car ownership of the rest of the city, every gap
+significant at p &lt; 0.0001. This note sets that out, and is careful about what
+it does and does not establish.</p>
+<p>One fact does most of the work: the poverty is not explained by missing
+services. On water, drainage and sanitation the old city matches the rest of
+Hyderabad district, and on two measures it is marginally ahead. Whatever kept
+these households poor, it was not the absence of pipes — which strips the
+easiest alibi off the question of what a generation of the same representation
+delivered.</p>
+<hr />
+<h2 id="the-two-facts">The two facts</h2>
+<p><strong>Representation has been stable and one-sided.</strong> AIMIM leads 25 of the 27
+constituency–year rows in this dataset, across six assembly elections from 1999 to
+2023, and has held all five seats continuously since 2009. Vote shares run from 30%
+to 78%.</p>
+<p>The two exceptions are both Malakpet, and both matter. AIMIM fielded no candidate
+there in 1999 or 2004; <strong>BJP took the seat with 53.24% and Congress with 52.12%</strong>,
+both outright majorities. Every seat AIMIM has actually contested, it has led.</p>
+<p><strong>Household economic status is far below the rest of the district.</strong> Census 2011
+enumerated 108 GHMC wards in Hyderabad district. Comparing the 52 wards in the six
+old-city mandals against the 56 elsewhere:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Indicator</th>
+<th>Old city</th>
+<th>Rest of district</th>
+<th>Gap</th>
+<th>p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LPG/PNG for cooking</td>
+<td>55.9%</td>
+<td>77.1%</td>
+<td><strong>−21.2</strong></td>
+<td>&lt;0.0001</td>
+</tr>
+<tr>
+<td>Household avails banking</td>
+<td>51.4%</td>
+<td>68.7%</td>
+<td><strong>−17.3</strong></td>
+<td>&lt;0.0001</td>
+</tr>
+<tr>
+<td>Computer/laptop with internet</td>
+<td>9.1%</td>
+<td>20.0%</td>
+<td><strong>−10.9</strong></td>
+<td>&lt;0.0001</td>
+</tr>
+<tr>
+<td>Car / jeep / van</td>
+<td>5.9%</td>
+<td>15.7%</td>
+<td><strong>−9.8</strong></td>
+<td>&lt;0.0001</td>
+</tr>
+</tbody>
+</table></div>
+<p>Ward medians; two-sided Mann–Whitney. Half the cooking-gas penetration, half the
+internet, a third of the car ownership.</p>
+<h2 id="schooling-and-work">Schooling and work</h2>
+<p>The asset gaps above are proxies for income. The Census ward tables also carry the
+things income comes from: literacy and work. Same 108 wards, same method — ward
+medians, two-sided Mann–Whitney.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Indicator</th>
+<th>Old city</th>
+<th>Rest of district</th>
+<th>Gap</th>
+<th>p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Literacy, age 7+</td>
+<td>82.1%</td>
+<td>86.3%</td>
+<td>−4.3</td>
+<td>0.001</td>
+</tr>
+<tr>
+<td>Female literacy, age 7+</td>
+<td>77.9%</td>
+<td>81.7%</td>
+<td>−3.8</td>
+<td>0.03</td>
+</tr>
+<tr>
+<td>Working, age 7+</td>
+<td>37.1%</td>
+<td>44.3%</td>
+<td><strong>−7.2</strong></td>
+<td>&lt;0.0001</td>
+</tr>
+<tr>
+<td>Women working, age 7+</td>
+<td>17.9%</td>
+<td>25.3%</td>
+<td><strong>−7.3</strong></td>
+<td>&lt;0.0001</td>
+</tr>
+</tbody>
+</table></div>
+<p>Schooling is behind, but modestly. <strong>Work is far behind</strong>, and the gap survives the
+first obvious objection: the old city has more children (13.0% of its population is
+under seven, against 10.7% elsewhere, p&nbsp;&lt;&nbsp;0.0001), which mechanically lowers
+a whole-population work rate, so the table uses the age-seven-plus population — and
+the gap is still seven points, at p&nbsp;=&nbsp;2×10⁻¹². In Charminar ward 39, 32.8%
+of the age-7+ population works; in Ameerpet ward 99, 45.7%.</p>
+<p>Three cautions on reading this. <strong>Female work participation measures norms as well as
+opportunity</strong> — a low rate reflects who seeks work, not only who can find it, and
+old-city social norms differ from the rest of the city's. <strong>The wards differ in
+composition</strong>: the old city has a much lower Scheduled Caste share (3.1% vs 7.7%),
+younger populations, and different migration histories, none of which is controlled
+for. And one result runs against the deprivation story: <strong>the male–female literacy
+gap is smaller in the old city</strong> (6.3 points vs 8.3, p&nbsp;=&nbsp;0.0008). Old-city
+women read at a smaller disadvantage to their men than women elsewhere in the
+district.</p>
+<h3 id="slum-housing-the-gap-that-isnt-there">Slum housing: the gap that isn't there</h3>
+<p>GHMC's slum survey — 1,351 notified and non-notified slums with ward numbers,
+households and population — gives a proxy for the tenure question. Joined to the
+Census ward populations (99 wards join cleanly; the nine Cantonment and Osmania
+University wards are outside GHMC's slum survey and are excluded, and the join was
+validated geographically against slum coordinates), the result is a null:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th></th>
+<th>Old city</th>
+<th>Rest of district</th>
+<th>p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Population in GHMC-listed slums (ward median)</td>
+<td>20.5%</td>
+<td>19.7%</td>
+<td>0.61</td>
+</tr>
+<tr>
+<td>Aggregate share</td>
+<td>23.4%</td>
+<td>26.6%</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>The old city does not hold more of its people in listed slums than the rest of the
+district. Its deprivation is not the classic slum form — informal settlements
+waiting for services. It is poverty in ordinary, serviced housing: Ward 43 in
+Bahadurpura has 9.7% of its people in listed slums, full water and drainage
+coverage, and the district's lowest cooking-gas use and lowest female literacy.
+The city's big slum concentrations sit elsewhere, along the Musi and in the
+north and west.</p>
+<p>Caveats: this is an administrative dataset of unstated vintage (GHMC's slum
+surveys date from the early 2010s), joined to 2011 Census denominators — one ward
+(Yousufguda, 108) comes out above 100%, which shows the mismatch. "Slum" here
+means GHMC-listed, which measures official recognition as much as housing
+conditions, and under-notification in the old city cannot be ruled out from this
+data.</p>
+<h3 id="the-scorecard">The scorecard</h3>
+<p>Of the four constraints the services finding points to — schooling, work, credit,
+land title — three now have ward-level measures. Schooling: modestly behind. Work:
+far behind. Tenure (via the slum proxy): at parity. Credit and land title proper
+cannot be measured at ward level from public data: RBI's credit statistics stop at
+the district, and title records are not published.</p>
+<p>Every indicator in this analysis is a rate — a share of households or people —
+not a total. The comparison is per-capita throughout; what no public dataset
+provides at ward level is income or consumption itself, which is why household
+assets stand in for it.</p>
+<p>Data: <a href="Data/GHMC-WARD-SLUMS.csv"><code>Data/GHMC-WARD-SLUMS.csv</code></a>.</p>
+<p>Data: <a href="Data/GHMC-WARD-PCA-2011.csv"><code>Data/GHMC-WARD-PCA-2011.csv</code></a>, derived from the
+ward-level Primary Census Abstract; dictionary in
+<a href="data-notes.html"><code>Data/README.md</code></a>.</p>
+<h2 id="the-services-are-not-the-explanation">The services are not the explanation</h2>
+<p>Set those against what a municipal corporation actually builds:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Indicator</th>
+<th>Old city</th>
+<th>Rest of district</th>
+<th>Gap</th>
+<th>p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tap water, treated source</td>
+<td>97.1%</td>
+<td>97.4%</td>
+<td>−0.3</td>
+<td>0.50</td>
+</tr>
+<tr>
+<td>Water source within premises</td>
+<td>94.8%</td>
+<td>94.5%</td>
+<td>+0.3</td>
+<td>0.10</td>
+</tr>
+<tr>
+<td>Waste water to closed drainage</td>
+<td>98.4%</td>
+<td>97.5%</td>
+<td><strong>+0.9</strong></td>
+<td>0.07</td>
+</tr>
+<tr>
+<td>Bathroom within premises</td>
+<td>98.9%</td>
+<td>99.0%</td>
+<td>−0.0</td>
+<td>0.90</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Not one is significant. Two favour the old city.</strong> The single worst-served ward in
+the district on treated water (49.1%) and on closed drainage (49.8%) is <em>not</em> in the
+old city.</p>
+<p>Ward 43 in Bahadurpura is the clearest illustration: <strong>22.0%</strong> LPG — the lowest in
+the district — alongside <strong>92.9%</strong> treated tap water and <strong>95.6%</strong> closed drainage.
+Poor households on a well-served network.</p>
+<p>So the pipes went in. What did not follow was income.</p>
+<h2 id="does-this-still-hold-projecting-past-2011">Does this still hold? Projecting past 2011</h2>
+<p>Census 2011 is fifteen years old, and the obvious objection is that it no longer
+describes the city. The right response is not to hedge but to ask which findings are
+robust to the gap and which are not. The two families of indicators age very
+differently, and the difference is arithmetic rather than judgement.</p>
+<p><strong>The service finding is ceiling-bounded, so it holds.</strong> In 2011 both groups already
+sat between 94% and 99% on every municipal measure. You cannot open a meaningful gap
+from 97 versus 97 when the ceiling is 100, and piped coverage does not run backwards.
+NFHS-5 (2019–21) puts Hyderabad district at 99.6% for an improved drinking-water
+source and 99.9% for electricity, consistent with saturation in both halves. Nothing
+since 2011 could have turned service parity into a service deficit.</p>
+<p><strong>The LPG gap has closed.</strong> NFHS-5 records 99.5% of Hyderabad district households
+using clean cooking fuel in 2019–21. Since the old city is roughly half the district,
+it cannot sit below about 99% without the other half exceeding 100%. The 21-point gap
+of 2011 is gone, and Ward 43's 22.0% with it.</p>
+<p><strong>The banking gap has probably closed.</strong> Jan Dhan accounts opened from 2014, and by
+2019–21, 84% of women in Telangana had a bank account they themselves used. Different
+unit, different definition from the Census household measure, so this does not settle
+the question at ward level — but a 17-point household gap surviving that expansion is
+hard to credit.</p>
+<p><strong>Internet and vehicle ownership have no ceiling and no scheme behind them.</strong> These
+stood at 9.1% and 5.9% in the old city, with no programme driving them towards
+universality. They are where the economic distance plausibly persists, and nobody has
+measured them at ward level since.</p>
+<p><strong>Which sharpens the argument rather than dissolving it.</strong> Note <em>what</em> closed the two
+gaps that closed. Ujjwala (2016) and Jan Dhan (2014) are centrally sponsored schemes,
+delivered nationally and uniformly. They did not close the old city's gap because it
+was represented well or badly; they closed it everywhere at once. Convergence on
+cooking fuel and bank accounts is therefore not evidence of local development, any
+more than the 2011 shortfall was evidence of local neglect. Both were set elsewhere.
+The measures still plausibly diverging are precisely the ones no scheme delivers.</p>
+<h3 id="how-firm-is-this-section">How firm is this section</h3>
+<p>The ceiling argument needs no new data and is as strong as the 2011 figures. The LPG
+conclusion rests on one district-level figure plus a bounding argument, and carries
+three caveats: NFHS "clean fuel" is a broader category than the Census's "LPG/PNG";
+the bound assumes ward counts proxy population shares; and NFHS is a sample survey
+where the Census is a complete enumeration.</p>
+<p>The NFHS-5 district figures have been confirmed against the official IIPS
+<em>District Fact Sheet: Hyderabad</em> (NFHS-5, 2019–21) — a copy of the original PDF is in
+<a href="Docs/NFHS-5-Hyderabad-District-Factsheet.pdf"><code>Docs/NFHS-5-Hyderabad-District-Factsheet.pdf</code></a>.
+Electricity 99.9%, improved drinking water 99.6%, improved sanitation 84.4%, clean
+cooking fuel 99.5%. Two notes from the factsheet itself: it carries <strong>no NFHS-4
+comparison column for this district</strong> (the reorganisation of Telangana's districts
+made 2015–16 estimates non-comparable), so no district-level trend can be quoted; and
+it does not report the women's bank-account indicator at district level — the 84.4%
+figure is from the official Telangana <strong>state</strong> factsheet (urban: 83.0%) and is
+labelled as such. The banking statement remains deliberately weaker than the LPG one:
+an inference, not a measurement.</p>
+<h2 id="what-this-supports-and-what-it-does-not">What this supports, and what it does not</h2>
+<p><strong>Supported:</strong> the old city has been represented by one party throughout, and is
+substantially poorer than the rest of its district on every household economic
+measure available. Those two things are true at once.</p>
+<p><strong>Not supported — and the distinction is the whole point:</strong></p>
+<p><em>That AIMIM caused the poverty.</em> This is a coincidence of two long-run facts, not an
+identified effect. Causal inference would need variation in representation, and there
+is almost none — two contests, in one seat, both before the 2008 delimitation. That is
+not an identification strategy. See "Making the argument robustly" below for designs
+that could actually deliver one.</p>
+<p><em>That the old city was denied infrastructure.</em> The data says the opposite. Anyone
+arguing under-provision of municipal services will be refuted by the Census.</p>
+<p><em>That an MLA could have changed either.</em> Urban infrastructure in India runs through
+the municipal corporation, state departments and centrally sponsored schemes. MLA-LADS
+is around ₹3 crore a year — small against municipal capital budgets. Across this whole
+period GHMC and the state were held by TDP, Congress, then TRS/BRS. <strong>AIMIM has not
+controlled the machinery that builds or funds any of this.</strong> That cuts both ways: it
+weakens a blame argument and it weakens a credit argument.</p>
+<p><em>That the direction runs one way.</em> Poor, dense, historically under-invested
+neighbourhoods produce distinctive political attachments. Representation may be as much
+consequence as cause. Nothing here separates the two.</p>
+<h2 id="why-the-reframing-is-the-stronger-argument">Why the reframing is the stronger argument</h2>
+<p>"The old city has no development" is refutable in one afternoon with this Census
+table, and it aims at the one thing an MLA has least control over.</p>
+<p>"A generation of unbroken representation has coincided with a generation of
+unchanged relative poverty, in a place where the pipes and drains were built"
+is a harder claim to dismiss, and a more interesting one. It moves the question from
+civic works — where the old city is doing fine — to economic mobility, where the
+gap is large, consistent across four independent indicators, and statistically
+unambiguous.</p>
+<p>It also raises the question worth actually asking: <strong>what would have had to be
+different?</strong> If service delivery is level and outcomes are not, the binding
+constraint is somewhere other than pipes — land title, credit access, formal
+employment, education. Those are answerable questions, and none of them is settled
+by a vote-share chart.</p>
+<h2 id="making-the-argument-robustly">Making the argument robustly</h2>
+<p>The claim people usually want to make from this material is that <em>AIMIM's wins have
+done little for the people of these constituencies</em>. Nothing in this repository
+establishes that, and two things in it point the other way. This section sets out what
+would be needed, in rough order of how much work it is against how much it buys.</p>
+<h3 id="why-the-current-design-cannot-deliver-it">Why the current design cannot deliver it</h3>
+<p>The obstacle is not data volume, it is the absence of variation in the treatment.
+AIMIM leads 25 of 27 contests here; the two exceptions are one seat, before the
+delimitation, in cycles the party did not enter. Comparing old-city wards to the rest
+of the district does not isolate representation, because the old city differs in
+density, housing-stock age, unauthorised construction, land-title status and
+composition — every one of which predicts economic outcomes independently of who holds
+the seat. Any estimate from this comparison is the sum of the representation effect
+and all of that, and there is no way to separate them from within the sample.</p>
+<h3 id="the-strongest-counter-argument-stated-fairly">The strongest counter-argument, stated fairly</h3>
+<p>The claim is weakest precisely where AIMIM has had the most power. Municipal service
+delivery is the domain of the corporation and its corporators, and AIMIM has held a
+large bloc of GHMC corporator seats across these wards for decades. On exactly those
+measures the old city is at parity or marginally ahead. Meanwhile household income —
+where the shortfall is real — is the domain an MLA influences least. So the record, as
+it stands, is <em>good</em> where the party had leverage and <em>poor</em> where it had little.
+Anyone advancing the "did nothing" claim should expect to meet this, and should have an
+answer before publishing rather than after.</p>
+<h3 id="designs-that-would-actually-identify-an-effect">Designs that would actually identify an effect</h3>
+<p><strong>1. Close-election comparison — run, August 2026.</strong> The design: pool every AIMIM
+assembly contest nationally, use the margin of victory as the running variable, and
+compare constituencies the party barely won against those it barely lost — near the
+threshold, winning is as good as random. We ran it with TCPD election data (via
+SHRUG, through 2022) and VIIRS night lights aggregated to post-2008 assembly
+constituencies.</p>
+<p><em>The sample.</em> AIMIM contested 324 general assembly elections in the data (1999–2022)
+and won 38. Within ±5 points of the threshold there are <strong>six contests in the
+party's entire national history</strong>; within ±10, twenty-one. Restricting to elections
+with usable lights windows (2014–2019) leaves <strong>13 close contests: 3 bare wins, 10
+bare losses</strong>. That is the identification base, all of it.</p>
+<p><em>The result.</em> Lights growth (Δ log VIIRS, three post-election years against
+pre-years) was 0.225 log points <em>lower</em> after bare AIMIM wins than bare losses —
+nominally a ~20% slower-growth effect. It does not survive scrutiny. An exact
+permutation test gives <strong>p = 0.12</strong>. And the comparison is confounded exactly where
+the night-lights literature warns: the three bare wins — Byculla in Mumbai, Dhule
+City, Nampally in Hyderabad — are dense urban cores with baseline luminance three
+times the losses' (32 vs 10 nW), and baseline brightness correlates −0.40 with
+subsequent growth in this sample. Bright places grow slower in lights for sensor
+and density reasons that have nothing to do with who won.</p>
+<p><em>What this establishes.</em> The test is not merely underpowered in principle; it is
+uninformative in fact, and its diagnostics show why: AIMIM's bare wins occur only in
+big-city cores, which is precisely where lights stop measuring development. The
+claim "AIMIM's wins caused slower development" cannot be supported — and neither can
+its opposite — from any public data now available. Data:
+<a href="Data/AIMIM-CONTESTS-1999-2022.csv"><code>Data/AIMIM-CONTESTS-1999-2022.csv</code></a> (every
+contest with margins) and
+<a href="Data/AIMIM-CLOSE-CONTESTS-LIGHTS.csv"><code>Data/AIMIM-CLOSE-CONTESTS-LIGHTS.csv</code></a> (the
+analysis set). The election data ends in 2022, so the 2023 Telangana and 2024
+Maharashtra rounds — which may add close contests — are the natural update.</p>
+<p><strong>2. The 2008 delimitation as a natural experiment.</strong> The redraw moved wards between
+constituencies, so some wards changed which party represented them while their
+population and housing stock did not. Comparing the 2001-to-2011 trajectory of wards
+that switched into an AIMIM seat against those that did not is a difference-in-
+differences with within-ward variation — much closer to the case of interest than any
+national pooling. The obstacle is the ward-to-constituency crosswalk: GHMC was
+constituted in 2007 and wards were renumbered, so 2001 and 2011 ward identifiers do not
+correspond and must be reconciled geographically before anything else can happen. Doing
+it at mandal level instead is cruder but tractable.</p>
+<p><strong>3. Synthetic control on the old city as a unit.</strong> Build a synthetic old city from
+wards or towns elsewhere in India matched on 2001 characteristics and compare
+trajectories to 2011. Needs a Census 2001 ward-level donor pool, which is the main cost.</p>
+<p><strong>4. Night lights as an annual outcome.</strong> VIIRS from 2012 and DMSP before it give a
+yearly series, which permits event studies around each election rather than one
+before-and-after. Two warnings: the elasticity of lights to consumption is much weaker
+in time series than in cross-section, and a dense, long-electrified metro is close to
+saturated — so lights are a reasonable outcome for the rural and small-town seats in
+design 1 and a poor one inside Hyderabad.</p>
+<h3 id="the-cheap-direct-test-of-did-nothing-run">The cheap, direct test of "did nothing" — run</h3>
+<p>The direct test looks at what the representatives actually controlled: the
+discretionary funds and the legislature. It needs no identification strategy, and the
+answer turns out to be textured rather than one-sided.</p>
+<p><strong>Hyderabad has been an AIMIM Lok Sabha seat continuously since 1984</strong> — Sultan
+Salahuddin Owaisi to 2004, Asaduddin Owaisi since — which makes the MP fund a clean
+series. The record:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Fund position</th>
+<th>Works</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>16th LS (2014–19)</td>
+<td>Recommended ₹24.87 cr; sanctioned ₹16.72 cr; <strong>utilised ₹7.09 cr</strong> (~28% of the ₹25 cr entitlement)</td>
+<td>225 completed</td>
+<td>Citizen Matters candidate report card, from MPLADS data</td>
+</tr>
+<tr>
+<td>17th LS (2019–24)</td>
+<td>Released ₹15.51 cr; <strong>spent ₹8.77 cr</strong> (57% of released)</td>
+<td>8 of 69 recommended works completed</td>
+<td>Siasat, citing the MPLADS portal</td>
+</tr>
+<tr>
+<td>18th LS (2024–)</td>
+<td>Released ₹9.80 cr; spent ₹0.58 cr</td>
+<td>none completed yet (term young)</td>
+<td>Siasat, citing the MPLADS portal</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The legislative record points the other way.</strong> PRS Legislative Research, 17th Lok
+Sabha: attendance 72% (national average 79%), <strong>60 debates</strong> (average 46.7), <strong>366
+questions</strong> (average 210), <strong>3 private member's bills</strong> (average 1.5). In the 16th,
+Citizen Matters reports 82% attendance and <strong>737 questions</strong> against a 293 average,
+and a Sansad Ratna award for the 15th. Whatever else is true, this is not an absentee
+representative.</p>
+<p><strong>The state-side fund shows the same under-spending — across every party.</strong> Under
+Telangana's Constituency Development Programme (₹3 crore per MLA per year from
+2016–17), Deccan Chronicle reported that in 2017–18 the sixteen Hyderabad-city MLAs
+together spent under ₹10 crore of ₹36 crore released, and the five who spent below
+₹50 lakh included AIMIM's Pasha Quadri (Charminar) and Akbaruddin Owaisi
+(Chandrayangutta) — <strong>alongside BJP's K. Laxman and G. Kishan Reddy and TRS minister
+Talasani Srinivas Yadav</strong>. Under-utilisation of constituency funds in Hyderabad is a
+city-wide, cross-party pattern, not an AIMIM trait.</p>
+<p><strong>Reading it honestly.</strong> The MPLADS utilisation numbers are genuinely poor, and they
+are the strongest single piece of evidence available for the folk claim — discretionary
+money the MP controlled, left unspent. Two things about them are true at once and
+should be said together. Leaving the money unspent is a real, directly attributable
+failure of representation — the only one in this analysis that is the officeholders'
+own act rather than an outcome they may or may not have influenced. And the money is
+far too small for its full use to have changed the outcomes measured here: the entire
+five-year entitlement is about ₹25 crore for a constituency of roughly twenty lakh
+electors — around ₹250 a head for the whole term, spent on small works — against gaps
+measured in employment and household income. Unspent funds convict the officeholders
+of not using their tools; they do not show the tools could have closed the gap. Against that: works are executed by the
+district authority, not the MP, so completion counts partly measure GHMC and the
+collectorate; expenditure figures trail recommendations by years as bills post; the
+17th-term envelope reflects the national MPLADS suspension of 2020–21; and the
+cross-party CDP pattern says under-spending is how Hyderabad's fund machinery behaves
+generally. And the legislative record is well above average on every measure PRS
+tracks except attendance. "Did nothing" survives contact with this data only in the
+narrow form: <em>the discretionary works funds were substantially under-spent</em> — a
+statement that indicts the city's MLAs of every party, and its fund administration,
+as much as its MP.</p>
+<p><strong>Still uncollected:</strong> GHMC ward-level works and budget data — the corporation is the
+right unit for service delivery, and ward-level expenditure would test the parity
+finding directly rather than by proxy. Telangana publishes no per-constituency CDP
+utilisation series; the 2017–18 figures above are a single press-reported year.</p>
+<p>All figures above are as reported at their access dates (August 2026); the MPLADS
+portal (mplads.mospi.gov.in) revises as bills are uploaded, and none of the press
+figures has been re-verified against the live portal, which does not expose a
+static report.</p>
+<h3 id="the-version-of-the-claim-that-survives">The version of the claim that survives</h3>
+<p>Stated as "AIMIM has done nothing for the old city", the argument is refutable with one
+Census table and aimed at the thing an MLA controls least. Stated as follows, it holds:</p>
+<blockquote>
+<p>A generation of unbroken political incorporation has not been accompanied by economic
+convergence. Where the old city has caught up — cooking fuel, bank accounts — it was
+pulled up by national schemes that reached everywhere at once. Where no scheme
+operated, the distance appears to remain.</p>
+</blockquote>
+<p>That is a correlation, honestly labelled, about political incorporation failing to
+convert into economic mobility. It is more interesting than the blame version, it is
+much harder to dismiss, and it points at answerable questions: land title, credit
+access, formal employment, schooling.</p>
+<h2 id="limits-of-this-analysis">Limits of this analysis</h2>
+<p><strong>Census 2011 is one time point, now fifteen years old.</strong> It pre-dates most of the
+2014–2023 period. The word "sustained" on the poverty side is doing more work than
+one census can carry; establishing it properly needs Census 2001 ward tables, or
+Census 2027 when it lands.</p>
+<p><strong>Mandals are not constituencies.</strong> The six old-city mandals approximate the five
+assembly seats; the boundaries are not identical. The comparison is between parts
+of a city, not between electorates.</p>
+<p><strong>These are levels, not change.</strong> Levels largely record history. A poor area in 2011
+may have been poor in 1951. Detecting whether representation changed a trajectory
+needs at least two time points, which this does not have.</p>
+<p><strong>No controls.</strong> Old-city wards differ from the rest in density, housing-stock age,
+unauthorised construction and land-title status — all of which predict economic
+outcomes independently of who represents them.</p>
+<h2 id="reproducing-it">Reproducing it</h2>
+<p>Data: <a href="Data/GHMC-WARD-AMENITIES-2011.csv"><code>Data/GHMC-WARD-AMENITIES-2011.csv</code></a> — 108
+GHMC wards, Census 2011 table HH-14 (Houselisting &amp; Housing Census), percentage of
+households by amenity and asset. Extracted from the Census of India release
+republished by <a href="https://data.opencity.in/dataset/hyderabad-census-2011-data">OpenCity</a>.</p>
+<p><code>old_city = yes</code> marks wards in the Bahadurpura, Charminar, Bandlaguda, Saidabad,
+Asifnagar and Golconda mandals.</p>
+<pre><code class="language-bash">python3 - &lt;&lt;'EOF'
+import csv, statistics as st
+rows=list(csv.DictReader(open('Data/GHMC-WARD-AMENITIES-2011.csv')))
+old =[r for r in rows if r['old_city']=='yes']
+rest=[r for r in rows if r['old_city']=='no']
+for k in ['tap_water_treated','closed_drainage','lpg_png_cooking','avails_banking']:
+    a=st.median(float(r[k]) for r in old); b=st.median(float(r[k]) for r in rest)
+    print(f&quot;{k:26} old {a:5.1f}   rest {b:5.1f}   gap {a-b:+5.1f}&quot;)
+EOF
+</code></pre>
+<p>Significance is a two-sided Mann–Whitney U on the ward distributions — a rank test,
+chosen because ward percentages are bounded and skewed rather than normal.</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data notes and dictionaries — Hyderabad's old city, 1999–2023</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+:root {
+    --paper:#f7f3ec; --surface:#fdfbf7; --ink:#211d16; --muted:#6e675a;
+    --rule:#ddd5c6; --rule-strong:#b8ae9a; --accent:#a84b2f;
+}
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --paper:#151310; --surface:#1d1a16; --ink:#ece6d9; --muted:#a09786;
+        --rule:#3a352c; --rule-strong:#554e40; --accent:#e08a5f;
+    }
+}
+:root[data-theme="dark"] {
+    --paper:#151310; --surface:#1d1a16; --ink:#ece6d9; --muted:#a09786;
+    --rule:#3a352c; --rule-strong:#554e40; --accent:#e08a5f;
+}
+body {
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'Newsreader','Iowan Old Style',Georgia,serif;
+    font-size:18px; line-height:1.65; -webkit-font-smoothing:antialiased;
+}
+.wrap { max-width:860px; margin:0 auto; padding:0 24px 80px; }
+.top {
+    position:sticky; top:0; background:var(--paper); border-bottom:1px solid var(--rule);
+    font-family:'IBM Plex Sans',system-ui,sans-serif; font-size:13px; z-index:10;
+}
+.top-in { max-width:860px; margin:0 auto; padding:14px 24px; }
+.top a { color:var(--muted); text-decoration:none; }
+.top a:hover { color:var(--ink); }
+h1 { font-size:clamp(1.9rem,5vw,2.7rem); font-weight:500; line-height:1.1;
+     letter-spacing:-.015em; margin:44px 0 8px; }
+.subtitle { font-family:'IBM Plex Sans',system-ui,sans-serif; font-size:13px;
+     color:var(--muted); margin-bottom:36px; }
+h2 { font-size:1.45rem; font-weight:500; letter-spacing:-.01em; margin:44px 0 12px;
+     padding-top:26px; border-top:1px solid var(--rule); }
+h3 { font-size:1.1rem; font-weight:500; margin:30px 0 8px; }
+p, li { max-width:70ch; }
+a { color:var(--accent); }
+strong { font-weight:600; }
+blockquote { margin:20px 0; padding:2px 22px; border-left:3px solid var(--accent);
+     color:var(--muted); font-style:italic; }
+table { border-collapse:collapse; width:100%; margin:20px 0;
+     font-family:'IBM Plex Sans',system-ui,sans-serif; font-size:13.5px;
+     font-feature-settings:"tnum" 1; background:var(--surface); }
+th, td { padding:8px 12px; border-bottom:1px solid var(--rule); text-align:left; }
+thead th { font-size:10.5px; text-transform:uppercase; letter-spacing:.07em;
+     color:var(--muted); border-bottom:1px solid var(--rule-strong); }
+.table-scroll { overflow-x:auto; border:1px solid var(--rule); border-radius:10px; }
+.table-scroll table { margin:0; }
+code { font-family:ui-monospace,'SF Mono',Menlo,monospace; font-size:.85em;
+     background:var(--surface); border:1px solid var(--rule); border-radius:4px;
+     padding:1px 5px; }
+pre { background:var(--surface); border:1px solid var(--rule); border-radius:10px;
+     padding:16px 18px; overflow-x:auto; font-size:13px; line-height:1.5; }
+pre code { border:none; background:none; padding:0; }
+hr { border:none; border-top:1px solid var(--rule); margin:40px 0; }
+</style>
+</head>
+<body>
+<div class="top"><div class="top-in"><a href="index.html">&larr; Back to the report</a></div></div>
+<div class="wrap">
+<h1>Data notes and dictionaries</h1>
+<p class="subtitle">Part of <a href="index.html">Hyderabad&rsquo;s old city, 1999&ndash;2023</a> &middot; source file: <a href="Data/README.md">Data/README.md</a></p>
+<h1 id="data-documentation">Data documentation</h1>
+<p><code>HYD-DIST-RESULTS.csv</code> — party vote share by constituency and assembly election year, Hyderabad district.</p>
+<h2 id="dictionary">Dictionary</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>YEAR</code></td>
+<td>integer</td>
+<td>Assembly election year: 1999, 2004, 2009, 2014, 2018, 2023</td>
+</tr>
+<tr>
+<td><code>ACNAME</code></td>
+<td>string</td>
+<td>Assembly constituency, uppercase: BAHADURPURA, CHANDRAYANGUTTA, CHARMINAR, MALAKPET, YAKUTPURA</td>
+</tr>
+<tr>
+<td><code>AIMIM_VoteShare</code></td>
+<td>float</td>
+<td>All India Majlis-e-Ittehadul Muslimeen, %</td>
+</tr>
+<tr>
+<td><code>TDP_VoteShare</code></td>
+<td>float</td>
+<td>Telugu Desam Party, %</td>
+</tr>
+<tr>
+<td><code>MBT_VoteShare</code></td>
+<td>float</td>
+<td>Majlis Bachao Tehreek, %</td>
+</tr>
+<tr>
+<td><code>INC_VoteShare</code></td>
+<td>float</td>
+<td>Indian National Congress, %</td>
+</tr>
+<tr>
+<td><code>BJP_VoteShare</code></td>
+<td>float</td>
+<td>Bharatiya Janata Party, %</td>
+</tr>
+<tr>
+<td><code>TRS_VoteShare</code></td>
+<td>float</td>
+<td>Telangana Rashtra Samithi, renamed Bharat Rashtra Samithi (BRS) in 2022, %</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Rows:</strong> 27. <strong>Coverage:</strong> 1999–2023, six cycles.</p>
+<h2 id="reading-the-file-correctly">Reading the file correctly</h2>
+<p><strong>A blank cell means the party did not contest that seat that year. It does not mean zero.</strong> Treating blanks as zeros will drag every average down and invent declines that did not happen. In Python: <code>pandas.read_csv(...)</code> gives <code>NaN</code>, which is correct — do not <code>fillna(0)</code>.</p>
+<p><strong>Rows do not sum to 100%.</strong> There is no column for independents, smaller parties, or NOTA. The residual runs from 0 to 15.6 points with a median of 3.5; 21 of the 27 rows fall under 6 points, so totals typically land between 94% and 98%. The six largest residuals are Malakpet 1999 (15.6), Yakutpura 2023 (14.0), Yakutpura 2009 (13.6), Malakpet 2009 (12.6), Malakpet 2014 (8.4) and Chandrayangutta 2009 (7.8). The residual is real votes, not missing data.</p>
+<p><strong>TRS and BRS are the same party.</strong> Renamed in 2022. The column keeps the <code>TRS_</code> name across the whole series for continuity.</p>
+<h2 id="known-gaps">Known gaps</h2>
+<h3 id="bahadurpura-2009-missing-row">Bahadurpura, 2009 — missing row</h3>
+<p>The dataset jumps from no Bahadurpura rows (1999–2009) to a 2014 row. That is misleading. Bahadurpura was created in the <strong>2008 delimitation and was contested in 2009</strong>, won by <strong>Mohammad Moazam Khan (AIMIM)</strong>.</p>
+<p>Consequence: any district-level aggregate for 2009 omits what is consistently AIMIM's strongest seat, and therefore <strong>understates AIMIM in 2009</strong>. Cross-cycle comparisons involving 2009 are affected.</p>
+<p><strong>What has been recovered so far</strong> (August 2026, secondary sources, two independent
+results agreeing — not yet confirmed against an ECI record):</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Candidate</th>
+<th>Party</th>
+<th>Votes</th>
+<th>Share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mohammad Moazam Khan</td>
+<td>AIMIM</td>
+<td>65,453</td>
+<td>70.80%</td>
+</tr>
+<tr>
+<td>Mir Ahmed Ali</td>
+<td><strong>CPI</strong></td>
+<td>8,718</td>
+<td>9.43%</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Why the row is still not in the CSV.</strong> The runner-up was <strong>CPI</strong>, which has no column in
+this dataset. The schema carries AIMIM, TDP, MBT, INC, BJP and TRS only. Adding a row with
+AIMIM at 70.80 and every other column blank would assert, under this file's own convention,
+that INC, BJP, TDP and MBT <em>did not contest</em> Bahadurpura in 2009 — which is not established
+and is probably false. A partial row would therefore corrupt the dataset rather than complete
+it, and would do so silently.</p>
+<p>This is itself a finding about the schema: the six tracked parties do not cover every serious
+contender in these seats. In 2009 Bahadurpura the second-placed party is not represented at
+all.</p>
+<p><strong>To close this properly</strong>, the row needs the full candidate list with each party's share,
+from the ECI's <em>Statistical Report on the 2009 General Election to the Andhra Pradesh
+Legislative Assembly</em> (constituency-wise detail, or the Form 20 for AC-69). Sources tried and
+exhausted without success: Wikipedia (constituency and candidate pages — no 2009 table),
+IndiaVotes, ElectionPandit (503), ResultUniversity (520), and the Indiastat constituency
+factbook (a scanned PDF with no extractable text).</p>
+<p>The pre-2009 absence of Bahadurpura is correct and expected — the seat did not exist.</p>
+<h3 id="turnout-and-absolute-votes-not-collected">Turnout and absolute votes — not collected</h3>
+<p>The dataset holds shares only. Known 2023 turnout, for reference, not currently in the file:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Constituency</th>
+<th>2023 turnout</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Yakutpura</td>
+<td>39.64%</td>
+</tr>
+<tr>
+<td>Malakpet</td>
+<td>41.32%</td>
+</tr>
+<tr>
+<td>Charminar</td>
+<td>43.27%</td>
+</tr>
+<tr>
+<td>Chandrayangutta</td>
+<td>45.26%</td>
+</tr>
+<tr>
+<td>Bahadurpura</td>
+<td>45.50%</td>
+</tr>
+</tbody>
+</table></div>
+<p>These were the lowest in the state that cycle, which bears directly on how the 2023 shifts should be read.</p>
+<h2 id="cross-checks-performed">Cross-checks performed</h2>
+<p>Spot-checked August 2026 against Wikipedia constituency pages.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Row</th>
+<th>This dataset</th>
+<th>Cross-check</th>
+<th>Delta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bahadurpura 2014, AIMIM</td>
+<td>78.46</td>
+<td>79.19</td>
+<td>−0.73</td>
+</tr>
+<tr>
+<td>Bahadurpura 2018, AIMIM</td>
+<td>74.26</td>
+<td>74.96</td>
+<td>−0.70</td>
+</tr>
+<tr>
+<td>Bahadurpura 2023, AIMIM</td>
+<td>62.02</td>
+<td>62.24</td>
+<td>−0.22</td>
+</tr>
+<tr>
+<td>Bahadurpura 2023, TRS/BRS</td>
+<td>15.60</td>
+<td>15.60</td>
+<td>0.00</td>
+</tr>
+</tbody>
+</table></div>
+<p>The consistent small negative delta points to a <strong>denominator difference</strong> — valid votes versus total votes polled — rather than transcription error. The dataset does not currently record which denominator was used. Until it does, treat values as accurate to about ±1 percentage point.</p>
+<h2 id="anomalies-worth-knowing">Anomalies worth knowing</h2>
+<ul>
+<li><strong>Malakpet 1999</strong> — AIMIM blank, BJP 53.24%, INC 31.16%. The only cycle in the series where BJP led one of these seats outright.</li>
+<li><strong>Malakpet 2004</strong> — INC 52.12%, its highest anywhere in the series. AIMIM did not field a candidate. Not a Congress surge; an uncontested lane.</li>
+<li><strong>Yakutpura 2023</strong> — AIMIM 32.9%, MBT 32.2%. Effectively a tie, and the closest contest in the dataset. Reading AIMIM's fall here without MBT's rise misses the mechanism.</li>
+</ul>
+<h2 id="provenance">Provenance</h2>
+<ul>
+<li><strong>Primary:</strong> Election Commission of India, constituency-level results — <a href="https://eci.gov.in/">eci.gov.in</a></li>
+<li><strong>Cross-check:</strong> Wikipedia constituency pages; IndiaVotes</li>
+<li><strong>Compiled:</strong> see <a href="Docs/"><code>../Docs/</code></a></li>
+</ul>
+<h2 id="contributing-corrections">Contributing corrections</h2>
+<p>Cite an ECI record, note the denominator used, and say which row changes. Corrections to the 2009 Bahadurpura gap are especially welcome.</p>
+<hr />
+<h1 id="ghmc-ward-amenities-2011csv">GHMC-WARD-AMENITIES-2011.csv</h1>
+<p>Census 2011 household amenities and assets for <strong>108 GHMC wards</strong> in Hyderabad
+district. Used in <a href="analysis.html"><code>../ANALYSIS.md</code></a>.</p>
+<h2 id="dictionary_1">Dictionary</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mandal</code></td>
+<td>Sub-district (tehsil) the ward sits in</td>
+</tr>
+<tr>
+<td><code>ward_no</code></td>
+<td>GHMC ward number</td>
+</tr>
+<tr>
+<td><code>old_city</code></td>
+<td><code>yes</code> for the six old-city mandals — Bahadurpura, Charminar, Bandlaguda, Saidabad, Asifnagar, Golconda</td>
+</tr>
+<tr>
+<td><code>tap_water_treated</code></td>
+<td>% households, main drinking-water source is treated tap water</td>
+</tr>
+<tr>
+<td><code>water_within_premises</code></td>
+<td>% households, water source within premises</td>
+</tr>
+<tr>
+<td><code>closed_drainage</code></td>
+<td>% households, waste water to closed drainage</td>
+</tr>
+<tr>
+<td><code>bathroom_within_premises</code></td>
+<td>% households with a bathroom within premises</td>
+</tr>
+<tr>
+<td><code>lpg_png_cooking</code></td>
+<td>% households cooking on LPG/PNG</td>
+</tr>
+<tr>
+<td><code>avails_banking</code></td>
+<td>% households availing banking services</td>
+</tr>
+<tr>
+<td><code>computer_internet</code></td>
+<td>% households with a computer/laptop <strong>with</strong> internet</td>
+</tr>
+<tr>
+<td><code>car_jeep_van</code></td>
+<td>% households owning a car, jeep or van</td>
+</tr>
+<tr>
+<td><code>no_listed_assets</code></td>
+<td>% households with none of the listed assets</td>
+</tr>
+</tbody>
+</table></div>
+<p>All values are percentages of households in that ward.</p>
+<h2 id="provenance_1">Provenance</h2>
+<p>Census of India 2011, <strong>Houselisting &amp; Housing Census, table HH-14</strong> —
+"Percentage of households to total households by amenities and assets", district
+536 (Hyderabad), Andhra Pradesh as then constituted. Retrieved from the Census
+release republished by <a href="https://data.opencity.in/dataset/hyderabad-census-2011-data">OpenCity</a>
+in August 2026 and reduced to the columns above; no values were altered.</p>
+<h2 id="reading-it-correctly">Reading it correctly</h2>
+<p><strong>Mandals are not assembly constituencies.</strong> <code>old_city</code> marks the six mandals that
+contain the five seats in <code>HYD-DIST-RESULTS.csv</code>, but the boundaries are not
+identical. Any comparison using this flag is between parts of a city, not between
+electorates.</p>
+<p><strong>One time point.</strong> Census 2011 pre-dates most of the 2014–2023 electoral period,
+so this supports statements about <em>levels</em>, not about change over the period of
+representation.</p>
+<p><strong>Complete enumeration, not a sample.</strong> There are no sampling errors on these
+figures. Significance tests in <code>ANALYSIS.md</code> compare ward distributions between two
+groups of wards, which is a different question from sampling uncertainty.</p>
+<hr />
+<h1 id="ghmc-ward-pca-2011csv">GHMC-WARD-PCA-2011.csv</h1>
+<p>Census 2011 ward-level Primary Census Abstract, reduced to literacy and
+work-participation indicators for the same <strong>108 GHMC wards</strong> as the amenities file.
+Used in the "Schooling and work" section of <a href="analysis.html"><code>../ANALYSIS.md</code></a>.</p>
+<h2 id="dictionary_2">Dictionary</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mandal</code>, <code>ward_no</code>, <code>old_city</code></td>
+<td>As in <code>GHMC-WARD-AMENITIES-2011.csv</code></td>
+</tr>
+<tr>
+<td><code>population</code></td>
+<td>Total ward population</td>
+</tr>
+<tr>
+<td><code>literacy_rate_7plus</code></td>
+<td>Literates as % of the age-7+ population</td>
+</tr>
+<tr>
+<td><code>female_literacy_rate_7plus</code></td>
+<td>Female literates as % of age-7+ females</td>
+</tr>
+<tr>
+<td><code>male_female_literacy_gap</code></td>
+<td>Male literacy rate minus female, percentage points</td>
+</tr>
+<tr>
+<td><code>wpr_all_ages</code></td>
+<td>Total workers as % of total population</td>
+</tr>
+<tr>
+<td><code>wpr_7plus</code></td>
+<td>Total workers as % of the age-7+ population</td>
+</tr>
+<tr>
+<td><code>female_wpr_all_ages</code></td>
+<td>Female workers as % of total females</td>
+</tr>
+<tr>
+<td><code>female_wpr_7plus</code></td>
+<td>Female workers as % of age-7+ females</td>
+</tr>
+<tr>
+<td><code>main_worker_share</code></td>
+<td>Main (non-marginal) workers as % of all workers</td>
+</tr>
+<tr>
+<td><code>child_share_0_6</code></td>
+<td>Age 0–6 population as % of total</td>
+</tr>
+<tr>
+<td><code>sc_share</code></td>
+<td>Scheduled Caste population as % of total</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="derivation-and-provenance">Derivation and provenance</h2>
+<p>Derived from the ward-level Primary Census Abstract for Hyderabad district
+(Census of India 2011), republished by
+<a href="https://data.opencity.in/dataset/hyderabad-census-2011-data">OpenCity</a>. Rates are
+computed from the PCA counts (<code>P_LIT</code>, <code>TOT_WORK_P</code>, <code>P_06</code> and so on); no values
+were taken from secondary tabulations. Mandal spellings were normalised to match
+the amenities file (Ammerpet→ameerpet, Tirumalgiri→tirumalagiri,
+Maredpally→maredpalle, Himayatnagar→himayathnagar, Golkonda→golconda); all 108
+wards joined exactly.</p>
+<p>The 7-plus denominators use the PCA's age-0–6 counts. Census convention computes
+literacy over the age-7+ population; the same denominator is offered for work
+participation because the old city's higher child share (13.0% vs 10.7%) would
+otherwise depress its whole-population rate mechanically. Both variants are in the
+file.</p>
+<hr />
+<h1 id="ghmc-ward-slumscsv">GHMC-WARD-SLUMS.csv</h1>
+<p>GHMC slum-survey population aggregated to ward level, for the tenure-proxy
+comparison in <a href="analysis.html"><code>../ANALYSIS.md</code></a>. <strong>99 wards</strong>, not 108: the eight
+Tirumalagiri (Secunderabad Cantonment) wards and the Osmania University census-town
+ward are outside GHMC's slum survey and outside its ward-numbering scheme, so they
+are excluded rather than mis-joined.</p>
+<h2 id="dictionary_3">Dictionary</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ward_no</code>, <code>mandal</code>, <code>old_city</code></td>
+<td>As in the other ward files</td>
+</tr>
+<tr>
+<td><code>n_slums</code></td>
+<td>GHMC-listed slums with this ward number</td>
+</tr>
+<tr>
+<td><code>slum_population</code></td>
+<td>Sum of surveyed slum population</td>
+</tr>
+<tr>
+<td><code>slum_households</code></td>
+<td>Sum of surveyed slum households</td>
+</tr>
+<tr>
+<td><code>ward_population_2011</code></td>
+<td>Census 2011 ward population (from the PCA file)</td>
+</tr>
+<tr>
+<td><code>slum_pop_share_pct</code></td>
+<td>slum_population / ward_population_2011 × 100</td>
+</tr>
+<tr>
+<td><code>notified_pop_share_pct</code></td>
+<td>% of the ward's slum population in Notified (vs Non-Notified) slums</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="provenance-and-join-validation">Provenance and join validation</h2>
+<p>Source: "Hyderabad - Slums" KML republished by
+<a href="https://data.opencity.in/dataset/hyderabad-slums">OpenCity</a> from GHMC — 1,351
+polygons carrying slum name, notified status, ward number, households and
+population; 1,268 have non-zero population. Survey year is not stated in the file;
+GHMC's slum surveys date from the early 2010s.</p>
+<p>The KML's ward numbers are GHMC's 150-ward scheme. Ward numbers 1–12 in that
+scheme are north-eastern wards (Kapra–Uppal belt) outside Hyderabad district,
+while the census files use Cantonment and census-town numbering for nine
+low-numbered wards — a collision. The join was therefore validated by computing
+each ward number's slum-polygon centroids: wards 18–19 land in Saidabad and match
+the census rows; wards 1–8 land in the north-east and do not. Only the 99
+unambiguous wards are included.</p>
+<h2 id="reading-it-correctly_1">Reading it correctly</h2>
+<p><strong>Mixed vintages.</strong> Administrative survey population over 2011 Census
+denominators; Yousufguda (ward 108) exceeds 100% as a result. Ward medians and
+rank tests are robust to this; individual ward values are indicative.</p>
+<p><strong>"Slum" is an administrative category.</strong> GHMC listing reflects official
+recognition as much as housing conditions. Under-notification in any area,
+including the old city, cannot be ruled out from this data.</p>
+<hr />
+<h1 id="aimim-contests-1999-2022csv-and-aimim-close-contests-lightscsv">AIMIM-CONTESTS-1999-2022.csv and AIMIM-CLOSE-CONTESTS-LIGHTS.csv</h1>
+<p>The close-election test described in <code>../ANALYSIS.md</code>, run in August 2026.</p>
+<p><code>AIMIM-CONTESTS-1999-2022.csv</code> — every general assembly election AIMIM contested
+in the TCPD data (324 rows): state, constituency, year, whether AIMIM led, its
+vote share, and its margin against the winner (negative) or runner-up (positive).
+Bye-elections excluded. The similarly-abbreviated "All India
+Majlis-E-Inquilab-E-Millat" is excluded as a different party.</p>
+<p><code>AIMIM-CLOSE-CONTESTS-LIGHTS.csv</code> — the 2014–2019 contests joined to VIIRS night
+lights by post-2008 assembly constituency: <code>dlog</code> is the change in log annual
+lights (mean of up to three post-election years minus mean of pre-years from 2012).</p>
+<h2 id="provenance_2">Provenance</h2>
+<p>Election results: Trivedi Centre for Political Data (Lok Dhaba), as distributed in
+<strong>SHRUG v2</strong> (Development Data Lab; Asher, Lunt, Matsuura and Novosad), Harvard
+Dataverse doi:10.7910/DVN/DPESAK, files <code>trivedi_elections_clean</code> and
+<code>trivedi_candidates_clean</code>; coverage ends 2022. Night lights: VIIRS annual
+composites aggregated to <code>ac08_id</code> constituencies, same source, <code>viirs_annual_con08</code>
+("average-masked" series), 2012–2021.</p>
+<h2 id="reading-it-correctly_2">Reading it correctly</h2>
+<p>The test's own diagnostics (in <code>../ANALYSIS.md</code>) matter more than its point
+estimate: three treated constituencies, all high-baseline urban cores, permutation
+p = 0.12, and a −0.40 correlation between baseline brightness and growth. It is
+reported as an uninformative result, not as evidence in either direction.</p>
+</div>
+</body>
+</html>
