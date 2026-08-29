@@ -458,7 +458,7 @@ td.lead { font-weight: 600; color: var(--ink); }
       <p>Bahadurpura, Chandrayangutta, Charminar, Malakpet, Yakutpura. AIMIM has led twenty-five of the twenty-seven contests held in these seats since 1999 &mdash; every one it entered &mdash; and has held all five without a break since 2009.</p>
       <p>Over that same generation these have stayed the poorest neighbourhoods in their own district. Half the cooking gas, half the internet, a third of the car ownership. Fewer people in work &mdash; 37% against 44% &mdash; and far fewer women in work. In Charminar&rsquo;s poorest ward, one household in fifty had internet. In Ameerpet, across town, one in two.</p>
       <p>The poverty has a specific shape, and it is not the one usually argued about. It is not slum poverty: the share of people living in listed slums is the same as in the rest of the city. It is not service poverty: water, drainage and bathrooms are at full coverage, slightly better than elsewhere. It is low work and low income inside ordinary, legal, fully serviced homes.</p>
-      <p>And where the old city has caught up since 2011, nothing local did the catching. The cooking-gas gap was closed by Ujjwala, the banking gap almost certainly by Jan Dhan &mdash; national schemes that reached every ward in India at once. None of this proves who is to blame, and the <a href="#limits">last section</a> is precise about what it cannot show. What the record itself shows is narrower and harder to dismiss: a generation of one party&rsquo;s representation, and a deficit that only Delhi has ever dented.</p>
+      <p>And where the old city has caught up since 2011, nothing local did the catching. The cooking-gas gap was closed by Ujjwala, the banking gap almost certainly by Jan Dhan &mdash; national schemes that reached every ward in India at once. None of this proves who is to blame &mdash; and we ran the standard causal test to see whether it could. It cannot: <a href="#limits">six close contests exist in AIMIM&rsquo;s entire national history</a>, too few to answer in either direction. What the record itself shows is narrower and harder to dismiss: a generation of one party&rsquo;s representation, and a deficit that only Delhi has ever dented.</p>
     </div>
 
     <figure class="fig">
@@ -787,6 +787,26 @@ td.lead { font-weight: 600; color: var(--ink); }
     <div class="overline">Proof and limits</div>
     <h2>What this shows, and what it cannot.</h2>
 
+    <figure class="fig" style="border-left:3px solid var(--accent)">
+      <div class="fig-head"><figcaption class="fig-title">The causal test, run</figcaption></div>
+      <div class="triptych">
+        <div>
+          <div class="tri-n lead">6</div>
+          <div class="tri-l">Contests within five points of the win&ndash;loss threshold, in AIMIM&rsquo;s entire national history, 1999&ndash;2022</div>
+        </div>
+        <div>
+          <div class="tri-n">3 v 10</div>
+          <div class="tri-l">Usable bare wins against bare losses, 2014&ndash;2019, with night-lights outcomes</div>
+        </div>
+        <div>
+          <div class="tri-n">p&thinsp;=&thinsp;0.12</div>
+          <div class="tri-l">Exact permutation test on the growth difference &mdash; no detectable effect</div>
+        </div>
+      </div>
+      <p class="panel-verdict">Whether AIMIM&rsquo;s wins helped or harmed these places cannot be shown from public data. That is now demonstrated, not assumed.</p>
+      <p class="chart-note">The standard design: compare constituencies a party barely won against ones it barely lost, where winning is as good as random. Run on every AIMIM assembly contest nationally (TCPD results via SHRUG), with VIIRS night-lights growth as the outcome. The raw comparison points to slower growth after bare wins, but it fails the permutation test and is confounded: all three bare wins &mdash; Byculla, Dhule City, Nampally &mdash; are dense city cores three times brighter at baseline than the losses, and bright places grow slower in lights for sensor reasons unrelated to who won. Full working in <a href="ANALYSIS.md">ANALYSIS.md</a>; data in <a href="Data/AIMIM-CONTESTS-1999-2022.csv">AIMIM-CONTESTS-1999-2022.csv</a> and <a href="Data/AIMIM-CLOSE-CONTESTS-LIGHTS.csv">AIMIM-CLOSE-CONTESTS-LIGHTS.csv</a>.</p>
+    </figure>
+
     <div class="ledger">
       <div>
         <h3 class="yes">Shown</h3>
@@ -814,7 +834,7 @@ td.lead { font-weight: 600; color: var(--ink); }
     <div class="measure">
       <p>So the claim that survives every check in this repository is this one:</p>
       <p><em>A generation of unbroken representation has coincided with a generation of the district&rsquo;s worst living standards &mdash; in neighbourhoods where the pipes were laid, the homes are legal, and the only gaps ever closed were closed from Delhi.</em></p>
-      <p>Could a causal test settle it? We ran the standard one: compare constituencies AIMIM barely won against those it barely lost, nationally, with night lights as the outcome. In the party&rsquo;s entire recorded history there are <strong>six contests within five points of the threshold</strong>, and the usable sample is three bare wins against ten bare losses. The raw comparison points to slower growth after AIMIM wins, but it fails an exact permutation test (p&nbsp;=&nbsp;0.12) and is confounded by the fact that all three bare wins are dense city cores, where night lights stop measuring development. The causal question is not answerable from public data &mdash; that is now demonstrated, not assumed. The full test, its data, and the 2008-redraw design that remains blocked are in <a href="ANALYSIS.md">ANALYSIS.md</a>.</p>
+      <p>The 2008 boundary redraw remains the one untried design, blocked on a ward crosswalk that is not public; it is set out in <a href="ANALYSIS.md">ANALYSIS.md</a> with the officeholder record and its sources.</p>
     </div>
   </section>
 
