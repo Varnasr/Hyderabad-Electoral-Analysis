@@ -128,7 +128,7 @@ section { padding: 0 0 12px; scroll-margin-top: 68px; }
 .rule-top { border-top: 1px solid var(--rule); margin-top: 72px; padding-top: 40px; }
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
-.tab-panel.rule-top { border-top: none; margin-top: 0; padding-top: 30px; }
+.tab-panel.rule-top { border-top: none; margin-top: 0; padding-top: 36px; }
 .hero.tab-panel { padding-top: clamp(30px, 5vw, 56px); }
 
 .overline {
@@ -350,7 +350,8 @@ em { font-style: italic; }
 .caveat p:last-child, .caveat li:last-child { margin-bottom: 0; }
 
 /* two-column supported / not supported */
-.ledger { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 34px; margin: 28px 0 8px; }
+.ledger { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 34px; margin: 28px 0 8px; align-items: start; }
+@media (max-width: 700px) { .ledger { gap: 8px; } .ledger h3 { margin-top: 18px; } }
 .ledger h3 {
     margin: 0 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--rule);
     font-size: 1.05rem;
@@ -367,13 +368,18 @@ em { font-style: italic; }
     background: var(--surface); border: 1px solid var(--rule); border-radius: 10px;
 }
 .chart-note { font-size: 12.5px; color: var(--muted); margin: 10px 0 0; max-width: 74ch; line-height: 1.6; }
+.fig > .chart-note { max-width: none; column-width: 40ch; column-gap: 46px; margin-top: 14px; }
 .chart-note strong { color: var(--ink); }
-@media (max-width: 700px) { .chart-wrapper { height: 320px; } }
+@media (max-width: 700px) {
+    .chart-wrapper { height: 320px; }
+    .fig { padding: 20px 14px 16px; }
+    .actions { gap: 10px 18px; }
+}
 
 /* ---------------- table ---------------- */
 .table-scroll { overflow-x: auto; margin: 22px 0; border: 1px solid var(--rule); border-radius: 10px; }
 table { width: 100%; border-collapse: collapse; font-size: 13.5px; background: var(--surface); }
-caption { text-align: left; padding: 14px 16px 2px; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+caption { text-align: left; padding: 14px 16px 10px; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
 th, td { padding: 9px 14px; text-align: right; border-bottom: 1px solid var(--rule); white-space: nowrap; }
 th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
 thead th {
@@ -531,7 +537,7 @@ td.lead { font-weight: 600; color: var(--ink); }
       </div>
 
       <p class="score-verdict">Every gap is in what income buys or earns. The two biggest were closed by national schemes. What the state builds is level.</p>
-      <p class="chart-note">Each bar is the size of the 2011 gap between the old city and the rest of the district, in percentage points on one shared scale; hollow bars mark gaps that have closed since, per NFHS-5 (2019&ndash;21). Typical (median) ward values across 108 wards, Census 2011; work and literacy from the ward census tables, slum share from GHMC&rsquo;s survey. Every filled gap passes a formal significance test (p&nbsp;&le;&nbsp;0.001). Full method and tests in <a href="ANALYSIS.md">ANALYSIS.md</a> and <a href="METHODOLOGY.md">METHODOLOGY.md</a>.</p>
+      <p class="chart-note">Each bar is the size of the 2011 gap between the old city and the rest of the district, in percentage points on one shared scale; hollow bars mark gaps that have closed since, per NFHS-5 (2019&ndash;21). Typical (median) ward values across 108 wards, Census 2011; work and literacy from the ward census tables, slum share from GHMC&rsquo;s survey. Every filled gap passes a formal significance test (p&nbsp;&le;&nbsp;0.001). Full method and tests in <a href="analysis.html">the full analysis</a> and <a href="methodology.html">the methodology page</a>.</p>
     </figure>
 
     <div class="statline">
@@ -608,6 +614,9 @@ td.lead { font-weight: 600; color: var(--ink); }
   <section id="closeup" class="rule-top tab-panel">
     <div class="overline">Up close</div>
     <h2>A few kilometres apart, in the same city.</h2>
+    <div class="measure">
+      <p>Two ways of seeing the same gap: a rich ward and a poor ward side by side, and then the single ward that carries the whole pattern.</p>
+    </div>
 
     <figure class="fig">
       <div class="fig-head"><figcaption class="fig-title">Two wards of the same city, Census 2011</figcaption></div>
@@ -810,13 +819,16 @@ td.lead { font-weight: 600; color: var(--ink); }
     <span id="interpretation"></span>
     <div class="overline">Proof and limits</div>
     <h2>What this shows, and what it cannot.</h2>
+    <div class="measure">
+      <p>This page keeps the argument honest. The box below is the strongest causal test we could run and what it found. After it, two lists: what the data proves, and what people might want it to prove but it does not.</p>
+    </div>
 
     <figure class="fig" style="border-left:3px solid var(--accent)">
       <div class="fig-head"><figcaption class="fig-title">The causal test, run</figcaption></div>
       <div class="triptych">
         <div>
           <div class="tri-n lead">6</div>
-          <div class="tri-l">Contests within five points of the win&ndash;loss threshold, in AIMIM&rsquo;s entire national history, 1999&ndash;2022</div>
+          <div class="tri-l">Close contests in AIMIM&rsquo;s entire national history, 1999&ndash;2022</div>
         </div>
         <div>
           <div class="tri-n">3 v 10</div>
@@ -828,7 +840,7 @@ td.lead { font-weight: 600; color: var(--ink); }
         </div>
       </div>
       <p class="panel-verdict">Whether AIMIM&rsquo;s wins helped or harmed these places cannot be shown from public data. Running the test is what shows it.</p>
-      <p class="chart-note">The idea: compare places a party barely won with places it barely lost &mdash; near the line, winning is close to a coin flip, so any later difference should be the winning itself. Run on every AIMIM assembly contest in the country (TCPD results via SHRUG), with satellite night-light growth as the outcome. The raw comparison points to slower growth after bare wins, but it fails the permutation test and is confounded: all three bare wins &mdash; Byculla, Dhule City, Nampally &mdash; are dense city cores three times brighter at baseline than the losses, and bright places grow slower in lights for sensor reasons unrelated to who won. Full working in <a href="ANALYSIS.md">ANALYSIS.md</a>; data in <a href="Data/AIMIM-CONTESTS-1999-2022.csv">AIMIM-CONTESTS-1999-2022.csv</a> and <a href="Data/AIMIM-CLOSE-CONTESTS-LIGHTS.csv">AIMIM-CLOSE-CONTESTS-LIGHTS.csv</a>.</p>
+      <p class="chart-note">The idea: compare places a party barely won with places it barely lost &mdash; near the line, winning is close to a coin flip, so any later difference should be the winning itself. Run on every AIMIM assembly contest in the country (TCPD results via SHRUG), with satellite night-light growth as the outcome. The raw comparison points to slower growth after bare wins, but it fails the permutation test and is confounded: all three bare wins &mdash; Byculla, Dhule City, Nampally &mdash; are dense city cores three times brighter at baseline than the losses, and bright places grow slower in lights for sensor reasons unrelated to who won. Full working in <a href="analysis.html">the full analysis</a>; data in <a href="Data/AIMIM-CONTESTS-1999-2022.csv">AIMIM-CONTESTS-1999-2022.csv</a> and <a href="Data/AIMIM-CLOSE-CONTESTS-LIGHTS.csv">AIMIM-CLOSE-CONTESTS-LIGHTS.csv</a>.</p>
     </figure>
 
     <div class="ledger">
@@ -856,10 +868,28 @@ td.lead { font-weight: 600; color: var(--ink); }
       </div>
     </div>
 
+    <figure class="fig">
+      <div class="fig-head"><figcaption class="fig-title">Constituency funds, by party &mdash; what is public</figcaption></div>
+      <div class="table-scroll" style="margin:14px 0 6px; border:none;">
+        <table>
+          <thead>
+            <tr><th scope="col">Officeholder</th><th scope="col">Party</th><th scope="col">Fund</th><th scope="col">Used</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Hyderabad MP (16th Lok Sabha, 2014&ndash;19)</td><td>AIMIM</td><td>&#8377;25 cr entitlement</td><td class="lead">&#8377;7.1 cr (~28%)</td></tr>
+            <tr><td>Hyderabad MP (17th Lok Sabha, 2019&ndash;24)</td><td>AIMIM</td><td>&#8377;15.5 cr released</td><td class="lead">&#8377;8.8 cr; 8 of 69 works done</td></tr>
+            <tr><td>All 16 Hyderabad-city MLAs (2017&ndash;18)</td><td>all parties</td><td>&#8377;36 cr released</td><td class="lead">under &#8377;10 cr</td></tr>
+            <tr><td>Lowest five city MLAs that year</td><td>AIMIM &times;2, BJP &times;2, TRS &times;1</td><td>&#8377;3 cr each</td><td class="lead">under &#8377;0.5 cr each</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="chart-note">Under-spending the constituency funds is a cross-party habit in Hyderabad, not an AIMIM one: the five lowest-spending city legislators in 2017&ndash;18 included BJP&rsquo;s K.&nbsp;Laxman and G.&nbsp;Kishan Reddy and TRS minister Talasani Srinivas Yadav alongside AIMIM&rsquo;s two old-city MLAs. A full MP-by-MP, party-by-party MPLADS table cannot yet be built from public sources: the government portal publishes MP-wise detail only from 2023&ndash;24, and its older summary pages were unreachable when this was compiled (August 2026). Sources: Citizen Matters and Siasat (from MPLADS data); Deccan Chronicle (Telangana CDP).</p>
+    </figure>
+
     <div class="measure">
       <p>So the claim that survives every check in this repository is this one:</p>
       <p><em>One party has represented the old city for a generation. Its people still work less and earn less than the rest of their district, in legal, fully serviced neighbourhoods &mdash; and the only gaps that closed were closed by national schemes.</em></p>
-      <p>The 2008 boundary redraw remains the one untried design, blocked on a ward crosswalk that is not public; it is set out in <a href="ANALYSIS.md">ANALYSIS.md</a> with the officeholder record and its sources.</p>
+      <p>The 2008 boundary redraw remains the one untried design, blocked on a ward crosswalk that is not public; it is set out in <a href="analysis.html">the full analysis</a> with the officeholder record and its sources.</p>
     </div>
   </section>
 
@@ -867,9 +897,32 @@ td.lead { font-weight: 600; color: var(--ink); }
   <section id="data" class="rule-top tab-panel">
     <span id="data-section"></span>
     <div class="overline">Data and method</div>
-    <h2>The full series.</h2>
+    <h2>The data behind every number.</h2>
+    <div class="measure">
+      <p>Five public datasets sit behind this site, all downloadable below. This page says how current each one is, what to be careful of when quoting it, and gives the full election table.</p>
+    </div>
 
-    <div class="caveat measure-wide">
+    <figure class="fig">
+      <div class="fig-head"><figcaption class="fig-title">How current is each dataset?</figcaption></div>
+      <div class="table-scroll" style="margin:14px 0 6px; border:none;">
+        <table>
+          <thead>
+            <tr><th scope="col">Dataset</th><th scope="col">Covers</th><th scope="col">Is anything newer available?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Election results, five seats</td><td>1999&ndash;2023</td><td>No &mdash; 2023 was the most recent assembly election.</td></tr>
+            <tr><td>Ward census: amenities, literacy, work</td><td>2011</td><td>No &mdash; the 2021 census was never conducted; the next is expected around 2027. This is the latest ward-level data in existence.</td></tr>
+            <tr><td>NFHS-5 district health survey</td><td>2019&ndash;21</td><td>No &mdash; the latest published district factsheets. Used here to check which 2011 gaps have since closed.</td></tr>
+            <tr><td>GHMC slum survey</td><td>early 2010s</td><td>No public update; the survey year is not stated in the file.</td></tr>
+            <tr><td>MP and MLA fund figures</td><td>to Aug 2026 / 2017&ndash;18</td><td>The MPLADS portal revises as bills post, and publishes MP-wise detail only from 2023&ndash;24 onwards.</td></tr>
+            <tr><td>Causal test: national elections and night lights</td><td>to 2022 / 2021</td><td>Partly &mdash; the 2023 Telangana and 2024 Maharashtra elections are not yet in the research file used and could add close contests.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="chart-note">Nothing on this site is projected forward. Where a 2011 number is known to have changed &mdash; cooking gas, banking &mdash; the site says so and says how it knows. Everything else is reported as of the date it was measured.</p>
+    </figure>
+
+    <div class="caveat">
       <h3>Before quoting the numbers</h3>
       <ul>
         <li><strong>Bahadurpura&rsquo;s 2009 row is missing.</strong> The seat was contested and won by AIMIM that year; district totals for 2009 understate the party.</li>
@@ -900,13 +953,13 @@ td.lead { font-weight: 600; color: var(--ink); }
       <a href="Data/GHMC-WARD-PCA-2011.csv">Census literacy &amp; work (CSV)</a>
       <a href="Data/GHMC-WARD-SLUMS.csv">GHMC slum survey by ward (CSV)</a>
       <button type="button" onclick="window.print()">Print or save as PDF</button>
-      <a href="ANALYSIS.md">Full written analysis</a>
+      <a href="analysis.html">Full written analysis</a>
       <a href="CITATION.cff">Cite this</a>
     </div>
 
     <h3>Sources</h3>
     <p class="chart-note">
-      <strong>Elections:</strong> Election Commission of India constituency results, cross-checked against Wikipedia and IndiaVotes; cross-check table and denominator note in <a href="Data/README.md">Data/README.md</a>.<br>
+      <strong>Elections:</strong> Election Commission of India constituency results, cross-checked against Wikipedia and IndiaVotes; cross-check table and denominator note in <a href="data-notes.html">the data notes</a>.<br>
       <strong>Wards:</strong> Census of India 2011 &mdash; Houselisting table HH-14 and the ward Primary Census Abstract, via <a href="https://data.opencity.in/dataset/hyderabad-census-2011-data">OpenCity</a>; GHMC slum survey via the same platform, join validated geographically.<br>
       <strong>Since 2011:</strong> NFHS-5 (2019&ndash;21) district and state factsheets, IIPS.<br>
       <strong>Officeholders:</strong> MPLADS portal figures as press-reported (Citizen Matters; Siasat, August 2026); PRS Legislative Research; Deccan Chronicle (Telangana CDP, 2017&ndash;18).<br>
