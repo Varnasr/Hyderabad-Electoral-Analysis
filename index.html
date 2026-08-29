@@ -287,6 +287,27 @@ em { font-style: italic; }
     .db-val { display: none; }
 }
 
+/* ---------------- ward explorer ---------------- */
+.db-med {
+    position: absolute; top: 50%; width: 2px; height: 16px;
+    background: var(--rule-strong); transform: translate(-50%, -50%);
+}
+.select-row { display: flex; gap: 12px 16px; flex-wrap: wrap; align-items: center; margin: 16px 0 4px; }
+.wsel {
+    font-family: 'IBM Plex Sans', system-ui, sans-serif; font-size: 14px;
+    padding: 8px 10px; background: var(--surface); color: var(--ink);
+    border: 1px solid var(--rule-strong); border-radius: 8px; max-width: 100%;
+}
+.wmeta { font-size: 12.5px; color: var(--muted); margin: 6px 0 0; font-family: 'IBM Plex Sans', system-ui, sans-serif; }
+.wmeta b { color: var(--ink); }
+.oc-tag {
+    display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent);
+    border-radius: 4px; padding: 1px 6px; margin-left: 6px; vertical-align: 1px;
+}
+.db-gap { text-align: right; font-size: 11.5px; color: var(--muted); white-space: nowrap; }
+.db-gap b { color: var(--ink); font-weight: 600; }
+
 /* ---------------- the record grid ---------------- */
 .record { margin: 26px 0 8px; overflow-x: auto; padding-bottom: 4px; }
 .record-grid {
@@ -460,6 +481,7 @@ td.lead { font-weight: 600; color: var(--ink); }
       <a href="#finding">The story</a>
       <a href="#record">The record</a>
       <a href="#closeup">Up close</a>
+      <a href="#explore">Explore</a>
       <a href="#not-the-reason">Diagnosis</a>
       <a href="#limits">Proof &amp; limits</a>
       <a href="#data">Data</a>
@@ -661,6 +683,33 @@ td.lead { font-weight: 600; color: var(--ink); }
     <div class="measure">
       <p>The old city is not uniform. Ward 73 in Asifnagar banks like Jubilee Hills, and the district&rsquo;s worst-served ward on water and drainage is ward 1 in Musheerabad, outside the old city. The pattern holds across 52 wards, not because every ward fits it.</p>
     </div>
+  </section>
+
+  <!-- ============ EXPLORE ============ -->
+  <section id="explore" class="rule-top tab-panel">
+    <div class="overline">Explore</div>
+    <h2>Compare any two wards.</h2>
+    <div class="measure">
+      <p>Pick any of the 108 wards and set it against another ward, or against the district median. Everything comes from the same Census 2011 ward tables used across this site. The thin grey tick on each line marks the district median.</p>
+    </div>
+
+    <figure class="fig">
+      <div class="fig-head">
+        <figcaption class="fig-title">Ward against ward, Census 2011</figcaption>
+        <div class="legend">
+          <span><i class="dot-old"></i> First ward</span>
+          <span><i class="dot-rest"></i> Comparison</span>
+        </div>
+      </div>
+      <div class="select-row">
+        <select class="wsel" id="wardA" aria-label="First ward"></select>
+        <span class="wmeta">against</span>
+        <select class="wsel" id="wardB" aria-label="Comparison ward"></select>
+      </div>
+      <p class="wmeta" id="wardMeta"></p>
+      <div id="wardRows"></div>
+      <p class="chart-note">Values are percentages of households, or of people aged seven and over for reading and work. Ward numbers follow the census tables; wards are labelled by their mandal since the census gives no ward names. Slum shares come from GHMC&rsquo;s survey and are unavailable for the nine Cantonment and Osmania University wards. The gap column is first ward minus comparison, in percentage points &mdash; a difference between two wards, with no statistical test implied.</p>
+    </figure>
   </section>
 
   <!-- ============ NOT THE REASON ============ -->
@@ -1083,8 +1132,109 @@ themeButtons.forEach(function (b) {
     tbody.appendChild(frag);
 })();
 
+/* ---------------- ward explorer ---------------- */
+const WARDS = [{"m":"Amberpet","w":83,"oc":0,"pop":26762,"tap":99.2,"wprem":98.5,"drain":99.6,"bath":99.0,"lpg":74.4,"bank":61.6,"net":10.1,"car":7.3,"lit":81.0,"flit":75.5,"work":42.0,"fwork":21.3,"slum":60.2},{"m":"Amberpet","w":84,"oc":0,"pop":41720,"tap":97.9,"wprem":97.4,"drain":98.6,"bath":99.7,"lpg":72.5,"bank":57.5,"net":4.9,"car":5.2,"lit":81.0,"flit":74.8,"work":37.4,"fwork":14.4,"slum":34.6},{"m":"Amberpet","w":85,"oc":0,"pop":24826,"tap":97.8,"wprem":95.8,"drain":99.6,"bath":99.6,"lpg":76.4,"bank":69.8,"net":15.3,"car":13.1,"lit":86.0,"flit":81.7,"work":42.7,"fwork":22.0,"slum":10.9},{"m":"Amberpet","w":86,"oc":0,"pop":27719,"tap":96.1,"wprem":98.4,"drain":99.0,"bath":99.6,"lpg":84.8,"bank":84.2,"net":40.5,"car":36.5,"lit":88.0,"flit":84.4,"work":48.0,"fwork":32.7,"slum":17.0},{"m":"Amberpet","w":87,"oc":0,"pop":32531,"tap":98.6,"wprem":97.4,"drain":99.4,"bath":99.6,"lpg":83.5,"bank":74.2,"net":29.3,"car":22.4,"lit":90.7,"flit":87.1,"work":44.3,"fwork":24.9,"slum":12.2},{"m":"Ameerpet","w":99,"oc":0,"pop":20958,"tap":99.0,"wprem":99.0,"drain":99.6,"bath":99.6,"lpg":91.3,"bank":86.4,"net":47.5,"car":44.3,"lit":90.5,"flit":88.0,"work":45.7,"fwork":27.8,"slum":13.1},{"m":"Ameerpet","w":100,"oc":0,"pop":38112,"tap":98.6,"wprem":95.2,"drain":98.4,"bath":96.2,"lpg":79.4,"bank":74.7,"net":23.0,"car":16.3,"lit":86.1,"flit":81.6,"work":47.3,"fwork":29.5,"slum":0.0},{"m":"Asifnagar","w":61,"oc":1,"pop":43718,"tap":97.9,"wprem":91.8,"drain":97.6,"bath":97.9,"lpg":47.0,"bank":36.9,"net":3.0,"car":4.1,"lit":79.3,"flit":74.7,"work":39.5,"fwork":18.9,"slum":30.2},{"m":"Asifnagar","w":62,"oc":1,"pop":33674,"tap":96.6,"wprem":91.2,"drain":97.2,"bath":97.0,"lpg":45.0,"bank":30.9,"net":1.9,"car":2.3,"lit":73.0,"flit":66.3,"work":41.1,"fwork":19.2,"slum":40.1},{"m":"Asifnagar","w":63,"oc":1,"pop":37129,"tap":98.7,"wprem":95.7,"drain":98.6,"bath":98.6,"lpg":33.8,"bank":29.6,"net":4.5,"car":4.2,"lit":72.0,"flit":69.5,"work":36.3,"fwork":14.4,"slum":17.0},{"m":"Asifnagar","w":64,"oc":1,"pop":42684,"tap":96.5,"wprem":90.3,"drain":97.3,"bath":97.2,"lpg":43.2,"bank":41.2,"net":4.6,"car":5.1,"lit":74.1,"flit":69.0,"work":39.6,"fwork":18.1,"slum":23.5},{"m":"Asifnagar","w":65,"oc":1,"pop":42365,"tap":97.5,"wprem":94.0,"drain":94.8,"bath":97.9,"lpg":54.7,"bank":46.8,"net":6.6,"car":6.8,"lit":78.1,"flit":74.4,"work":39.7,"fwork":19.7,"slum":19.3},{"m":"Asifnagar","w":66,"oc":1,"pop":41452,"tap":96.6,"wprem":96.8,"drain":98.2,"bath":98.0,"lpg":68.1,"bank":65.0,"net":18.0,"car":12.7,"lit":81.3,"flit":77.7,"work":36.6,"fwork":17.8,"slum":32.1},{"m":"Asifnagar","w":67,"oc":1,"pop":40688,"tap":92.6,"wprem":84.5,"drain":90.6,"bath":88.7,"lpg":74.4,"bank":72.2,"net":33.6,"car":26.9,"lit":86.2,"flit":82.9,"work":44.8,"fwork":25.3,"slum":24.4},{"m":"Asifnagar","w":72,"oc":1,"pop":40889,"tap":93.6,"wprem":94.7,"drain":98.4,"bath":99.5,"lpg":55.7,"bank":51.5,"net":14.7,"car":11.4,"lit":82.7,"flit":79.9,"work":35.1,"fwork":16.9,"slum":4.0},{"m":"Asifnagar","w":73,"oc":1,"pop":31635,"tap":98.5,"wprem":94.1,"drain":96.5,"bath":97.5,"lpg":88.3,"bank":86.3,"net":34.3,"car":28.6,"lit":91.9,"flit":90.2,"work":38.8,"fwork":20.9,"slum":8.4},{"m":"Asifnagar","w":74,"oc":1,"pop":25847,"tap":95.8,"wprem":94.7,"drain":93.7,"bath":98.5,"lpg":64.3,"bank":69.9,"net":25.0,"car":22.2,"lit":85.7,"flit":82.8,"work":39.3,"fwork":20.8,"slum":31.7},{"m":"Asifnagar","w":75,"oc":1,"pop":34868,"tap":93.7,"wprem":85.5,"drain":87.9,"bath":96.1,"lpg":63.8,"bank":59.8,"net":9.2,"car":6.6,"lit":81.5,"flit":77.9,"work":37.1,"fwork":15.8,"slum":12.9},{"m":"Asifnagar","w":76,"oc":1,"pop":27280,"tap":97.7,"wprem":96.9,"drain":99.3,"bath":99.2,"lpg":81.3,"bank":77.3,"net":28.4,"car":24.4,"lit":89.4,"flit":87.4,"work":35.9,"fwork":16.2,"slum":7.3},{"m":"Bahadurpura","w":37,"oc":1,"pop":30725,"tap":97.3,"wprem":97.8,"drain":98.8,"bath":98.3,"lpg":72.1,"bank":71.9,"net":14.1,"car":8.9,"lit":88.9,"flit":86.7,"work":35.4,"fwork":16.7,"slum":14.0},{"m":"Bahadurpura","w":42,"oc":1,"pop":28678,"tap":96.3,"wprem":97.1,"drain":97.3,"bath":99.3,"lpg":68.8,"bank":55.7,"net":6.6,"car":4.6,"lit":85.8,"flit":81.7,"work":43.0,"fwork":22.1,"slum":29.7},{"m":"Bahadurpura","w":43,"oc":1,"pop":57542,"tap":92.9,"wprem":89.0,"drain":95.6,"bath":97.8,"lpg":22.0,"bank":29.3,"net":4.2,"car":4.0,"lit":71.6,"flit":65.9,"work":34.7,"fwork":22.1,"slum":9.7},{"m":"Bahadurpura","w":44,"oc":1,"pop":41854,"tap":96.9,"wprem":96.8,"drain":98.6,"bath":99.5,"lpg":26.5,"bank":28.0,"net":3.9,"car":2.5,"lit":74.1,"flit":70.9,"work":38.1,"fwork":19.6,"slum":34.3},{"m":"Bahadurpura","w":45,"oc":1,"pop":38433,"tap":97.3,"wprem":98.0,"drain":99.5,"bath":99.6,"lpg":40.2,"bank":32.2,"net":4.2,"car":2.9,"lit":77.9,"flit":75.0,"work":33.5,"fwork":16.0,"slum":31.5},{"m":"Bahadurpura","w":46,"oc":1,"pop":21082,"tap":78.5,"wprem":96.8,"drain":98.4,"bath":97.7,"lpg":43.2,"bank":18.9,"net":9.3,"car":4.9,"lit":81.1,"flit":77.9,"work":40.4,"fwork":25.7,"slum":26.8},{"m":"Bahadurpura","w":47,"oc":1,"pop":28268,"tap":97.4,"wprem":96.6,"drain":99.1,"bath":99.5,"lpg":50.7,"bank":44.5,"net":10.3,"car":6.1,"lit":84.9,"flit":83.1,"work":34.0,"fwork":14.8,"slum":14.9},{"m":"Bahadurpura","w":48,"oc":1,"pop":37323,"tap":94.8,"wprem":92.6,"drain":96.9,"bath":99.2,"lpg":62.8,"bank":51.2,"net":10.1,"car":9.2,"lit":82.4,"flit":79.7,"work":31.5,"fwork":13.1,"slum":11.5},{"m":"Bahadurpura","w":49,"oc":1,"pop":17601,"tap":97.1,"wprem":97.9,"drain":99.3,"bath":99.0,"lpg":77.7,"bank":66.3,"net":14.6,"car":16.4,"lit":88.1,"flit":82.5,"work":37.5,"fwork":17.5,"slum":6.6},{"m":"Bahadurpura","w":53,"oc":1,"pop":31292,"tap":97.1,"wprem":91.0,"drain":99.2,"bath":98.9,"lpg":53.7,"bank":48.5,"net":9.3,"car":5.5,"lit":80.9,"flit":77.7,"work":36.1,"fwork":14.3,"slum":13.5},{"m":"Bahadurpura","w":54,"oc":1,"pop":40105,"tap":96.4,"wprem":93.5,"drain":97.9,"bath":98.7,"lpg":39.6,"bank":37.9,"net":6.5,"car":5.1,"lit":80.0,"flit":77.1,"work":37.0,"fwork":16.7,"slum":17.1},{"m":"Bahadurpura","w":55,"oc":1,"pop":38482,"tap":95.7,"wprem":97.4,"drain":99.4,"bath":99.3,"lpg":40.3,"bank":34.2,"net":3.4,"car":3.3,"lit":80.3,"flit":77.7,"work":33.6,"fwork":14.1,"slum":41.9},{"m":"Bahadurpura","w":56,"oc":1,"pop":56773,"tap":92.9,"wprem":97.0,"drain":98.2,"bath":98.6,"lpg":40.4,"bank":28.0,"net":3.8,"car":4.1,"lit":76.5,"flit":73.3,"work":35.2,"fwork":16.7,"slum":22.7},{"m":"Bandlaguda","w":22,"oc":1,"pop":47220,"tap":98.8,"wprem":98.8,"drain":99.3,"bath":99.4,"lpg":54.4,"bank":48.2,"net":4.7,"car":3.1,"lit":82.1,"flit":80.0,"work":34.9,"fwork":15.0,"slum":30.2},{"m":"Bandlaguda","w":23,"oc":1,"pop":35196,"tap":96.5,"wprem":93.6,"drain":95.3,"bath":97.0,"lpg":37.5,"bank":40.0,"net":9.4,"car":5.0,"lit":77.6,"flit":75.5,"work":37.1,"fwork":16.7,"slum":76.2},{"m":"Bandlaguda","w":24,"oc":1,"pop":60763,"tap":67.8,"wprem":71.3,"drain":84.1,"bath":96.2,"lpg":40.0,"bank":39.4,"net":5.2,"car":5.7,"lit":79.2,"flit":75.5,"work":33.6,"fwork":15.7,"slum":34.5},{"m":"Bandlaguda","w":25,"oc":1,"pop":22589,"tap":99.4,"wprem":98.5,"drain":99.7,"bath":99.6,"lpg":51.9,"bank":50.6,"net":5.6,"car":3.5,"lit":79.6,"flit":74.8,"work":35.3,"fwork":15.9,"slum":6.9},{"m":"Bandlaguda","w":26,"oc":1,"pop":43599,"tap":98.2,"wprem":93.6,"drain":99.3,"bath":98.9,"lpg":47.0,"bank":42.7,"net":3.1,"car":2.9,"lit":80.5,"flit":75.8,"work":34.7,"fwork":15.6,"slum":21.7},{"m":"Bandlaguda","w":27,"oc":1,"pop":42758,"tap":96.7,"wprem":93.0,"drain":96.8,"bath":97.3,"lpg":44.0,"bank":37.7,"net":4.7,"car":4.8,"lit":76.5,"flit":71.2,"work":38.2,"fwork":19.5,"slum":41.1},{"m":"Bandlaguda","w":28,"oc":1,"pop":46256,"tap":97.8,"wprem":94.5,"drain":98.2,"bath":98.0,"lpg":57.6,"bank":41.0,"net":3.8,"car":3.3,"lit":81.2,"flit":77.1,"work":38.7,"fwork":18.1,"slum":44.2},{"m":"Bandlaguda","w":41,"oc":1,"pop":31812,"tap":96.5,"wprem":92.6,"drain":98.5,"bath":99.0,"lpg":69.5,"bank":43.1,"net":4.5,"car":3.2,"lit":83.2,"flit":77.7,"work":41.9,"fwork":22.1,"slum":22.0},{"m":"Charminar","w":29,"oc":1,"pop":54010,"tap":99.6,"wprem":98.7,"drain":99.9,"bath":99.4,"lpg":47.7,"bank":48.3,"net":7.1,"car":5.3,"lit":84.1,"flit":81.8,"work":32.4,"fwork":12.1,"slum":24.8},{"m":"Charminar","w":31,"oc":1,"pop":25280,"tap":99.4,"wprem":98.4,"drain":97.5,"bath":99.5,"lpg":56.0,"bank":53.8,"net":11.3,"car":6.8,"lit":85.4,"flit":83.3,"work":34.5,"fwork":16.0,"slum":33.0},{"m":"Charminar","w":36,"oc":1,"pop":32375,"tap":98.1,"wprem":94.4,"drain":99.4,"bath":98.8,"lpg":53.8,"bank":48.1,"net":5.9,"car":4.3,"lit":82.8,"flit":78.8,"work":33.9,"fwork":16.1,"slum":7.6},{"m":"Charminar","w":38,"oc":1,"pop":25782,"tap":97.3,"wprem":97.3,"drain":99.8,"bath":99.0,"lpg":74.1,"bank":65.2,"net":14.5,"car":10.8,"lit":89.5,"flit":87.0,"work":36.0,"fwork":15.6,"slum":4.6},{"m":"Charminar","w":39,"oc":1,"pop":68878,"tap":99.7,"wprem":99.7,"drain":100.0,"bath":100.0,"lpg":32.5,"bank":18.9,"net":2.3,"car":1.6,"lit":79.8,"flit":77.6,"work":32.8,"fwork":14.6,"slum":47.7},{"m":"Charminar","w":40,"oc":1,"pop":31269,"tap":97.1,"wprem":95.8,"drain":97.6,"bath":99.2,"lpg":62.5,"bank":59.6,"net":8.1,"car":7.5,"lit":86.9,"flit":84.0,"work":35.8,"fwork":15.1,"slum":0.3},{"m":"Golconda","w":68,"oc":1,"pop":60074,"tap":95.7,"wprem":94.3,"drain":96.4,"bath":97.9,"lpg":71.3,"bank":61.3,"net":13.9,"car":10.7,"lit":80.8,"flit":76.0,"work":41.7,"fwork":21.4,"slum":16.8},{"m":"Golconda","w":69,"oc":1,"pop":39933,"tap":97.7,"wprem":93.7,"drain":98.5,"bath":99.3,"lpg":62.2,"bank":53.5,"net":5.2,"car":4.4,"lit":82.0,"flit":76.7,"work":40.1,"fwork":20.2,"slum":41.5},{"m":"Golconda","w":70,"oc":1,"pop":63787,"tap":97.4,"wprem":94.7,"drain":99.1,"bath":99.1,"lpg":51.6,"bank":51.8,"net":9.1,"car":7.7,"lit":85.2,"flit":82.5,"work":33.8,"fwork":12.9,"slum":23.1},{"m":"Golconda","w":71,"oc":1,"pop":49565,"tap":94.8,"wprem":94.9,"drain":97.0,"bath":98.5,"lpg":55.7,"bank":55.3,"net":17.3,"car":11.1,"lit":82.7,"flit":77.6,"work":44.5,"fwork":23.8,"slum":11.5},{"m":"Himayathnagar","w":80,"oc":0,"pop":40354,"tap":95.0,"wprem":96.2,"drain":97.9,"bath":99.4,"lpg":82.7,"bank":80.0,"net":37.8,"car":37.1,"lit":90.4,"flit":87.6,"work":44.2,"fwork":27.0,"slum":18.2},{"m":"Himayathnagar","w":81,"oc":0,"pop":30388,"tap":99.2,"wprem":96.0,"drain":97.9,"bath":99.8,"lpg":80.7,"bank":79.3,"net":35.3,"car":35.3,"lit":90.6,"flit":87.9,"work":46.9,"fwork":29.4,"slum":20.3},{"m":"Himayathnagar","w":82,"oc":0,"pop":37320,"tap":98.6,"wprem":95.0,"drain":95.9,"bath":98.2,"lpg":72.8,"bank":63.2,"net":14.7,"car":9.6,"lit":85.1,"flit":81.3,"work":39.5,"fwork":19.5,"slum":24.6},{"m":"Khairatabad","w":96,"oc":0,"pop":28768,"tap":99.1,"wprem":87.1,"drain":95.1,"bath":97.4,"lpg":59.4,"bank":53.1,"net":7.6,"car":5.4,"lit":80.7,"flit":76.0,"work":44.7,"fwork":24.6,"slum":41.6},{"m":"Khairatabad","w":97,"oc":0,"pop":35780,"tap":97.1,"wprem":94.6,"drain":98.6,"bath":98.8,"lpg":81.6,"bank":80.6,"net":33.5,"car":30.3,"lit":90.0,"flit":86.9,"work":43.2,"fwork":24.4,"slum":15.0},{"m":"Khairatabad","w":98,"oc":0,"pop":26569,"tap":97.6,"wprem":96.0,"drain":99.0,"bath":99.4,"lpg":84.9,"bank":83.9,"net":46.6,"car":41.9,"lit":88.8,"flit":86.0,"work":46.1,"fwork":29.1,"slum":9.8},{"m":"Khairatabad","w":102,"oc":0,"pop":42054,"tap":96.7,"wprem":93.2,"drain":92.7,"bath":96.8,"lpg":68.2,"bank":58.1,"net":19.4,"car":14.8,"lit":81.9,"flit":77.5,"work":43.7,"fwork":25.4,"slum":33.1},{"m":"Khairatabad","w":103,"oc":0,"pop":54039,"tap":98.9,"wprem":98.8,"drain":98.0,"bath":99.2,"lpg":80.0,"bank":77.4,"net":34.0,"car":28.8,"lit":88.5,"flit":85.0,"work":47.5,"fwork":29.8,"slum":0.0},{"m":"Khairatabad","w":106,"oc":0,"pop":43270,"tap":98.5,"wprem":98.6,"drain":98.9,"bath":99.5,"lpg":83.6,"bank":76.4,"net":19.4,"car":11.8,"lit":86.6,"flit":82.1,"work":47.5,"fwork":27.4,"slum":14.5},{"m":"Khairatabad","w":108,"oc":0,"pop":40905,"tap":99.2,"wprem":97.6,"drain":93.5,"bath":99.4,"lpg":60.0,"bank":41.6,"net":2.4,"car":1.6,"lit":78.9,"flit":73.7,"work":42.2,"fwork":21.4,"slum":100.0},{"m":"Maredpalle","w":140,"oc":0,"pop":52831,"tap":98.9,"wprem":93.4,"drain":96.9,"bath":98.2,"lpg":78.9,"bank":69.0,"net":21.8,"car":17.5,"lit":87.0,"flit":82.5,"work":39.8,"fwork":21.2,"slum":25.4},{"m":"Maredpalle","w":141,"oc":0,"pop":33742,"tap":98.3,"wprem":90.2,"drain":97.0,"bath":99.8,"lpg":82.3,"bank":82.6,"net":23.9,"car":16.9,"lit":87.8,"flit":83.2,"work":40.2,"fwork":22.5,"slum":12.6},{"m":"Maredpalle","w":142,"oc":0,"pop":24089,"tap":97.2,"wprem":94.9,"drain":83.8,"bath":97.8,"lpg":75.5,"bank":64.6,"net":14.0,"car":7.7,"lit":84.7,"flit":78.5,"work":48.0,"fwork":31.9,"slum":33.3},{"m":"Maredpalle","w":149,"oc":0,"pop":31948,"tap":96.7,"wprem":84.6,"drain":97.8,"bath":97.2,"lpg":75.8,"bank":73.2,"net":35.8,"car":34.0,"lit":86.5,"flit":83.2,"work":45.3,"fwork":29.3,"slum":19.7},{"m":"Maredpalle","w":150,"oc":0,"pop":29932,"tap":97.6,"wprem":94.5,"drain":95.3,"bath":97.4,"lpg":65.2,"bank":50.1,"net":7.1,"car":5.4,"lit":78.5,"flit":73.3,"work":42.7,"fwork":23.3,"slum":58.0},{"m":"Musheerabad","w":1,"oc":0,"pop":6762,"tap":49.1,"wprem":48.8,"drain":49.8,"bath":60.0,"lpg":46.7,"bank":61.1,"net":4.4,"car":3.5,"lit":86.8,"flit":75.8,"work":13.5,"fwork":6.7,"slum":null},{"m":"Musheerabad","w":88,"oc":0,"pop":36526,"tap":94.6,"wprem":93.3,"drain":96.0,"bath":97.9,"lpg":82.4,"bank":75.0,"net":30.4,"car":22.4,"lit":87.8,"flit":83.8,"work":47.4,"fwork":30.8,"slum":25.2},{"m":"Musheerabad","w":89,"oc":0,"pop":34664,"tap":98.7,"wprem":98.6,"drain":99.5,"bath":99.3,"lpg":83.2,"bank":81.8,"net":20.0,"car":15.8,"lit":88.8,"flit":85.2,"work":45.1,"fwork":25.8,"slum":4.5},{"m":"Musheerabad","w":90,"oc":0,"pop":34899,"tap":99.2,"wprem":97.0,"drain":99.7,"bath":99.5,"lpg":70.1,"bank":67.2,"net":13.7,"car":10.0,"lit":87.6,"flit":84.1,"work":42.9,"fwork":24.0,"slum":9.0},{"m":"Musheerabad","w":91,"oc":0,"pop":28426,"tap":97.8,"wprem":97.0,"drain":99.8,"bath":99.6,"lpg":73.7,"bank":59.8,"net":10.4,"car":6.3,"lit":84.7,"flit":80.4,"work":41.8,"fwork":20.8,"slum":15.4},{"m":"Musheerabad","w":92,"oc":0,"pop":31697,"tap":98.6,"wprem":92.4,"drain":96.7,"bath":99.4,"lpg":47.7,"bank":48.3,"net":10.9,"car":7.6,"lit":79.9,"flit":76.5,"work":38.4,"fwork":19.3,"slum":40.5},{"m":"Musheerabad","w":93,"oc":0,"pop":26593,"tap":98.8,"wprem":94.9,"drain":99.4,"bath":99.3,"lpg":84.0,"bank":80.9,"net":36.7,"car":29.4,"lit":88.7,"flit":85.0,"work":48.1,"fwork":32.7,"slum":16.4},{"m":"Musheerabad","w":94,"oc":0,"pop":28887,"tap":96.8,"wprem":90.3,"drain":97.2,"bath":97.1,"lpg":61.8,"bank":52.2,"net":13.4,"car":12.0,"lit":81.2,"flit":75.1,"work":43.1,"fwork":23.1,"slum":25.5},{"m":"Musheerabad","w":95,"oc":0,"pop":32690,"tap":99.1,"wprem":96.1,"drain":99.4,"bath":99.4,"lpg":82.3,"bank":80.0,"net":32.7,"car":27.2,"lit":85.4,"flit":80.9,"work":48.0,"fwork":33.5,"slum":24.4},{"m":"Musheerabad","w":143,"oc":0,"pop":52527,"tap":99.4,"wprem":98.0,"drain":97.3,"bath":99.8,"lpg":80.0,"bank":62.0,"net":12.2,"car":6.3,"lit":85.9,"flit":81.4,"work":41.2,"fwork":19.9,"slum":35.0},{"m":"Musheerabad","w":144,"oc":0,"pop":34190,"tap":99.1,"wprem":96.7,"drain":97.0,"bath":99.7,"lpg":77.2,"bank":64.5,"net":15.7,"car":10.5,"lit":87.7,"flit":83.8,"work":39.6,"fwork":19.3,"slum":21.5},{"m":"Nampally","w":50,"oc":0,"pop":30615,"tap":94.7,"wprem":92.3,"drain":98.4,"bath":99.0,"lpg":75.8,"bank":61.7,"net":12.0,"car":11.5,"lit":86.3,"flit":81.5,"work":38.3,"fwork":14.0,"slum":15.1},{"m":"Nampally","w":51,"oc":0,"pop":35729,"tap":98.3,"wprem":92.5,"drain":99.6,"bath":99.7,"lpg":68.9,"bank":52.9,"net":8.5,"car":7.9,"lit":86.4,"flit":81.7,"work":44.5,"fwork":28.8,"slum":10.8},{"m":"Nampally","w":52,"oc":0,"pop":28660,"tap":94.8,"wprem":88.6,"drain":99.3,"bath":97.2,"lpg":46.3,"bank":30.5,"net":4.3,"car":3.0,"lit":80.0,"flit":73.9,"work":40.6,"fwork":19.6,"slum":18.0},{"m":"Nampally","w":77,"oc":0,"pop":40798,"tap":91.2,"wprem":83.2,"drain":94.9,"bath":96.8,"lpg":56.5,"bank":51.9,"net":12.0,"car":10.1,"lit":79.8,"flit":76.7,"work":44.0,"fwork":25.0,"slum":31.6},{"m":"Nampally","w":78,"oc":0,"pop":22309,"tap":95.7,"wprem":91.9,"drain":98.7,"bath":97.5,"lpg":77.3,"bank":77.5,"net":33.7,"car":29.7,"lit":87.9,"flit":85.0,"work":41.2,"fwork":20.8,"slum":17.2},{"m":"Nampally","w":79,"oc":0,"pop":31267,"tap":96.3,"wprem":96.4,"drain":97.8,"bath":99.3,"lpg":88.4,"bank":81.1,"net":24.4,"car":19.4,"lit":90.9,"flit":87.8,"work":37.9,"fwork":16.8,"slum":3.9},{"m":"Saidabad","w":18,"oc":1,"pop":25242,"tap":97.3,"wprem":94.1,"drain":96.3,"bath":97.1,"lpg":80.3,"bank":76.0,"net":27.4,"car":23.7,"lit":88.7,"flit":85.2,"work":43.2,"fwork":24.2,"slum":10.7},{"m":"Saidabad","w":19,"oc":1,"pop":45226,"tap":97.3,"wprem":96.9,"drain":98.2,"bath":97.9,"lpg":84.4,"bank":76.3,"net":20.2,"car":19.1,"lit":88.0,"flit":84.4,"work":38.6,"fwork":19.7,"slum":23.1},{"m":"Saidabad","w":20,"oc":1,"pop":45484,"tap":92.0,"wprem":77.7,"drain":78.2,"bath":79.9,"lpg":58.2,"bank":53.0,"net":16.6,"car":17.0,"lit":78.6,"flit":73.8,"work":45.6,"fwork":27.5,"slum":8.7},{"m":"Saidabad","w":21,"oc":1,"pop":56751,"tap":96.7,"wprem":96.0,"drain":98.8,"bath":99.5,"lpg":63.0,"bank":65.2,"net":15.3,"car":9.6,"lit":84.8,"flit":81.8,"work":37.6,"fwork":18.2,"slum":17.6},{"m":"Saidabad","w":30,"oc":1,"pop":22888,"tap":96.5,"wprem":98.3,"drain":99.8,"bath":99.9,"lpg":63.1,"bank":52.8,"net":7.9,"car":5.2,"lit":84.2,"flit":79.3,"work":36.6,"fwork":18.6,"slum":17.4},{"m":"Saidabad","w":32,"oc":1,"pop":39521,"tap":99.5,"wprem":99.3,"drain":99.3,"bath":99.6,"lpg":87.5,"bank":83.0,"net":23.6,"car":20.2,"lit":88.2,"flit":85.1,"work":37.7,"fwork":20.5,"slum":11.9},{"m":"Saidabad","w":33,"oc":1,"pop":23269,"tap":98.0,"wprem":92.4,"drain":98.6,"bath":98.9,"lpg":90.1,"bank":81.7,"net":34.8,"car":28.3,"lit":89.2,"flit":86.1,"work":43.2,"fwork":25.3,"slum":10.6},{"m":"Saidabad","w":34,"oc":1,"pop":47127,"tap":98.2,"wprem":97.6,"drain":99.6,"bath":99.5,"lpg":68.3,"bank":61.7,"net":16.2,"car":10.9,"lit":83.2,"flit":79.0,"work":37.9,"fwork":20.1,"slum":27.8},{"m":"Saidabad","w":35,"oc":1,"pop":40214,"tap":95.9,"wprem":95.1,"drain":99.2,"bath":99.5,"lpg":57.8,"bank":60.6,"net":13.6,"car":9.1,"lit":80.9,"flit":78.0,"work":35.9,"fwork":19.0,"slum":18.9},{"m":"Secunderabad","w":145,"oc":0,"pop":34659,"tap":99.1,"wprem":94.8,"drain":97.1,"bath":99.8,"lpg":76.1,"bank":71.1,"net":33.0,"car":27.7,"lit":83.6,"flit":79.4,"work":44.7,"fwork":27.7,"slum":32.7},{"m":"Secunderabad","w":146,"oc":0,"pop":29920,"tap":97.0,"wprem":90.8,"drain":94.6,"bath":92.2,"lpg":64.0,"bank":55.9,"net":12.0,"car":7.7,"lit":83.3,"flit":78.4,"work":44.8,"fwork":25.5,"slum":46.2},{"m":"Secunderabad","w":147,"oc":0,"pop":41336,"tap":94.8,"wprem":92.5,"drain":97.7,"bath":99.1,"lpg":77.0,"bank":66.5,"net":20.0,"car":15.1,"lit":88.7,"flit":85.3,"work":41.8,"fwork":19.7,"slum":14.6},{"m":"Secunderabad","w":148,"oc":0,"pop":29455,"tap":97.0,"wprem":92.7,"drain":99.1,"bath":98.5,"lpg":82.2,"bank":71.0,"net":29.4,"car":23.6,"lit":79.9,"flit":75.9,"work":43.8,"fwork":25.2,"slum":52.9},{"m":"Shaikpet","w":104,"oc":0,"pop":30701,"tap":98.8,"wprem":98.3,"drain":97.5,"bath":99.4,"lpg":88.6,"bank":83.7,"net":46.1,"car":43.2,"lit":90.2,"flit":87.5,"work":44.1,"fwork":26.3,"slum":1.0},{"m":"Shaikpet","w":105,"oc":0,"pop":69177,"tap":96.5,"wprem":96.7,"drain":93.9,"bath":98.3,"lpg":67.9,"bank":59.7,"net":22.9,"car":22.8,"lit":79.7,"flit":75.1,"work":46.4,"fwork":29.7,"slum":36.5},{"m":"Shaikpet","w":107,"oc":0,"pop":60103,"tap":97.7,"wprem":96.9,"drain":97.5,"bath":98.1,"lpg":57.2,"bank":38.4,"net":3.9,"car":2.2,"lit":74.3,"flit":67.8,"work":48.1,"fwork":29.3,"slum":56.7},{"m":"Shaikpet","w":109,"oc":0,"pop":51014,"tap":92.9,"wprem":80.9,"drain":76.8,"bath":88.8,"lpg":66.6,"bank":56.6,"net":23.8,"car":25.4,"lit":78.2,"flit":73.0,"work":51.1,"fwork":34.1,"slum":67.6},{"m":"Shaikpet","w":110,"oc":0,"pop":39937,"tap":96.6,"wprem":90.6,"drain":93.3,"bath":96.7,"lpg":80.7,"bank":72.6,"net":28.1,"car":21.7,"lit":86.0,"flit":81.9,"work":40.1,"fwork":19.8,"slum":0.0},{"m":"Tirumalagiri","w":1,"oc":0,"pop":28700,"tap":94.5,"wprem":88.2,"drain":91.4,"bath":98.1,"lpg":85.8,"bank":68.3,"net":17.2,"car":15.6,"lit":86.7,"flit":82.7,"work":40.3,"fwork":18.9,"slum":null},{"m":"Tirumalagiri","w":2,"oc":0,"pop":32628,"tap":72.0,"wprem":31.6,"drain":95.9,"bath":97.7,"lpg":53.5,"bank":23.5,"net":4.1,"car":3.0,"lit":73.6,"flit":68.1,"work":48.0,"fwork":30.0,"slum":null},{"m":"Tirumalagiri","w":3,"oc":0,"pop":23111,"tap":84.2,"wprem":51.1,"drain":89.5,"bath":89.1,"lpg":58.2,"bank":52.1,"net":17.0,"car":15.1,"lit":79.7,"flit":75.7,"work":45.7,"fwork":28.5,"slum":null},{"m":"Tirumalagiri","w":4,"oc":0,"pop":22698,"tap":90.5,"wprem":78.5,"drain":97.5,"bath":98.9,"lpg":82.4,"bank":77.6,"net":37.4,"car":31.8,"lit":88.7,"flit":84.9,"work":51.4,"fwork":31.8,"slum":null},{"m":"Tirumalagiri","w":5,"oc":0,"pop":24492,"tap":83.7,"wprem":64.0,"drain":96.5,"bath":99.2,"lpg":81.6,"bank":71.2,"net":34.9,"car":32.2,"lit":84.9,"flit":80.3,"work":47.7,"fwork":29.8,"slum":null},{"m":"Tirumalagiri","w":6,"oc":0,"pop":27522,"tap":91.2,"wprem":83.5,"drain":96.7,"bath":97.1,"lpg":90.5,"bank":82.9,"net":40.6,"car":40.3,"lit":87.8,"flit":84.5,"work":45.5,"fwork":26.4,"slum":null},{"m":"Tirumalagiri","w":7,"oc":0,"pop":27438,"tap":89.9,"wprem":53.6,"drain":89.3,"bath":96.3,"lpg":76.6,"bank":64.8,"net":21.4,"car":19.8,"lit":88.7,"flit":83.2,"work":55.0,"fwork":30.3,"slum":null},{"m":"Tirumalagiri","w":8,"oc":0,"pop":31321,"tap":91.3,"wprem":73.7,"drain":95.8,"bath":98.1,"lpg":82.0,"bank":74.3,"net":16.1,"car":14.4,"lit":90.8,"flit":86.4,"work":46.2,"fwork":19.7,"slum":null}];
+const DISTRICT_MEDIAN = {"tap": 97.1, "wprem": 94.7, "drain": 97.9, "bath": 98.9, "lpg": 68.5, "bank": 60.9, "net": 14.1, "car": 10.3, "lit": 84.7, "flit": 80.2, "work": 40.5, "fwork": 20.8, "slum": 19.7};
+
+const W_GROUPS = [
+    ["How households live", [
+        ["lpg", "Cooking gas at home"], ["bank", "Avails banking"],
+        ["net", "Computer with internet"], ["car", "Car / jeep / van"]]],
+    ["Schooling and work", [
+        ["lit", "Literate, age 7+"], ["flit", "Women literate, age 7+"],
+        ["work", "Working, age 7+"], ["fwork", "Women working, age 7+"]]],
+    ["What the corporation built", [
+        ["tap", "Tap water, treated"], ["wprem", "Water within premises"],
+        ["drain", "Closed drainage"], ["bath", "Bathroom within premises"]]],
+    ["Slum housing", [["slum", "People in listed slums"]]]
+];
+
+(function wardExplorer() {
+    const selA = document.getElementById("wardA");
+    const selB = document.getElementById("wardB");
+    if (!selA) { return; }
+
+    function fillSelect(sel, withMedian) {
+        let html = withMedian
+            ? '<option value="med">District median (all 108 wards)</option>' : "";
+        let mandal = "";
+        WARDS.forEach(function (r, i) {
+            if (r.m !== mandal) {
+                if (mandal) { html += "</optgroup>"; }
+                mandal = r.m;
+                html += '<optgroup label="' + r.m + ' mandal">';
+            }
+            html += '<option value="' + i + '">Ward ' + r.w + " · " + r.m +
+                    (r.oc ? " (old city)" : "") + "</option>";
+        });
+        html += "</optgroup>";
+        sel.innerHTML = html;
+    }
+    fillSelect(selA, false);
+    fillSelect(selB, true);
+    // default to the pair used in the essay: Charminar 39 vs Ameerpet 99
+    WARDS.forEach(function (r, i) {
+        if (r.m === "Charminar" && r.w === 39) { selA.value = String(i); }
+        if (r.m === "Ameerpet" && r.w === 99) { selB.value = String(i); }
+    });
+
+    const fmt = function (v) { return v === null ? "&mdash;" : v.toFixed(1); };
+
+    function render() {
+        const a = WARDS[+selA.value];
+        const bIsMed = selB.value === "med";
+        const b = bIsMed ? DISTRICT_MEDIAN : WARDS[+selB.value];
+
+        const meta = document.getElementById("wardMeta");
+        meta.innerHTML =
+            "<b>Ward " + a.w + ", " + a.m + "</b>" +
+            (a.oc ? '<span class="oc-tag">old city</span>' : "") +
+            " &middot; population " + a.pop.toLocaleString("en-IN") +
+            " &nbsp;&nbsp;against&nbsp;&nbsp; " +
+            (bIsMed ? "<b>the district median</b>"
+                    : "<b>Ward " + b.w + ", " + b.m + "</b>" +
+                      (b.oc ? '<span class="oc-tag">old city</span>' : "") +
+                      " &middot; population " + b.pop.toLocaleString("en-IN"));
+
+        let html = "";
+        W_GROUPS.forEach(function (grp, gi) {
+            html += '<div class="panel-label' + (gi === 0 ? " first" : "") + '">' + grp[0] + "</div>";
+            html += '<div class="dumbbell">';
+            grp[1].forEach(function (row) {
+                const key = row[0], label = row[1];
+                const va = a[key], vb = b[key], med = DISTRICT_MEDIAN[key];
+                if (va === null || vb === null || vb === undefined) {
+                    html += '<div class="db-row"><div class="db-name">' + label +
+                        '</div><div class="db-track"></div><div class="db-gap">no data</div></div>';
+                    return;
+                }
+                const lo = Math.min(va, vb), hi = Math.max(va, vb);
+                const gap = va - vb;
+                html += '<div class="db-row"><div class="db-name">' + label + "</div>" +
+                    '<div class="db-track">' +
+                    '<i class="db-link" style="left:' + lo + "%;width:" + (hi - lo) + '%"></i>' +
+                    (bIsMed ? "" : '<i class="db-med" style="left:' + med + '%"></i>') +
+                    '<i class="db-pt rest" style="left:' + vb + '%"></i>' +
+                    '<i class="db-pt old" style="left:' + va + '%"></i>' +
+                    '<span class="db-val" style="left:' + va + '%">' + fmt(va) + "</span>" +
+                    (Math.abs(va - vb) > 4 ? '<span class="db-val" style="left:' + vb + '%">' + fmt(vb) + "</span>" : "") +
+                    "</div>" +
+                    '<div class="db-gap"><b>' + (gap > 0 ? "+" : "") + gap.toFixed(1) + "</b> pts</div></div>";
+            });
+            html += "</div>";
+        });
+        html += '<div class="db-axis"><div></div>' +
+            '<div class="db-axis-in"><span>0</span><span>25</span><span>50</span><span>75</span><span>100%</span></div>' +
+            "<div></div></div>";
+        document.getElementById("wardRows").innerHTML = html;
+    }
+    selA.addEventListener("change", render);
+    selB.addEventListener("change", render);
+    render();
+})();
+
 /* ---------------- tabs ---------------- */
-const TAB_IDS = ["finding", "record", "closeup", "not-the-reason", "limits", "data"];
+const TAB_IDS = ["finding", "record", "closeup", "explore", "not-the-reason", "limits", "data"];
 /* legacy deep-link ids live inside these tabs */
 const TAB_ALIAS = {
     "executive-summary": "finding", "representation-and-poverty": "finding",
