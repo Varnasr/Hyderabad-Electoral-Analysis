@@ -119,13 +119,17 @@ a:hover { text-decoration-thickness: 2px; }
 .skip:focus { left: 0; }
 
 /* ---------------- layout ---------------- */
-.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
-.measure { max-width: 62ch; }
-.measure-wide { max-width: 76ch; }
+.wrap { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+.measure { max-width: 66ch; }
+.measure-wide { max-width: 80ch; }
 
 section { padding: 0 0 12px; scroll-margin-top: 68px; }
 [id] { scroll-margin-top: 68px; }
 .rule-top { border-top: 1px solid var(--rule); margin-top: 72px; padding-top: 40px; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.tab-panel.rule-top { border-top: none; margin-top: 0; padding-top: 30px; }
+.hero.tab-panel { padding-top: clamp(30px, 5vw, 56px); }
 
 .overline {
     font-size: 11px; font-weight: 600; letter-spacing: .09em;
@@ -154,7 +158,7 @@ p { margin-bottom: 1.05em; }
 p.dek {
     font-size: clamp(1.15rem, 2.2vw, 1.4rem);
     font-style: italic; font-weight: 400; color: var(--muted);
-    line-height: 1.45; max-width: 40ch; margin-bottom: 26px;
+    line-height: 1.45; max-width: 48ch; margin-bottom: 26px;
 }
 strong { font-weight: 600; }
 em { font-style: italic; }
@@ -165,15 +169,8 @@ em { font-style: italic; }
     background: var(--paper);
     border-bottom: 1px solid var(--rule);
 }
-@supports (backdrop-filter: blur(12px)) {
-    .masthead {
-        background: color-mix(in srgb, var(--paper) 86%, transparent);
-        backdrop-filter: saturate(180%) blur(12px);
-        -webkit-backdrop-filter: saturate(180%) blur(12px);
-    }
-}
 .masthead-in {
-    max-width: 1120px; margin: 0 auto; padding: 0 24px;
+    max-width: 980px; margin: 0 auto; padding: 0 24px;
     height: 52px; display: flex; align-items: center; gap: 22px;
     font-size: 13px;
 }
@@ -186,16 +183,28 @@ em { font-style: italic; }
 .masthead nav a:hover { color: var(--ink); }
 .masthead nav a[aria-current="true"] { color: var(--ink); border-bottom-color: var(--accent); }
 @media (max-width: 820px) {
-    .masthead nav a { display: none; }
-    .masthead-in { gap: 12px; }
+    .masthead-in { gap: 12px; padding: 0 16px; }
+    .masthead .brand { display: none; }
+    .masthead nav {
+        margin-left: 0; flex: 1; overflow-x: auto; gap: 18px;
+        -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    }
+    .masthead nav::-webkit-scrollbar { display: none; }
+    .masthead nav a { flex: none; }
 }
 
-.toggle {
-    background: none; border: 1px solid var(--rule-strong); color: var(--muted);
-    border-radius: 6px; padding: 4px 10px; font-size: 12px; cursor: pointer;
+.theme-seg {
+    display: flex; flex: none; border: 1px solid var(--rule-strong);
+    border-radius: 6px; overflow: hidden;
+}
+.theme-seg button {
+    background: none; border: none; color: var(--muted);
+    padding: 4px 9px; font-size: 11px; cursor: pointer;
     font-family: inherit; white-space: nowrap;
 }
-.toggle:hover { color: var(--ink); border-color: var(--ink); }
+.theme-seg button + button { border-left: 1px solid var(--rule); }
+.theme-seg button:hover { color: var(--ink); }
+.theme-seg button.active { background: var(--accent-soft); color: var(--ink); font-weight: 600; }
 
 /* ---------------- hero ---------------- */
 .hero { padding: clamp(44px, 8vw, 88px) 0 8px; }
@@ -270,7 +279,11 @@ em { font-style: italic; }
     font-size: 1.02rem; color: var(--ink); margin: 12px 0 0;
 }
 @media (max-width: 760px) {
-    .db-row, .db-axis { grid-template-columns: 104px 1fr 58px; gap: 8px; font-size: 12px; }
+    .db-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; padding: 12px 0 10px; font-size: 12.5px; }
+    .db-name { flex: 1; }
+    .db-sig { text-align: right; }
+    .db-track { flex-basis: 100%; order: 3; }
+    .db-axis { grid-template-columns: 0 1fr 0; gap: 0; }
     .db-val { display: none; }
 }
 
@@ -405,13 +418,16 @@ td.lead { font-weight: 600; color: var(--ink); }
     font-size: 1.05rem; color: var(--ink); margin: 16px 0 0;
 }
 @media (max-width: 700px) {
-    .score-row { grid-template-columns: 106px 1fr; gap: 8px; font-size: 12px; }
-    .score-nums { display: none; }
-    .score-note { font-size: 11px; }
+    .score-row { display: block; padding: 13px 0; font-size: 13px; }
+    .score-name { display: inline; font-weight: 500; }
+    .score-nums { display: inline; margin-left: 10px; }
+    .score-track { margin-top: 7px; }
+    .score-note { font-size: 11.5px; }
 }
 
 /* ---------------- print ---------------- */
 @media print {
+    .tab-panel { display: block !important; }
     :root, :root[data-theme="dark"] {
         --paper: #fff; --surface: #fff; --ink: #000; --muted: #444;
         --rule: #ccc; --rule-strong: #999; --accent: #000;
@@ -435,12 +451,17 @@ td.lead { font-weight: 600; color: var(--ink); }
   <div class="masthead-in">
     <span class="brand">Hyderabad&rsquo;s old city &middot; 1999&ndash;2023</span>
     <nav>
+      <a href="#finding">The story</a>
       <a href="#record">The record</a>
       <a href="#closeup">Up close</a>
-      <a href="#not-the-reason">Not the reason</a>
+      <a href="#not-the-reason">Diagnosis</a>
       <a href="#limits">Proof &amp; limits</a>
       <a href="#data">Data</a>
-      <button class="toggle" id="themeToggle" type="button" aria-label="Switch colour theme">Theme</button>
+      <div class="theme-seg" role="group" aria-label="Colour theme">
+        <button type="button" data-mode="light">Light</button>
+        <button type="button" data-mode="system">Auto</button>
+        <button type="button" data-mode="dark">Dark</button>
+      </div>
     </nav>
   </div>
 </header>
@@ -449,7 +470,7 @@ td.lead { font-weight: 600; color: var(--ink); }
 <div class="wrap">
 
   <!-- ============ THE ARGUMENT ============ -->
-  <section class="hero" id="finding">
+  <section class="hero tab-panel" id="finding">
     <span id="executive-summary"></span><span id="representation-and-poverty"></span><span id="still-holds"></span>
     <div class="overline">Assembly elections 1999&ndash;2023 &middot; Census 2011 &middot; 108 GHMC wards</div>
     <h1>Held for a generation. Poor for a generation.</h1>
@@ -457,8 +478,8 @@ td.lead { font-weight: 600; color: var(--ink); }
     <div class="measure standfirst">
       <p>Bahadurpura, Chandrayangutta, Charminar, Malakpet, Yakutpura. AIMIM has led twenty-five of the twenty-seven contests held in these seats since 1999 &mdash; every one it entered &mdash; and has held all five without a break since 2009.</p>
       <p>Over that same generation these have stayed the poorest neighbourhoods in their own district. Half the cooking gas, half the internet, a third of the car ownership. Fewer people in work &mdash; 37% against 44% &mdash; and far fewer women in work. In Charminar&rsquo;s poorest ward, one household in fifty had internet. In Ameerpet, across town, one in two.</p>
-      <p>The poverty has a specific shape, and it is not the one usually argued about. It is not slum poverty: the share of people living in listed slums is the same as in the rest of the city. It is not service poverty: water, drainage and bathrooms are at full coverage, slightly better than elsewhere. It is low work and low income inside ordinary, legal, fully serviced homes.</p>
-      <p>And where the old city has caught up since 2011, nothing local did the catching. The cooking-gas gap was closed by Ujjwala, the banking gap almost certainly by Jan Dhan &mdash; national schemes that reached every ward in India at once. None of this proves who is to blame &mdash; and we ran the standard causal test to see whether it could. It cannot: <a href="#limits">six close contests exist in AIMIM&rsquo;s entire national history</a>, too few to answer in either direction. What the record itself shows is narrower and harder to dismiss: a generation of one party&rsquo;s representation, and a deficit that only Delhi has ever dented.</p>
+      <p><strong>The problem is work and income.</strong> It is not slums: the share of people in listed slums matches the rest of the city. It is not services: water, drainage and bathrooms are at full coverage. Fewer people have work, far fewer women have work, and the things income buys are scarce &mdash; in ordinary, legal houses with every service connected.</p>
+      <p>Where the old city has caught up since 2011, national schemes did it. Ujjwala closed the cooking-gas gap and Jan Dhan almost certainly closed the banking gap; both reached every ward in India at once, so the catch-up says nothing about local performance. We also ran the standard causal test of whether AIMIM&rsquo;s wins helped or harmed these places, and it cannot answer: <a href="#limits">six close contests exist in the party&rsquo;s entire history</a>. What stands is the record itself: one party for a generation, in neighbourhoods that still work less and earn less than the city around them.</p>
     </div>
 
     <figure class="fig">
@@ -490,7 +511,7 @@ td.lead { font-weight: 600; color: var(--ink); }
         <div class="score-row">
           <div class="score-name">People in work, age 7+</div>
           <div class="score-nums">37.1 &rarr; 44.3</div>
-          <div class="score-track"><i class="score-bar" style="width:30%"></i><span class="score-note">The strongest statistical gap in the analysis, and it survives the old city&rsquo;s younger age profile.</span></div>
+          <div class="score-track"><i class="score-bar" style="width:30%"></i><span class="score-note">The biggest, most reliable gap in the data &mdash; and not because the old city has more children.</span></div>
         </div>
         <div class="score-row">
           <div class="score-name">Able to read, age 7+</div>
@@ -500,7 +521,7 @@ td.lead { font-weight: 600; color: var(--ink); }
         <div class="score-row">
           <div class="score-name">Water, drainage, bathrooms</div>
           <div class="score-nums">94&ndash;99 both</div>
-          <div class="score-track"><i class="score-tick"></i><span class="score-note">Level. No significant difference on any of four measures; drainage slightly favours the old city.</span></div>
+          <div class="score-track"><i class="score-tick"></i><span class="score-note">Level. No meaningful difference on any of four measures; drainage slightly favours the old city.</span></div>
         </div>
         <div class="score-row">
           <div class="score-name">Living in a listed slum</div>
@@ -509,8 +530,8 @@ td.lead { font-weight: 600; color: var(--ink); }
         </div>
       </div>
 
-      <p class="score-verdict">Every gap is in what income buys or earns. The two biggest have since been closed &mdash; from Delhi. Everything the state builds or lists is level.</p>
-      <p class="chart-note">Old city &rarr; rest of district, ward medians across 108 wards, Census 2011 (work and literacy from the ward Primary Census Abstract; slum share from GHMC&rsquo;s survey over 99 cleanly joined wards). Bars show the 2011 gap in percentage points on a shared scale; hollow bars mark gaps closed since, per NFHS-5 (2019&ndash;21). Every filled gap is significant at p&nbsp;&le;&nbsp;0.001. Full method and tests in <a href="ANALYSIS.md">ANALYSIS.md</a> and <a href="METHODOLOGY.md">METHODOLOGY.md</a>.</p>
+      <p class="score-verdict">Every gap is in what income buys or earns. The two biggest were closed by national schemes. What the state builds is level.</p>
+      <p class="chart-note">Each bar is the size of the 2011 gap between the old city and the rest of the district, in percentage points on one shared scale; hollow bars mark gaps that have closed since, per NFHS-5 (2019&ndash;21). Typical (median) ward values across 108 wards, Census 2011; work and literacy from the ward census tables, slum share from GHMC&rsquo;s survey. Every filled gap passes a formal significance test (p&nbsp;&le;&nbsp;0.001). Full method and tests in <a href="ANALYSIS.md">ANALYSIS.md</a> and <a href="METHODOLOGY.md">METHODOLOGY.md</a>.</p>
     </figure>
 
     <div class="statline">
@@ -526,7 +547,7 @@ td.lead { font-weight: 600; color: var(--ink); }
   </section>
 
   <!-- ============ THE RECORD ============ -->
-  <section id="record" class="rule-top">
+  <section id="record" class="rule-top tab-panel">
     <span id="constituency-analysis"></span><span id="party-trends"></span><span id="statistical-analysis"></span><span id="evidence"></span>
     <div class="overline">The record</div>
     <h2>Twenty-seven contests. AIMIM led twenty-five.</h2>
@@ -573,7 +594,7 @@ td.lead { font-weight: 600; color: var(--ink); }
     </div>
 
     <div class="measure">
-      <p>The two exceptions are both Malakpet, in cycles AIMIM sat out. Since 2014 the party&rsquo;s share has fallen in four of the five seats &mdash; furthest in Yakutpura, where 2023 was nearly a tie with MBT (32.9% to 32.2%) on the district&rsquo;s lowest turnout. The hold is intact; the margins are not what they were.</p>
+      <p>The two exceptions are both Malakpet, in cycles AIMIM sat out. Since 2014 the party&rsquo;s share has fallen in four of the five seats &mdash; furthest in Yakutpura, where 2023 was nearly a tie with MBT (32.9% to 32.2%) on the district&rsquo;s lowest turnout. AIMIM still holds every seat, with smaller margins than a decade ago.</p>
     </div>
 
     <div class="chart-block">
@@ -584,7 +605,7 @@ td.lead { font-weight: 600; color: var(--ink); }
   </section>
 
   <!-- ============ UP CLOSE ============ -->
-  <section id="closeup" class="rule-top">
+  <section id="closeup" class="rule-top tab-panel">
     <div class="overline">Up close</div>
     <h2>A few kilometres apart, in the same city.</h2>
 
@@ -634,11 +655,14 @@ td.lead { font-weight: 600; color: var(--ink); }
   </section>
 
   <!-- ============ NOT THE REASON ============ -->
-  <section id="not-the-reason" class="rule-top">
-    <div class="overline">Three explanations that fail</div>
-    <h2>It is not the pipes, not the slums, and not for want of Delhi&rsquo;s schemes.</h2>
+  <section id="not-the-reason" class="rule-top tab-panel">
+    <div class="overline">The diagnosis</div>
+    <h2>The problem is work and income. Three other explanations fail.</h2>
 
     <div class="measure">
+      <p>Start with what the data actually shows. <strong>Only about a third of old-city residents have work of any kind &mdash; 37%, against 44% in the rest of the district.</strong> Among women it is 18% against 25%. This is the biggest and most reliable difference in all the data, and it is not because the old city has more children &mdash; the gap is the same when you count only adults. People who earn less own less, and that is the rest of the pattern: less cooking gas, less banking, less internet, fewer vehicles. Reading and writing are only a few points behind, so basic schooling is not the wall.</p>
+      <p>Why do fewer people work? Ward data cannot separate the causes, but it can name the candidates: schooling that stops early even where basic literacy is close; few formal jobs within reach of these neighbourhoods; weak access to credit for the self-employed; discrimination in hiring; and norms that keep much of women&rsquo;s work unpaid and at home. Which of these binds, and how hard, is the open question &mdash; and the one worth putting to anyone who represents these seats. What the same data rules out is below.</p>
+
       <h3>&ldquo;The old city was denied services&rdquo;</h3>
       <p>The Census refutes this directly. Treated tap water 97.1% against 97.4%, closed drainage 98.4% against 97.5%, bathrooms 98.9% against 99.0% &mdash; no difference significant, drainage slightly favouring the old city. And the finding cannot have decayed since 2011: both halves were already at 94&ndash;99%, coverage that high has nowhere to fall, and NFHS-5 puts the whole district at 99.6% improved water and 99.9% electricity by 2019&ndash;21.</p>
 
@@ -646,7 +670,7 @@ td.lead { font-weight: 600; color: var(--ink); }
       <p>The share of people in GHMC-listed slums is statistically the same inside the old city as outside it &mdash; medians 20.5% against 19.7%, p&nbsp;=&nbsp;0.61. The city&rsquo;s slum concentrations sit along the Musi and in the north-west. Old-city poverty lives in ordinary, legal, serviced housing, which is precisely what makes it harder to explain away.</p>
 
       <h3>&ldquo;Things must have improved since 2011&rdquo;</h3>
-      <p>Two gaps did close, and how they closed is the point. NFHS-5 records 99.5% of district households on clean cooking fuel by 2019&ndash;21, so the 21-point gas gap is gone; and with 84% of Telangana&rsquo;s women holding their own bank account after Jan Dhan, the banking gap has almost certainly gone too. Both were closed by national schemes that reached every ward in India at once &mdash; they are not evidence of local development, any more than the 2011 shortfalls were evidence of local neglect. The gaps with no scheme behind them &mdash; internet, vehicles, work &mdash; have never been measured again at ward level, and there is no reason to assume they closed.</p>
+      <p>Two gaps did close. NFHS-5 records 99.5% of district households on clean cooking fuel by 2019&ndash;21, so the 21-point gas gap is gone; with 84% of Telangana&rsquo;s women holding their own bank account after Jan Dhan, the banking gap has almost certainly gone too. Both were closed by national schemes that reached every ward in India at once, so they are not evidence of local development &mdash; and the 2011 shortfalls were not evidence of local neglect. The gaps with no scheme behind them &mdash; work, internet, vehicles &mdash; have not been measured at ward level since, and there is no reason to assume they closed.</p>
     </div>
 
     <figure class="fig">
@@ -782,7 +806,7 @@ td.lead { font-weight: 600; color: var(--ink); }
   </section>
 
   <!-- ============ PROOF AND LIMITS ============ -->
-  <section id="limits" class="rule-top">
+  <section id="limits" class="rule-top tab-panel">
     <span id="interpretation"></span>
     <div class="overline">Proof and limits</div>
     <h2>What this shows, and what it cannot.</h2>
@@ -800,11 +824,11 @@ td.lead { font-weight: 600; color: var(--ink); }
         </div>
         <div>
           <div class="tri-n">p&thinsp;=&thinsp;0.12</div>
-          <div class="tri-l">Exact permutation test on the growth difference &mdash; no detectable effect</div>
+          <div class="tri-l">A standard statistical check finds no effect either way</div>
         </div>
       </div>
-      <p class="panel-verdict">Whether AIMIM&rsquo;s wins helped or harmed these places cannot be shown from public data. That is now demonstrated, not assumed.</p>
-      <p class="chart-note">The standard design: compare constituencies a party barely won against ones it barely lost, where winning is as good as random. Run on every AIMIM assembly contest nationally (TCPD results via SHRUG), with VIIRS night-lights growth as the outcome. The raw comparison points to slower growth after bare wins, but it fails the permutation test and is confounded: all three bare wins &mdash; Byculla, Dhule City, Nampally &mdash; are dense city cores three times brighter at baseline than the losses, and bright places grow slower in lights for sensor reasons unrelated to who won. Full working in <a href="ANALYSIS.md">ANALYSIS.md</a>; data in <a href="Data/AIMIM-CONTESTS-1999-2022.csv">AIMIM-CONTESTS-1999-2022.csv</a> and <a href="Data/AIMIM-CLOSE-CONTESTS-LIGHTS.csv">AIMIM-CLOSE-CONTESTS-LIGHTS.csv</a>.</p>
+      <p class="panel-verdict">Whether AIMIM&rsquo;s wins helped or harmed these places cannot be shown from public data. Running the test is what shows it.</p>
+      <p class="chart-note">The idea: compare places a party barely won with places it barely lost &mdash; near the line, winning is close to a coin flip, so any later difference should be the winning itself. Run on every AIMIM assembly contest in the country (TCPD results via SHRUG), with satellite night-light growth as the outcome. The raw comparison points to slower growth after bare wins, but it fails the permutation test and is confounded: all three bare wins &mdash; Byculla, Dhule City, Nampally &mdash; are dense city cores three times brighter at baseline than the losses, and bright places grow slower in lights for sensor reasons unrelated to who won. Full working in <a href="ANALYSIS.md">ANALYSIS.md</a>; data in <a href="Data/AIMIM-CONTESTS-1999-2022.csv">AIMIM-CONTESTS-1999-2022.csv</a> and <a href="Data/AIMIM-CLOSE-CONTESTS-LIGHTS.csv">AIMIM-CLOSE-CONTESTS-LIGHTS.csv</a>.</p>
     </figure>
 
     <div class="ledger">
@@ -813,6 +837,7 @@ td.lead { font-weight: 600; color: var(--ink); }
         <div class="item"><p>One party has led every contest it entered in these seats across six elections, and held all five seats continuously since 2009.</p></div>
         <div class="item"><p>The same neighbourhoods are far behind the rest of their district on work, income and assets, modestly behind on literacy, and level on services and slum housing. Every claim is tested ward by ward.</p></div>
         <div class="item"><p>The only gaps that have closed since 2011 were closed by national schemes, delivered everywhere at once.</p></div>
+        <div class="item"><p>The officeholders left their discretionary funds substantially unspent &mdash; the one failure in this analysis that is directly theirs. The Hyderabad MP used about &#8377;7 crore of a &#8377;25 crore entitlement in the 16th Lok Sabha and completed 8 of 69 recommended works in the 17th, while keeping a strong record in the House itself. The city&rsquo;s BJP and TRS legislators under-spent their funds too.</p></div>
       </div>
       <div>
         <h3>Not shown</h3>
@@ -825,21 +850,21 @@ td.lead { font-weight: 600; color: var(--ink); }
           <p>Urban services run through the corporation, the state and central schemes; through this whole period the state and GHMC were held by TDP, Congress, then TRS/BRS. This weakens blame and credit alike.</p>
         </div>
         <div class="item">
-          <b>That the officeholders were idle.</b>
-          <p>The Hyderabad MP&rsquo;s constituency fund was badly under-spent &mdash; about &#8377;7 crore used of a &#8377;25 crore entitlement in the 16th Lok Sabha &mdash; but his parliamentary record is strong, with double the average questions asked. And the same fund under-spending shows up in the city&rsquo;s BJP and TRS legislators too. The funds indict Hyderabad&rsquo;s political class collectively, not one party.</p>
+          <b>That spending those funds would have closed the gap.</b>
+          <p>The full MP entitlement is &#8377;25 crore over five years, in a constituency of about twenty lakh electors &mdash; roughly &#8377;250 a head for the whole term, spent on small works like water points and CC roads. Leaving it unspent is a real failure, and it is too small to explain, or to have fixed, a deficit measured in jobs and income. Both things are true.</p>
         </div>
       </div>
     </div>
 
     <div class="measure">
       <p>So the claim that survives every check in this repository is this one:</p>
-      <p><em>A generation of unbroken representation has coincided with a generation of the district&rsquo;s worst living standards &mdash; in neighbourhoods where the pipes were laid, the homes are legal, and the only gaps ever closed were closed from Delhi.</em></p>
+      <p><em>One party has represented the old city for a generation. Its people still work less and earn less than the rest of their district, in legal, fully serviced neighbourhoods &mdash; and the only gaps that closed were closed by national schemes.</em></p>
       <p>The 2008 boundary redraw remains the one untried design, blocked on a ward crosswalk that is not public; it is set out in <a href="ANALYSIS.md">ANALYSIS.md</a> with the officeholder record and its sources.</p>
     </div>
   </section>
 
   <!-- ============ DATA ============ -->
-  <section id="data" class="rule-top">
+  <section id="data" class="rule-top tab-panel">
     <span id="data-section"></span>
     <div class="overline">Data and method</div>
     <h2>The full series.</h2>
@@ -949,22 +974,32 @@ function seriesColor(seat) {
     return cssVar(SERIES_VAR[String(seat).toUpperCase()] || "--muted");
 }
 
-/* ---------------- theme ---------------- */
+/* ---------------- theme: light / system / dark ---------------- */
 const root = document.documentElement;
-function currentTheme() {
-    return root.getAttribute("data-theme") ||
-        (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+const themeButtons = Array.prototype.slice.call(
+    document.querySelectorAll(".theme-seg button"));
+
+function applyMode(mode) {
+    if (mode === "light" || mode === "dark") root.setAttribute("data-theme", mode);
+    else root.removeAttribute("data-theme");          // follow the device
+    themeButtons.forEach(function (b) {
+        b.classList.toggle("active", b.getAttribute("data-mode") === mode);
+    });
 }
+let savedMode = "system";
 try {
     const saved = localStorage.getItem("hyd-theme");
-    if (saved === "dark" || saved === "light") root.setAttribute("data-theme", saved);
-} catch (e) { /* private mode — fall through to the system preference */ }
+    if (saved === "dark" || saved === "light" || saved === "system") savedMode = saved;
+} catch (e) { /* private mode — stay on the device setting */ }
+applyMode(savedMode);
 
-document.getElementById("themeToggle").addEventListener("click", function () {
-    const next = currentTheme() === "dark" ? "light" : "dark";
-    root.setAttribute("data-theme", next);
-    try { localStorage.setItem("hyd-theme", next); } catch (e) {}
-    repaintCharts();
+themeButtons.forEach(function (b) {
+    b.addEventListener("click", function () {
+        const mode = b.getAttribute("data-mode");
+        applyMode(mode);
+        try { localStorage.setItem("hyd-theme", mode); } catch (e) {}
+        repaintCharts();
+    });
 });
 
 /* ---------------- table ---------------- */
@@ -995,26 +1030,45 @@ document.getElementById("themeToggle").addEventListener("click", function () {
     tbody.appendChild(frag);
 })();
 
-/* ---------------- scroll spy ---------------- */
-(function spy() {
-    const links = Array.prototype.slice.call(
-        document.querySelectorAll('.masthead nav a[href^="#"]'));
-    const targets = links
-        .map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); })
-        .filter(Boolean);
-    if (!targets.length || !("IntersectionObserver" in window)) { return; }
+/* ---------------- tabs ---------------- */
+const TAB_IDS = ["finding", "record", "closeup", "not-the-reason", "limits", "data"];
+/* legacy deep-link ids live inside these tabs */
+const TAB_ALIAS = {
+    "executive-summary": "finding", "representation-and-poverty": "finding",
+    "still-holds": "finding", "story": "finding",
+    "constituency-analysis": "record", "party-trends": "record",
+    "statistical-analysis": "record", "evidence": "record",
+    "interpretation": "limits", "data-section": "data"
+};
+const tabLinks = Array.prototype.slice.call(
+    document.querySelectorAll('.masthead nav a[href^="#"]'));
 
-    const io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) {
-            if (!e.isIntersecting) { return; }
-            links.forEach(function (a) {
-                a.setAttribute("aria-current",
-                    a.getAttribute("href") === "#" + e.target.id ? "true" : "false");
-            });
+function showTab(tab, innerId) {
+    TAB_IDS.forEach(function (id) {
+        document.getElementById(id).classList.toggle("active", id === tab);
+    });
+    tabLinks.forEach(function (a) {
+        a.setAttribute("aria-current",
+            a.getAttribute("href") === "#" + tab ? "true" : "false");
+    });
+    if (typeof Chart !== "undefined") {
+        requestAnimationFrame(function () {
+            charts.forEach(function (c) { c.resize(); });
         });
-    }, { rootMargin: "-52px 0px -70% 0px", threshold: 0 });
-    targets.forEach(function (t) { io.observe(t); });
-})();
+    }
+    const target = innerId && document.getElementById(innerId);
+    if (target) { target.scrollIntoView(); }
+    else { window.scrollTo({ top: 0, behavior: "instant" }); }
+}
+function routeHash() {
+    const id = decodeURIComponent(location.hash.slice(1));
+    if (TAB_IDS.indexOf(id) !== -1) { showTab(id, null); }
+    else if (TAB_ALIAS[id]) { showTab(TAB_ALIAS[id], id); }
+    else { showTab("finding", null); }
+}
+window.addEventListener("hashchange", routeHash);
+/* the initial route runs at the end of this script, after the charts
+   array exists — showTab touches it to resize charts on reveal */
 
 /* ---------------- CSV export ---------------- */
 function exportAllDataToCSV() {
@@ -1161,6 +1215,8 @@ if (mq.addEventListener) { mq.addEventListener("change", onSystemChange); }
 else if (mq.addListener) { mq.addListener(onSystemChange); }
 
 window.addEventListener("beforeprint", repaintCharts);
+
+routeHash();
 </script>
 </body>
 </html>
