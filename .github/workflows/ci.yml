@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      # Before 2026-09-22 the only workflow here deployed to Pages, so nothing
+      # held the data to the claims data-notes.html and METHODOLOGY.md make.
+      - name: Data integrity
+        run: python3 tools/check_data.py
+
+      - name: Every CSV parses and is rectangular
+        run: |
+          python3 - <<'PY'
+          import csv, glob, sys
+          bad = []
+          for f in sorted(glob.glob("Data/*.csv")):
+              rows = list(csv.reader(open(f, newline="", encoding="utf-8")))
+              if not rows:
+                  bad.append(f"{f}: empty"); continue
+              widths = {len(r) for r in rows if r}
+              if len(widths) != 1:
+                  bad.append(f"{f}: ragged, widths {sorted(widths)}")
+              else:
+                  print(f"  ok  {f}  {len(rows)-1} rows x {widths.pop()} cols")
+          if bad: sys.exit("FAIL\n  " + "\n  ".join(bad))
+          print("PASS")
+          PY
