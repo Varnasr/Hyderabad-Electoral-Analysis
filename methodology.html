@@ -82,7 +82,7 @@ hr { border:none; border-top:1px solid var(--rule); margin:40px 0; }
 </ul>
 <p>A party can lose vote share while gaining votes if turnout rises around it. Nothing in this dataset distinguishes those two cases. Where a movement looks dramatic — Yakutpura 2023 is the obvious one — the absence of turnout and count data is a real limit on interpretation, not a detail.</p>
 <h2 id="what-was-computed">What was computed</h2>
-<div class="table-scroll"><table>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Table, scrolls horizontally"><table>
 <thead>
 <tr>
 <th>Measure</th>
@@ -140,7 +140,7 @@ hr { border:none; border-top:1px solid var(--rule); margin:40px 0; }
 </ul>
 <h2 id="reproducing-the-figures">Reproducing the figures</h2>
 <p>The dataset is a plain CSV and the report computes everything client-side in <code>index.html</code>. To recompute independently:</p>
-<pre><code class="language-bash">python3 -c &quot;
+<pre tabindex="0" role="region" aria-label="Code, scrolls horizontally"><code class="language-bash">python3 -c &quot;
 import csv, statistics
 rows = list(csv.DictReader(open('Data/HYD-DIST-RESULTS.csv')))
 vals = [float(r['AIMIM_VoteShare']) for r in rows

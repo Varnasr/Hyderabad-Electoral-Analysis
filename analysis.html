@@ -94,7 +94,7 @@ both outright majorities. Every seat AIMIM has actually contested, it has led.</
 <p><strong>Household economic status is far below the rest of the district.</strong> Census 2011
 enumerated 108 GHMC wards in Hyderabad district. Comparing the 52 wards in the six
 old-city mandals against the 56 elsewhere:</p>
-<div class="table-scroll"><table>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Table, scrolls horizontally"><table>
 <thead>
 <tr>
 <th>Indicator</th>
@@ -141,7 +141,7 @@ internet, a third of the car ownership.</p>
 <p>The asset gaps above are proxies for income. The Census ward tables also carry the
 things income comes from: literacy and work. Same 108 wards, same method — ward
 medians, two-sided Mann–Whitney.</p>
-<div class="table-scroll"><table>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Table, scrolls horizontally"><table>
 <thead>
 <tr>
 <th>Indicator</th>
@@ -203,7 +203,7 @@ households and population — gives a proxy for the tenure question. Joined to t
 Census ward populations (99 wards join cleanly; the nine Cantonment and Osmania
 University wards are outside GHMC's slum survey and are excluded, and the join was
 validated geographically against slum coordinates), the result is a null:</p>
-<div class="table-scroll"><table>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Table, scrolls horizontally"><table>
 <thead>
 <tr>
 <th></th>
@@ -256,7 +256,7 @@ ward-level Primary Census Abstract; dictionary in
 <a href="data-notes.html"><code>Data/README.md</code></a>.</p>
 <h2 id="the-services-are-not-the-explanation">The services are not the explanation</h2>
 <p>Set those against what a municipal corporation actually builds:</p>
-<div class="table-scroll"><table>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Table, scrolls horizontally"><table>
 <thead>
 <tr>
 <th>Indicator</th>
@@ -466,7 +466,7 @@ answer turns out to be textured rather than one-sided.</p>
 <p><strong>Hyderabad has been an AIMIM Lok Sabha seat continuously since 1984</strong> — Sultan
 Salahuddin Owaisi to 2004, Asaduddin Owaisi since — which makes the MP fund a clean
 series. The record:</p>
-<div class="table-scroll"><table>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Table, scrolls horizontally"><table>
 <thead>
 <tr>
 <th>Term</th>
@@ -572,7 +572,7 @@ households by amenity and asset. Extracted from the Census of India release
 republished by <a href="https://data.opencity.in/dataset/hyderabad-census-2011-data">OpenCity</a>.</p>
 <p><code>old_city = yes</code> marks wards in the Bahadurpura, Charminar, Bandlaguda, Saidabad,
 Asifnagar and Golconda mandals.</p>
-<pre><code class="language-bash">python3 - &lt;&lt;'EOF'
+<pre tabindex="0" role="region" aria-label="Code, scrolls horizontally"><code class="language-bash">python3 - &lt;&lt;'EOF'
 import csv, statistics as st
 rows=list(csv.DictReader(open('Data/GHMC-WARD-AMENITIES-2011.csv')))
 old =[r for r in rows if r['old_city']=='yes']
