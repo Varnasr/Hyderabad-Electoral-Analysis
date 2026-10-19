@@ -1,5 +1,7 @@
 # Hyderabad-Electoral-Analysis
 
+Shared engineering standard: @.claude/engineering-standards.md. It applies to all work in this repository. This file adds what is specific to the project, and wins where the two disagree.
+
 Electoral and ward-level analysis of Hyderabad district, 1999 to 2023. Static
 HTML pages plus the CSVs they describe, deployed to GitHub Pages.
 
