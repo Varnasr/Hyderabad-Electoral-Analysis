@@ -77,6 +77,13 @@ pre {{ background:var(--surface); border:1px solid var(--rule); border-radius:10
      padding:16px 18px; overflow-x:auto; font-size:13px; line-height:1.5; }}
 pre code {{ border:none; background:none; padding:0; }}
 hr {{ border:none; border-top:1px solid var(--rule); margin:40px 0; }}
+.footer {{
+    margin-top: 76px; border-top: 1px solid var(--rule); padding: 26px 0 60px;
+    font-size: 13px; color: var(--muted); line-height: 1.65;
+    font-family:'IBM Plex Sans',system-ui,sans-serif;
+}}
+.footer p {{ margin: 0 0 .6em; max-width: 74ch; }}
+.footer a {{ color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }}
 </style>
 </head>
 <body>
@@ -85,6 +92,9 @@ hr {{ border:none; border-top:1px solid var(--rule); margin:40px 0; }}
 <h1>{title}</h1>
 <p class="subtitle">Part of <a href="index.html">Hyderabad&rsquo;s old city, 1999&ndash;2023</a> &middot; source file: <a href="{src}">{src}</a></p>
 {body}
+<footer class="footer">
+    <p>Need help setting out your story, what sets your work apart, the context, the return on investment and the projections? Pinpoint Ventures can help. Write to <a href="mailto:hello@pinpointventures.in?subject=Enquiry%20from%20varnasr.github.io/Hyderabad-Electoral-Analysis">hello@pinpointventures.in</a> or message on <a href="https://wa.me/919871777110?text=Hi%20Pinpoint%20Ventures%2C%20I%20found%20you%20through%20varnasr.github.io/Hyderabad-Electoral-Analysis.%20I%27d%20like%20to%20discuss%20a%20research%20or%20advisory%20engagement." target="_blank" rel="noopener">WhatsApp</a>.</p>
+</footer>
 </div>
 </body>
 </html>
@@ -109,15 +119,20 @@ def fix_links(html, src):
     return html
 
 def wrap_tables(html):
-    return html.replace("<table>", '<div class="table-scroll"><table>').replace(
-        "</table>", "</table></div>")
+    return html.replace(
+        "<table>",
+        '<div class="table-scroll" tabindex="0" role="region" aria-label="Table, scrolls horizontally"><table>'
+    ).replace("</table>", "</table></div>")
+
+def scroll_code(html):
+    return html.replace("<pre><code", '<pre tabindex="0" role="region" aria-label="Code, scrolls horizontally"><code')
 
 def main():
     os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
     for src, out, title in PAGES:
         md = io.open(src, encoding="utf-8").read()
         body = markdown.markdown(md, extensions=["tables", "fenced_code", "toc"])
-        body = wrap_tables(fix_links(body, src))
+        body = scroll_code(wrap_tables(fix_links(body, src)))
         io.open(out, "w", encoding="utf-8").write(
             SHELL.format(title=title, body=body, src=src, backhash=""))
         print("built", out, len(body), "bytes")
