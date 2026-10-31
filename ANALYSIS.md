@@ -245,7 +245,7 @@ by a vote-share chart.
 ## Making the argument robustly
 
 The claim people usually want to make from this material is that *AIMIM's wins have
-done little for the people of these constituencies*. Nothing in this repository
+done little for the people of these constituencies*. Nothing in this analysis
 establishes that, and two things in it point the other way. This section sets out what
 would be needed, in rough order of how much work it is against how much it buys.
 
