@@ -28,13 +28,11 @@ These are descriptive statistics. There is no regression, no control for any cov
 
 ## What this cannot establish
 
-This section exists because the repository's earlier framing invited claims it cannot support.
-
 **No causal claims.** Nothing here identifies the effect of anything on anything. If a seat has both long AIMIM incumbency and poor service delivery, this dataset cannot tell you whether one caused the other, whether a third factor drove both, or whether the association is coincidental. It contains no service-delivery data at all.
 
 **No inference about voters.** Constituency-level results are aggregates. Reading individual or community-level voting behaviour off them is the [ecological fallacy](https://en.wikipedia.org/wiki/Ecological_fallacy), and it is a live risk in a district where constituency and community composition correlate. A seat's result tells you how that seat voted in aggregate. It does not tell you how any group within it voted.
 
-**No pre/post-2009 continuity.** The 2008 delimitation redrew these boundaries. Bahadurpura did not exist before 2009. Comparing a 2004 result to a 2023 result in the "same" seat compares two different geographies wearing one name. Every cross-period claim in this repository carries that caveat implicitly; treat it as explicit.
+**No pre/post-2009 continuity.** The 2008 delimitation redrew these boundaries. Bahadurpura did not exist before 2009. Comparing a 2004 result to a 2023 result in the "same" seat compares two different geographies wearing one name. Every cross-period claim here carries that caveat implicitly; treat it as explicit.
 
 **No statistical power.** Six observations per seat. Any apparent pattern is descriptive. Trends here are things to investigate, not findings to rest on.
 
