@@ -202,9 +202,50 @@ def _page_heads():
         desc = re.search(r'<meta name="description" content="([^"]*)"', s)
         got = re.findall(r'<meta property="og:description" content="([^"]*)"', s)
         assert got == ([desc.group(1)] if desc else []), f"{f.name}: og:description does not match the description"
-        assert 'name="twitter:card"' in s, f"{f.name}: no twitter:card"
+        assert 'name="twitter:card" content="summary_large_image"' in s, f"{f.name}: twitter:card is not summary_large_image"
     return f"{len(pages)} pages carry a canonical and Open Graph tags that match their own title and description"
 check("every page names its own address and previews as its own title", _page_heads)
+
+# ---------------------------------------------------------------- share card
+
+def _jpeg_or_png_size(data):
+    """Width and height of a JPEG or PNG from its own bytes, or None."""
+    import struct
+    if data[:8] == b"\x89PNG\r\n\x1a\n":
+        return struct.unpack(">II", data[16:24])
+    if data[:3] == b"\xff\xd8\xff":
+        i = 2
+        while i + 9 < len(data):
+            assert data[i] == 0xFF, "damaged JPEG"
+            marker, length = data[i + 1], struct.unpack(">H", data[i + 2:i + 4])[0]
+            if marker in (0xC0, 0xC1, 0xC2):
+                h, w = struct.unpack(">HH", data[i + 5:i + 9])
+                return w, h
+            i += 2 + length
+    return None
+
+
+def _share_card():
+    import re
+    base = "https://varnasr.github.io/Hyderabad-Electoral-Analysis/"
+    pages = sorted(ROOT.glob("*.html"))
+    for f in pages:
+        s = f.read_text(encoding="utf-8")
+        got = re.findall(r'<meta property="og:image" content="([^"]*)"', s)
+        assert len(got) == 1 and got[0].startswith(base), f"{f.name}: og:image is {got}, expected one address under {base}"
+        assert re.findall(r'<meta name="twitter:image" content="([^"]*)"', s) == got, f"{f.name}: twitter:image differs from og:image"
+        assert re.findall(r'<meta property="og:image:width" content="([^"]*)"', s) == ["1200"], f"{f.name}: og:image:width is not 1200"
+        assert re.findall(r'<meta property="og:image:height" content="([^"]*)"', s) == ["630"], f"{f.name}: og:image:height is not 630"
+        assert re.search(r'<meta property="og:image:alt" content="[^"]+"', s), f"{f.name}: no og:image:alt"
+    path = ROOT / got[0][len(base):]
+    assert path.is_file(), f"{got[0]} has no file at {path.relative_to(ROOT)}"
+    data = path.read_bytes()
+    assert len(data) <= 250_000, f"{path.name} is {len(data)} bytes; WhatsApp drops previews over about 250 KB"
+    size = _jpeg_or_png_size(data)
+    assert size, f"{path.name} is not a JPEG or PNG (LinkedIn does not read WebP)"
+    assert size == (1200, 630), f"{path.name} is {size[0]}x{size[1]}, the tags say 1200x630"
+    return f"{len(pages)} pages point at {path.name}, {len(data)} bytes, {size[0]}x{size[1]}"
+check("every page previews with a JPEG or PNG card that exists, within 250 KB", _share_card)
 
 print()
 if failures:
