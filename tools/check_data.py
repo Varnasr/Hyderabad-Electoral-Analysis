@@ -181,6 +181,31 @@ def _aimim():
     return f"{len(contests)} contests, {len(wins)} won, {len(lights)} in the close-contest subset"
 check("AIMIM win flags and margins agree in sign", _aimim)
 
+# ---------------------------------------------------------------- page head
+
+def _page_heads():
+    import re
+    base = "https://varnasr.github.io/Hyderabad-Electoral-Analysis/"
+    pages = sorted(ROOT.glob("*.html"))
+    assert pages, "no pages found"
+    for f in pages:
+        s = f.read_text(encoding="utf-8")
+        url = base + ("" if f.name == "index.html" else f.name)
+        canon = re.findall(r'<link rel="canonical" href="([^"]*)"', s)
+        assert canon == [url], f"{f.name}: canonical is {canon}, expected {[url]}"
+        for prop, want in (("og:url", url), ("og:type", "website")):
+            got = re.findall(r'<meta property="%s" content="([^"]*)"' % prop, s)
+            assert got == [want], f"{f.name}: {prop} is {got}"
+        title = re.search(r"<title>(.*?)</title>", s).group(1)
+        got = re.findall(r'<meta property="og:title" content="([^"]*)"', s)
+        assert got == [title], f"{f.name}: og:title does not match the title"
+        desc = re.search(r'<meta name="description" content="([^"]*)"', s)
+        got = re.findall(r'<meta property="og:description" content="([^"]*)"', s)
+        assert got == ([desc.group(1)] if desc else []), f"{f.name}: og:description does not match the description"
+        assert 'name="twitter:card"' in s, f"{f.name}: no twitter:card"
+    return f"{len(pages)} pages carry a canonical and Open Graph tags that match their own title and description"
+check("every page names its own address and previews as its own title", _page_heads)
+
 print()
 if failures:
     print(f"FAIL - {len(failures)} check(s) failed: {', '.join(failures)}")
